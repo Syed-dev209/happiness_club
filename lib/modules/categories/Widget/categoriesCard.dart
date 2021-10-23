@@ -10,7 +10,7 @@ class CategoriesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      width: double.maxFinite,
+      width: 165,
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
       decoration: BoxDecoration(
           color: Colors.black,

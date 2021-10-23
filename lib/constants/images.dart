@@ -31,6 +31,9 @@ class Images {
 
   static const String UNLIKE_ICON = "assets/SVG/unlikeIcon.svg";
   static const String LIKE_ICON = "assets/SVG/likeIcon.svg";
-  static const String SEARCH_ICON = "assets/SVG/searchIcon.svg";
+  static const String LIKE_ICON2 = "assets/SVG/like2.svg";
+  static const String SEARCH_ICON = "assets/PNG/Vector.png";
   static const String FILTER_ICON = "assets/SVG/fliterIcon.svg";
+
+  static const String DISCOUNT_OFFER = "assets/PNG/discountOffer.png";
 }

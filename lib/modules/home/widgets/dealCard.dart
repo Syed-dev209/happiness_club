@@ -204,4 +204,5 @@ class DealCard extends StatelessWidget {
       ),
     );
   }
+
 }

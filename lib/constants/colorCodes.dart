@@ -8,4 +8,6 @@ class ColorCodes {
   static const int LIGHT_PINK_COLOR = 0xfffae9ec;
   static const int DARK_PINK_COLOR = 0xffcf1e43;
   static const int LITE_YELLOW_COLOR = 0xfffff9e6;
+  static const int GREY_COLOR = 0xffcbcbcb;
+  static const int STAR_COLOR = 0xffFFA019;
 }

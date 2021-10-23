@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
+import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 
 class OffersCard extends StatefulWidget {
   const OffersCard({Key? key}) : super(key: key);
@@ -16,78 +18,83 @@ class _OffersCardState extends State<OffersCard> {
   bool like = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 264,
-      width: double.maxFinite,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(14)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          dealImage(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Restaurants",
-                      style: FontStyle.PoppinsStyle(
-                          11, Color(ColorCodes.BLUE_COLOR),
-                          fontWeight: FontWeight.w500),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,CupertinoPageRoute(builder: (_)=> OfferDetailsScreen()));
+      },
+      child: Container(
+        height: 264,
+        width: double.maxFinite,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(14)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            dealImage(),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Restaurants",
+                        style: FontStyle.PoppinsStyle(
+                            11, Color(ColorCodes.BLUE_COLOR),
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Mc Donald Burger Deal",
-                          style: FontStyle.PoppinsStyle(12, Colors.black,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              like = !like;
-                            });
-                          },
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                //color: Colors.red,
-                                borderRadius: BorderRadius.circular(20)),
-                            padding: EdgeInsets.only(top: 2),
-                            child: SvgPicture.asset(
-                              like ? Images.LIKE_ICON : Images.UNLIKE_ICON,
-                              fit: BoxFit.cover,
-                              // height: 30,
-                            ),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Mc Donald Burger Deal",
+                            style: FontStyle.PoppinsStyle(12, Colors.black,
+                                fontWeight: FontWeight.w500),
                           ),
-                        )
-                      ],
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                like = !like;
+                              });
+                            },
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                  //color: Colors.red,
+                                  borderRadius: BorderRadius.circular(20)),
+                              padding: EdgeInsets.only(top: 2),
+                              child: SvgPicture.asset(
+                                like ? Images.LIKE_ICON : Images.UNLIKE_ICON,
+                                fit: BoxFit.cover,
+                                // height: 30,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  locationRow(),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  ratingAndTime(),
-                ],
+                    SizedBox(
+                      height: 3,
+                    ),
+                    locationRow(),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    ratingAndTime(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

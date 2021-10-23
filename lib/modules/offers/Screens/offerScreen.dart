@@ -54,7 +54,37 @@ class _OffersScreenState extends State<OffersScreen> {
             style: FontStyle.PoppinsStyle(17, Colors.black,
                 fontWeight: FontWeight.w600),
           ),
-          SvgPicture.asset(Images.APPBAR_DROP_ICON)
+          PopupMenuButton(
+            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8)
+            ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 05, 
+                    vertical: 10
+                  ),
+                  child: SvgPicture.asset(Images.APPBAR_DROP_ICON),
+                ),
+                itemBuilder: (context) => [
+                   PopupMenuItem(
+                    child: Text("Most viewed",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
+                    value: 1,
+                  ),
+                  PopupMenuItem(
+                    child: Text("Best rated",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                    value: 2,
+                  ),
+                   PopupMenuItem(
+                    child: Text("Featured",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                    value: 3,
+                  ),
+                ]
+            )
+          // GestureDetector(
+          //     onTap: () {
+
+          //     }, child: SvgPicture.asset(Images.APPBAR_DROP_ICON))
         ],
       ),
     );

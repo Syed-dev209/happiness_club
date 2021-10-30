@@ -23,6 +23,13 @@
             </list>
           </value>
         </entry>
+        <entry key="bubble_tab_indicator">
+          <value>
+            <list>
+              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/bubble_tab_indicator-0.1.6/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="carousel_slider">
           <value>
             <list>
@@ -97,6 +104,13 @@
           <value>
             <list>
               <option value="C:/flutter/packages/flutter/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_rating_bar">
+          <value>
+            <list>
+              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_rating_bar-4.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -330,6 +344,7 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.6.1/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/blur-3.0.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0/lib" />
+      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/bubble_tab_indicator-0.1.6/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.0.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.1.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.2.0/lib" />
@@ -340,6 +355,7 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-1.1.2/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/file-6.1.2/lib" />
+      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_rating_bar-4.0.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.22.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.1.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.3/lib" />

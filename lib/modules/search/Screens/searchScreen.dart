@@ -15,30 +15,36 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     FocusNode focus = FocusNode();
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.maxFinite,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: CustomAppBar(title: "Search"),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          searchTextFeild(focus),
-          SizedBox(
-            height: 12,
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            Container(
+              height: size.height*0.47,
+              width: double.maxFinite,
+              child: Column(
+                children: [
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: CustomAppBar(title: "Search"),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            searchTextFeild(focus),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Wrap(
                 spacing: 15,
@@ -54,20 +60,28 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-          ),
-          
-          Container(
-            height: 15,
-            width: double.maxFinite,
-            color: Color(0xfff2f2f2),
-          ),
-          SizedBox(height: 10,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text("Recent Searches",style: FontStyle.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
-          ),
-          Expanded(flex: 2, child: recentSearches())
-        ],
+            
+                ],
+              ),
+            ),
+            
+            Container(
+              height: 15,
+              width: double.maxFinite,
+              color: Color(0xfff2f2f2),
+            ),
+            SizedBox(height: 10,),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Text("Recent Searches",style: FontStyle.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
+            ),
+            SizedBox(
+              height: size.height*047,
+              width: double.maxFinite,
+              child: recentSearches(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -105,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
           separatorBuilder: (context, i) => SizedBox(
                 height: 10,
               ),
-          itemCount: 5),
+          itemCount: 10),
     );
   }
 

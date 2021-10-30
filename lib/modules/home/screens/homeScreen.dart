@@ -64,15 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 150,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
                       return CategoriesCard();
                     },
-                    separatorBuilder: (context,i)=>SizedBox(width: 10,),
+                    separatorBuilder: (context, i) => SizedBox(
+                          width: 10,
+                        ),
                     itemCount: 10),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               SizedBox(
                 height: 260,
                 //flex: 2,
@@ -223,7 +227,11 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           height: 30,
           width: 20,
-          child: SvgPicture.asset(Images.DRAWER_ICON),
+          child: GestureDetector(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: SvgPicture.asset(Images.DRAWER_ICON)),
         ),
         SizedBox(
           width: 30,

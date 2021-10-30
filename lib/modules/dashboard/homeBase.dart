@@ -5,6 +5,7 @@ import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/categories/Screens/categoriesScreen.dart';
 import 'package:happiness_club/modules/home/screens/homeScreen.dart';
+import 'package:happiness_club/modules/home/widgets/drawer.dart';
 import 'package:happiness_club/modules/offers/Screens/offerScreen.dart';
 import 'package:happiness_club/modules/search/Screens/searchScreen.dart';
 
@@ -29,6 +30,7 @@ class _HomeBaseState extends State<HomeBase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       body: body,
       bottomNavigationBar: Card(
         elevation: 8,

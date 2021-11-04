@@ -1,5 +1,5 @@
 class Images {
-  static const String LOGO = "assets/PNG/logo.png";
+  static const String LOGO = "assets/PNG/logoNew.png";
   static const String SPLASH_BG = "assets/SVG/splashBg.svg";
   static const String LOGO_SMALL = "assets/SVG/logoSmall.svg";
   static const String DRAWER_ICON = "assets/SVG/drawerIcon.svg";
@@ -36,4 +36,20 @@ class Images {
   static const String FILTER_ICON = "assets/SVG/fliterIcon.svg";
 
   static const String DISCOUNT_OFFER = "assets/PNG/discountOffer.png";
+    static const String CARD_ICON = "assets/PNG/card.png";
+
+  static const String SCAN_ICON = "assets/PNG/Scan.png";
+  static const String FAVOURITES_ICON = "assets/PNG/fav.png";
+
+  static const String PRIZE_ICON = "assets/PNG/prize.png";
+
+  static const String CHAMPION_ICON = "assets/PNG/champions.png";
+  static const String NEWSLETTER = "assets/PNG/newsletter.png";
+  static const String ARTICLE = "assets/PNG/articles.png";
+  static const String ABOUT = "assets/PNG/aboutUs.png";
+  static const String CONATCT = "assets/PNG/contactUs.png";
+  static const String SUGGESTIONS = "assets/PNG/suggestions.png";
+  static const String TERMS = "assets/PNG/termCondition.png";
+  static const String PRIVACY = "assets/PNG/privacyPolicy.png";
+ static const String COMPANIES = "assets/PNG/companies.png";
 }

@@ -45,7 +45,7 @@ class DealCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "Mc Donald Burger Deal",
-                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                      style: FontStyle.PoppinsStyle(14, Colors.black,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -150,7 +150,7 @@ class DealCard extends StatelessWidget {
           ),
           Text('Zar Mall, Dubai',
               style: FontStyle.PoppinsStyle(
-                11,
+                11.5,
                 Colors.black26,
               ))
         ],
@@ -172,7 +172,7 @@ class DealCard extends StatelessWidget {
               child: Text(
                 "9 days left",
                 style: FontStyle.PoppinsStyle(
-                    9, Color(ColorCodes.DARK_PINK_COLOR),
+                    10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
               ),
             ),
@@ -195,7 +195,7 @@ class DealCard extends StatelessWidget {
                 ),
                 Text(
                   "4.2",
-                  style: FontStyle.PoppinsStyle(9, Colors.black),
+                  style: FontStyle.PoppinsStyle(10, Colors.black),
                 )
               ],
             ),

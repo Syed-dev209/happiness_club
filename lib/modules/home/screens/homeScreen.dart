@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Categories",
                     style: FontStyle.PoppinsStyle(14, Colors.black,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w500),
                   ),
                   Text(
                     "View All",
@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              SizedBox(height: 10,),
               SizedBox(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
@@ -102,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "New Deals",
                     style: FontStyle.PoppinsStyle(14, Colors.black,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w500),
                   ),
                   Text(
                     "View All",
@@ -136,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Featured Deals",
                     style: FontStyle.PoppinsStyle(14, Colors.black,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w500),
                   ),
                   Text(
                     "View All",
@@ -177,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CarouselSlider.builder(
                 itemCount: imgList.length,
                 options: CarouselOptions(
-                    // aspectRatio: 2.0,
+                     aspectRatio: 2.0,
                     enlargeCenterPage: true,
                     scrollDirection: Axis.horizontal,
                     autoPlay: true,
@@ -214,6 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget sliderImageContainer(String image) {
     return Container(
+      width: double.maxFinite,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),

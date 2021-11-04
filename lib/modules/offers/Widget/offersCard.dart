@@ -55,7 +55,7 @@ class _OffersCardState extends State<OffersCard> {
                         children: [
                           Text(
                             "Mc Donald Burger Deal",
-                            style: FontStyle.PoppinsStyle(12, Colors.black,
+                            style: FontStyle.PoppinsStyle(14, Colors.black,
                                 fontWeight: FontWeight.w500),
                           ),
                           GestureDetector(
@@ -65,7 +65,7 @@ class _OffersCardState extends State<OffersCard> {
                               });
                             },
                             child: Container(
-                              height: 35,
+                              height: 40,
                               width: 35,
                               decoration: BoxDecoration(
                                   //color: Colors.red,
@@ -201,7 +201,7 @@ class _OffersCardState extends State<OffersCard> {
               child: Text(
                 "9 days left",
                 style: FontStyle.PoppinsStyle(
-                    9, Color(ColorCodes.DARK_PINK_COLOR),
+                    11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
               ),
             ),
@@ -224,7 +224,7 @@ class _OffersCardState extends State<OffersCard> {
                 ),
                 Text(
                   "4.2",
-                  style: FontStyle.PoppinsStyle(9, Colors.black),
+                  style: FontStyle.PoppinsStyle(11, Colors.black),
                 )
               ],
             ),

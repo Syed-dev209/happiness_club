@@ -42,8 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         flex: 5,
                         child: Image.asset(
                           Images.LOGO,
-                          cacheHeight: 220,
-                          cacheWidth: 200,
+                          // height: 250,
+                          // width: 200,
                         ),
                       ),
                       Expanded(

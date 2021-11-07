@@ -1,5 +1,5 @@
 class Images {
-  static const String LOGO = "assets/PNG/logoNew.png";
+  static const String LOGO = "assets/PNG/logoHd.png";
   static const String SPLASH_BG = "assets/SVG/splashBg.svg";
   static const String LOGO_SMALL = "assets/SVG/logoSmall.svg";
   static const String DRAWER_ICON = "assets/SVG/drawerIcon.svg";
@@ -36,7 +36,7 @@ class Images {
   static const String FILTER_ICON = "assets/SVG/fliterIcon.svg";
 
   static const String DISCOUNT_OFFER = "assets/PNG/discountOffer.png";
-    static const String CARD_ICON = "assets/PNG/card.png";
+  static const String CARD_ICON = "assets/PNG/card.png";
 
   static const String SCAN_ICON = "assets/PNG/Scan.png";
   static const String FAVOURITES_ICON = "assets/PNG/fav.png";
@@ -51,5 +51,13 @@ class Images {
   static const String SUGGESTIONS = "assets/PNG/suggestions.png";
   static const String TERMS = "assets/PNG/termCondition.png";
   static const String PRIVACY = "assets/PNG/privacyPolicy.png";
- static const String COMPANIES = "assets/PNG/companies.png";
+  static const String COMPANIES = "assets/PNG/companies.png";
+
+  static const String FIRST_POSITION = "assets/SVG/firstPosition.svg";
+  static const String SECOND_POSITION = "assets/SVG/secondPosition.svg";
+  static const String THIRD_POSITION = "assets/SVG/thirdPosition.svg";
+  static const String TROPHY_ICON = "assets/SVG/cupIcon.svg";
+
+   static const String CALENDER_ICON = "assets/PNG/calendarIcon.png";
+   static const String DOTTED_LINE = "assets/PNG/dottedLine.png";
 }

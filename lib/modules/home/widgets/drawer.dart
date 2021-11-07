@@ -9,7 +9,7 @@ import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart'
 
 class CustomDrawer extends StatelessWidget {
  
-  final style = FontStyle.PoppinsStyle(16, Colors.black26);
+  final style = FontStyle.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w500);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -43,11 +43,11 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     title: Text(
                       "John Smith",
-                      style: FontStyle.PoppinsStyle(16, Colors.black),
+                      style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
                       "johnsmith@gmail.com",
-                      style: FontStyle.PoppinsStyle(14, Colors.black26),
+                      style: FontStyle.PoppinsStyle(12, Colors.black26,fontWeight: FontWeight.w400),
                     ),
                   ),
                 )),
@@ -115,7 +115,7 @@ class CustomDrawer extends StatelessWidget {
                     title: Text("Contact Us",style: style),
                   ),
                   ListTile(
-                    leading: Image.asset(Images.SUGGESTIONS, cacheHeight: 20),
+                    leading: Image.asset(Images.SUGGESTIONS, height: 20),
                     title: Text("Suggestions",style: style),
                   ),
                   ListTile(

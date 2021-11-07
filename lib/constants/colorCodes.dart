@@ -10,4 +10,6 @@ class ColorCodes {
   static const int LITE_YELLOW_COLOR = 0xfffff9e6;
   static const int GREY_COLOR = 0xffcbcbcb;
   static const int STAR_COLOR = 0xffFFA019;
+  static const Color LIGHT_GREY_COLOR = Color(0xffF4F4F4);
+  static const Color DARK_GREY_COLOR = Color(0xff929292);
 }

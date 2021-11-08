@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
                       return DealCard(
-                        width: 195,
+                        width: 230,
                         smallBox: false,
                       );
                     },
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
                       return DealCard(
-                        width: 188,
+                        width: 161,
                         smallBox: true,
                       );
                     },
@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
                       return DealCard(
-                        width: 180,
+                        width: 161,
                         smallBox: true,
                       );
                     },
@@ -178,8 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CarouselSlider.builder(
                 itemCount: imgList.length,
                 options: CarouselOptions(
-                     aspectRatio: 2.0,
+                     aspectRatio: 2.5,
                     enlargeCenterPage: true,
+                  viewportFraction: 1,
                     scrollDirection: Axis.horizontal,
                     autoPlay: true,
                     onPageChanged: (index, val) {

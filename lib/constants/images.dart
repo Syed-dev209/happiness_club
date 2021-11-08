@@ -29,9 +29,11 @@ class Images {
   static const String CATEGORIES_BG = "assets/PNG/categoriesBg.png";
   static const String APPBAR_DROP_ICON = "assets/SVG/appBarDropDownIcon.svg";
 
-  static const String UNLIKE_ICON = "assets/SVG/unlikeIcon.svg";
-  static const String LIKE_ICON = "assets/SVG/likeIcon.svg";
+  static const String UNLIKE_ICON = "assets/PNG/likeInactive.png";
+  static const String LIKE_ICON = "assets/PNG/LikeActive.png";
   static const String LIKE_ICON2 = "assets/SVG/like2.svg";
+   static const String LIKE_ICON3 = "assets/PNG/likeIcon3.png";
+   static const String LIKE_ICON_FILLED = "assets/PNG/likeFilled.png";
   static const String SEARCH_ICON = "assets/PNG/Vector.png";
   static const String FILTER_ICON = "assets/SVG/fliterIcon.svg";
 

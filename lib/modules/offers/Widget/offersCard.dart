@@ -23,7 +23,7 @@ class _OffersCardState extends State<OffersCard> {
         Navigator.push(context,CupertinoPageRoute(builder: (_)=> OfferDetailsScreen()));
       },
       child: Container(
-        height: 264,
+        height: 296,
         width: double.maxFinite,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
@@ -65,16 +65,24 @@ class _OffersCardState extends State<OffersCard> {
                               });
                             },
                             child: Container(
-                              height: 40,
+                              height: 35,
                               width: 35,
                               decoration: BoxDecoration(
-                                  //color: Colors.red,
-                                  borderRadius: BorderRadius.circular(20)),
-                              padding: EdgeInsets.only(top: 2),
-                              child: SvgPicture.asset(
-                                like ? Images.LIKE_ICON : Images.UNLIKE_ICON,
-                                fit: BoxFit.cover,
-                                // height: 30,
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(0,1),
+                                    blurRadius: 2,
+                                    color: Colors.black.withOpacity(0.2)
+                                  )
+                                ]
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  like ? Images.LIKE_ICON_FILLED : Images.LIKE_ICON3,
+                                height: 13,
+                                ),
                               ),
                             ),
                           )

@@ -98,6 +98,7 @@ class _OffersSummaryState extends State<OffersSummary> {
               style: FontStyle.PoppinsStyle(20, Colors.black,
                   fontWeight: FontWeight.w600),
             ),
+            SizedBox(height: 10,),
             Text(
               "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and "
               "demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the"
@@ -117,8 +118,8 @@ class _OffersSummaryState extends State<OffersSummary> {
             Row(
               children: [
                 Container(
-                  height: 38,
-                  width: 38,
+                  height: 45,
+                  width: 45,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
@@ -126,14 +127,13 @@ class _OffersSummaryState extends State<OffersSummary> {
                             ColorCodes.GOLDEN_COLOR,
                           ),
                           width: 2)),
-                  child: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: SvgPicture.asset(
-                        Images.LIKE_ICON2,
-                        height: 20,
-                        width: 20,
-                      )),
+                  child: Image.asset(
+              
+                    Images.LIKE_ICON3,
+                    cacheHeight: 25,
+                    filterQuality: FilterQuality.high,
+                    // width: 10,
+                  ),
                 ),
                 SizedBox(width: 10,),
                 Expanded(

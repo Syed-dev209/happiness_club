@@ -4,12 +4,15 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/aboutUs/aboutusScreen.dart';
+import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
+import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
+import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
- 
-  final style = FontStyle.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w500);
+  final style =
+      FontStyle.PoppinsStyle(14, Colors.black26, fontWeight: FontWeight.w500);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -43,11 +46,13 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     title: Text(
                       "John Smith",
-                      style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),
+                      style: FontStyle.PoppinsStyle(16, Colors.black,
+                          fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
                       "johnsmith@gmail.com",
-                      style: FontStyle.PoppinsStyle(12, Colors.black26,fontWeight: FontWeight.w400),
+                      style: FontStyle.PoppinsStyle(12, Colors.black26,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 )),
@@ -55,38 +60,55 @@ class CustomDrawer extends StatelessWidget {
               child: ListView(
                 children: [
                   ListTile(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context)=>DigitalCardScreen()));
+                    },
                     leading: Image.asset(
                       Images.CARD_ICON,
                       height: 20,
                     ),
-                    title: Text("Digital card",style: style,),
+                    title: Text(
+                      "Digital card",
+                      style: style,
+                    ),
                   ),
                   ListTile(
                     leading: Image.asset(Images.SCAN_ICON, height: 20),
-                    title: Text("Scan QR Code",style: style),
+                    title: Text("Scan QR Code", style: style),
                   ),
                   ListTile(
-                    leading:
-                        Image.asset(Images.FAVOURITES_ICON, height: 20),
-                    title: Text("Favourites",style: style),
+                    leading: Image.asset(Images.FAVOURITES_ICON, height: 20),
+                    title: Text("Favourites", style: style),
                   ),
                   ListTile(
-                    leading: Image.asset(Images.PRIZE_ICON,height: 20),
-                    title: Text("Prize History",style: style),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => PrizeHistoryScreen()));
+                    },
+                    leading: Image.asset(Images.PRIZE_ICON, height: 20),
+                    title: Text("Prize History", style: style),
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => ChampionsScreen()));
+                    },
                     leading: Image.asset(Images.CHAMPION_ICON, height: 20),
-                    title: Text("Champions",style: style),
+                    title: Text("Champions", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.COMPANIES, height: 20),
-                    onTap: (){
-                       Navigator.push(
+                    onTap: () {
+                      Navigator.push(
                           context,
                           CupertinoPageRoute(
                               builder: (_) => CompaniesScreen()));
                     },
-                    title: Text("Companies",style: style),
+                    title: Text("Companies", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.NEWSLETTER, height: 20),
@@ -96,11 +118,11 @@ class CustomDrawer extends StatelessWidget {
                           CupertinoPageRoute(
                               builder: (_) => NewsletterScreen()));
                     },
-                    title: Text("Newsletters",style: style),
+                    title: Text("Newsletters", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.ARTICLE, height: 20),
-                    title: Text("Articles & News",style: style),
+                    title: Text("Articles & News", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
@@ -108,23 +130,23 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(context,
                           CupertinoPageRoute(builder: (_) => AboutUsScreen()));
                     },
-                    title: Text("About Us",style: style),
+                    title: Text("About Us", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.CONATCT, height: 20),
-                    title: Text("Contact Us",style: style),
+                    title: Text("Contact Us", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.SUGGESTIONS, height: 20),
-                    title: Text("Suggestions",style: style),
+                    title: Text("Suggestions", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.TERMS, height: 20),
-                    title: Text("Terms & Conditions",style: style),
+                    title: Text("Terms & Conditions", style: style),
                   ),
                   ListTile(
                     leading: Image.asset(Images.PRIVACY, height: 20),
-                    title: Text("Privacy Policy",style: style),
+                    title: Text("Privacy Policy", style: style),
                   ),
                 ],
               ),

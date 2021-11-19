@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
+import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
+import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/modules/splash/splashScreen.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -24,13 +29,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Happiness Club',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: myColor,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CategoriesOfferProvider()),
+        ChangeNotifierProvider(create: (_) => OffersSliderProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Happiness Club',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: myColor,
+        ),
+        home: SplashScreen(),
       ),
-      home: SplashScreen(),
     );
   }
 }

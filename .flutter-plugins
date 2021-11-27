@@ -1,9 +1,11 @@
 # This is a generated file; do not edit or check into version control.
-connectivity=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\connectivity-3.0.6\\
-connectivity_for_web=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\connectivity_for_web-0.4.0+1\\
-connectivity_macos=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\connectivity_macos-0.2.1+2\\
-path_provider=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-2.0.4\\
-path_provider_linux=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-2.1.0\\
-path_provider_macos=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-2.0.2\\
-path_provider_windows=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-2.0.3\\
-sqflite=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\sqflite-2.0.0+4\\
+connectivity=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-3.0.6/
+connectivity_for_web=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.4.0+1/
+connectivity_macos=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.2.1+2/
+path_provider=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.7/
+path_provider_android=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.9/
+path_provider_ios=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_ios-2.0.7/
+path_provider_linux=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.2/
+path_provider_macos=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.3/
+path_provider_windows=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.4/
+sqflite=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.0+4/

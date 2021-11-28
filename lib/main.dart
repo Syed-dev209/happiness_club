@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
+import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/latest_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/modules/splash/splashScreen.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +36,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CategoriesOfferProvider()),
         ChangeNotifierProvider(create: (_) => OffersSliderProvider()),
+        ChangeNotifierProvider(create: (_) => MostViewedOffersProvider()),
+        ChangeNotifierProvider(create: (_) => LatestOffersProvider()),
+        ChangeNotifierProvider(create: (_) => FeaturedOffersProvider()),
       ],
       child: MaterialApp(
         title: 'Happiness Club',

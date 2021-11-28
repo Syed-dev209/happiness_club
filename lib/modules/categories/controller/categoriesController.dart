@@ -14,6 +14,7 @@ Future getOfferCategories(context) async {
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
+
       var response = await dio.get(APIS.OFFER_CATEGORIES);
       if (response.statusCode == 200) {
         var model = OffersCategoriesModel.fromJson(response.data);

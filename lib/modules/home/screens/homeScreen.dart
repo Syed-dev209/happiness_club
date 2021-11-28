@@ -4,12 +4,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/categories/Widget/categoriesCard.dart';
+import 'package:happiness_club/modules/categories/Widget/category_card_shimmer.dart';
+import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
 import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
+import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/latest_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
+import 'package:happiness_club/modules/home/controller/homeController.dart';
 import 'package:happiness_club/modules/home/widgets/dealCard.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:happiness_club/modules/home/widgets/deal_shimmer_card.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,6 +38,22 @@ class _HomeScreenState extends State<HomeScreen> {
     Images.DISCOUNT_OFFER,
   ];
   int currentPos = 0;
+
+  onRefreshCall()async{
+    Provider.of<CategoriesOfferProvider>(context, listen: false).clearProvider();
+    Provider.of<OffersSliderProvider>(context, listen: false).clearProvider();
+    Provider.of<MostViewedOffersProvider>(context,listen: false).clearProvider();
+    Provider.of<LatestOffersProvider>(context,listen: false).clearProvider();
+    Provider.of<FeaturedOffersProvider>(context,listen: false).clearProvider();
+
+    await getOfferCategories(context);
+    await getSliderImages(context);
+    await getMostViewedOffers(context);
+    await getLatestOffers(context);
+    await getFeaturedOffers(context);
+    showToast(context, "Page refreshed");
+
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,142 +61,238 @@ class _HomeScreenState extends State<HomeScreen> {
         height: MediaQuery.of(context).size.height + 300,
         width: double.maxFinite,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              appBar(),
-              SizedBox(
-                height: 25,
-              ),
-              creditCard(), ///credit card
-              SizedBox(
-                height: 20,
-              ),
-              discountSlider(), ///slider
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Categories",
-                    style: FontStyle.PoppinsStyle(14, Colors.black,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    "View All",
-                    style: FontStyle.PoppinsStyle(
-                        12, Color(ColorCodes.GOLDEN_COLOR),
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10,),
-              Consumer<CategoriesOfferProvider>(
-                  builder: (context,data,_){
-                return SizedBox( ///categories
-                  height: 150,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, i) {
-                        return CategoriesCard(modelData: data.modelData!.data![i]!,);
-                      },
-                      separatorBuilder: (context, i) => SizedBox(
-                        width: 10,
-                      ),
-                      itemCount:data.modelData!.data!.length),
-                );
-              }),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 260,
-                //flex: 2,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, i) {
-                      return DealCard(
-                        width: 230,
-                        smallBox: false,
-                      );
-                    },
-                    separatorBuilder: (context, i) => SizedBox(
-                          width: 10,
+        child: Column(
+          children: [
+            appBar(),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: ()async{
+                  return onRefreshCall();
+                },
+                child: ListView(
+                  children: [
+                    SizedBox(
+                      height: 25,
+                    ),
+                    creditCard(), ///credit card
+                    SizedBox(
+                      height: 20,
+                    ),
+                    discountSlider(), ///slider
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Categories",
+                          style: FontStyle.PoppinsStyle(14, Colors.black,
+                              fontWeight: FontWeight.w500),
                         ),
-                    itemCount: 10),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "New Deals",
-                    style: FontStyle.PoppinsStyle(14, Colors.black,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    "View All",
-                    style: FontStyle.PoppinsStyle(
-                        12, Color(ColorCodes.GOLDEN_COLOR),
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 220,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, i) {
-                      return DealCard(
-                        width: 161,
-                        smallBox: true,
-                      );
-                    },
-                    separatorBuilder: (context, i) => SizedBox(
-                          width: 10,
+                        Text(
+                          "View All",
+                          style: FontStyle.PoppinsStyle(
+                              12, Color(ColorCodes.GOLDEN_COLOR),
+                              fontWeight: FontWeight.w600),
                         ),
-                    itemCount: 10),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Featured Deals",
-                    style: FontStyle.PoppinsStyle(14, Colors.black,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    "View All",
-                    style: FontStyle.PoppinsStyle(
-                        12, Color(ColorCodes.GOLDEN_COLOR),
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 220,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, i) {
-                      return DealCard(
-                        width: 161,
-                        smallBox: true,
+                      ],
+                    ),
+                    SizedBox(height: 10,),
+                    Consumer<CategoriesOfferProvider>(
+                        builder: (context,data,_){
+                          if(data.modelData==null){
+                            return SizedBox(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.separated(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, i) {
+                                    return CategoryCardShimmer();
+                                  },
+                                  separatorBuilder: (context, i) => SizedBox(
+                                    width: 10,
+                                  ),
+                                  itemCount:3),
+                            );
+                          }
+                      return SizedBox( ///categories
+                        height: 150,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, i) {
+                              return CategoriesCard(modelData: data.modelData!.data![i]!,);
+                            },
+                            separatorBuilder: (context, i) => SizedBox(
+                              width: 10,
+                            ),
+                            itemCount:data.modelData!.data!.length),
                       );
-                    },
-                    separatorBuilder: (context, i) => SizedBox(
-                          width: 10,
+                    }),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(  ///most viewed offers
+                      height: 260,
+                      //flex: 2,
+                      child: Consumer<MostViewedOffersProvider>(
+                        builder: (context,data,_){
+                          if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
+                            return ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return DealShimmerCard(
+                                    smallCard: false,
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                  width: 10,
+                                ),
+                                itemCount: 4);
+                          }
+                          if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
+                            return Center(
+                              child: Text("No Offers"),
+                            );
+                          }
+                          return  ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, i) {
+                                return DealCard(
+                                  width: 230,
+                                  smallBox: false,
+                                  modelData: data.modelData!.data![i],
+                                  type: StorageKeys.MOST_VIEWED_OFFERS,
+                                );
+                              },
+                              separatorBuilder: (context, i) => SizedBox(
+                                width: 10,
+                              ),
+                              itemCount: data.modelData!.data!.length);
+                        },
+                      )
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "New Deals",
+                          style: FontStyle.PoppinsStyle(14, Colors.black,
+                              fontWeight: FontWeight.w500),
                         ),
-                    itemCount: 10),
-              )
-            ],
-          ),
+                        Text(
+                          "View All",
+                          style: FontStyle.PoppinsStyle(
+                              12, Color(ColorCodes.GOLDEN_COLOR),
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    SizedBox( ///latest offers
+                      height: 220,
+                      child: Consumer<LatestOffersProvider>(
+                        builder:  (context, data , _){
+                          if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
+                            return ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return DealShimmerCard(
+                                    smallCard: true,
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                  width: 10,
+                                ),
+                                itemCount: 4);
+                          }
+                          if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
+                            return Center(
+                              child: Text("No Offers"),
+                            );
+                          }
+                           return  ListView.separated(
+                               scrollDirection: Axis.horizontal,
+                               itemBuilder: (context, i) {
+                                 return DealCard(
+                                   width: 161,
+                                   smallBox: true,
+                                   modelData: data.modelData!.data![i],
+                                   type: StorageKeys.LATEST_OFFERS,
+                                 );
+                               },
+                               separatorBuilder: (context, i) => SizedBox(
+                                 width: 10,
+                               ),
+                               itemCount: data.modelData!.data!.length);
+                        },
+                      )
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Featured Deals",
+                          style: FontStyle.PoppinsStyle(14, Colors.black,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "View All",
+                          style: FontStyle.PoppinsStyle(
+                              12, Color(ColorCodes.GOLDEN_COLOR),
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                    SizedBox(  ///Featured Offers
+                      height: 220,
+                      child: Consumer<FeaturedOffersProvider>(
+                        builder: (context,data,_){
+                          if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
+                            return ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return DealShimmerCard(
+                                    smallCard: true,
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                  width: 10,
+                                ),
+                                itemCount: 4);
+                          }
+                          if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
+                            return Center(
+                              child: Text("No Offers"),
+                            );
+                          }
+                          return ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, i) {
+                                return DealCard(
+                                  width: 161,
+                                  smallBox: true,
+                                  modelData: data.modelData!.data![i],
+                                  type: StorageKeys.FEATURED_OFFERS,
+                                );
+                              },
+                              separatorBuilder: (context, i) => SizedBox(
+                                width: 10,
+                              ),
+                              itemCount: data.modelData!.data!.length);
+                        },
+                      )
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -179,6 +301,10 @@ class _HomeScreenState extends State<HomeScreen> {
   discountSlider() {
     return Consumer<OffersSliderProvider>(
       builder: (context,data,_){
+        if(data.modelData == null){
+          print("null data");
+          return sliderImageShimmer();
+        }
         return Container(
             height: 230,
             child: Column(
@@ -233,6 +359,26 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(image: CachedNetworkImageProvider(image), fit: BoxFit.cover)),
+    );
+  }
+
+  sliderImageShimmer(){
+    return SizedBox(
+      height: 150,
+      width: 500,
+      child: Shimmer.fromColors(
+        baseColor: ColorCodes.SHIMMER_BASE_COLOR,
+        highlightColor: ColorCodes.SHIMMER_HIGHLIGHT_COLOR,
+        child: Container(
+          height: 120,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            color: Colors.black,
+              borderRadius: BorderRadius.circular(10),
+          ),
+
+        ),
+      ),
     );
   }
 

@@ -68,5 +68,6 @@ class OffersSliderProvider extends ChangeNotifier {
 
   clearProvider() {
     modelData = null;
+    notifyListeners();
   }
 }

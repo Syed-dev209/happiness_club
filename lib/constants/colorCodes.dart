@@ -13,4 +13,6 @@ class ColorCodes {
   static const Color LIGHT_GREY_COLOR = Color(0xffF4F4F4);
   static const Color DARK_GREY_COLOR = Color(0xff929292);
   static const Color LIGHT_YELLOW_COLOR=Color(0xfffaf6e6);
+  static  Color SHIMMER_BASE_COLOR= Colors.grey.withOpacity(0.3);
+  static const Color SHIMMER_HIGHLIGHT_COLOR=Colors.white;
 }

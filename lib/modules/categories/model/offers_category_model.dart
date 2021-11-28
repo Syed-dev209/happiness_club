@@ -91,5 +91,6 @@ class CategoriesOfferProvider extends ChangeNotifier {
 
   clearProvider() {
     modelData = null;
+    notifyListeners();
   }
 }

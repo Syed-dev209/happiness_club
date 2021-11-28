@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.happiness_club">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="happiness_club"
         android:icon="@mipmap/ic_launcher">

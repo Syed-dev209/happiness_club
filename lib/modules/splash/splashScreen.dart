@@ -20,6 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
   loadData()async{
     await getOfferCategories(context);
     await getSliderImages(context);
+    await getMostViewedOffers(context);
+    await getLatestOffers(context);
+    await getFeaturedOffers(context);
       Navigator.pushReplacement(
           context, CupertinoPageRoute(builder: (_) => HomeBase()));
 

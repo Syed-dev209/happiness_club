@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/categories/Widget/categoriesCard.dart';
+import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
+import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/modules/home/widgets/dealCard.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,11 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 25,
               ),
-              creditCard(),
+              creditCard(), ///credit card
               SizedBox(
                 height: 20,
               ),
-              discountSlider(),
+              discountSlider(), ///slider
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -61,20 +65,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(height: 10,),
-              SizedBox(
-                height: 150,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, i) {
-                      return CategoriesCard();
-                    },
-                    separatorBuilder: (context, i) => SizedBox(
-                          width: 10,
-                        ),
-                    itemCount: 10),
-              ),
+              Consumer<CategoriesOfferProvider>(
+                  builder: (context,data,_){
+                return SizedBox( ///categories
+                  height: 150,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, i) {
+                        return CategoriesCard(modelData: data.modelData!.data![i]!,);
+                      },
+                      separatorBuilder: (context, i) => SizedBox(
+                        width: 10,
+                      ),
+                      itemCount:data.modelData!.data!.length),
+                );
+              }),
               SizedBox(
                 height: 10,
               ),
@@ -170,48 +177,54 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   discountSlider() {
-    return Container(
-        height: 230,
-        child: Column(
-          children: [
-            Expanded(
-              child: CarouselSlider.builder(
-                itemCount: imgList.length,
-                options: CarouselOptions(
-                     aspectRatio: 2.5,
-                    enlargeCenterPage: true,
-                  viewportFraction: 1,
-                    scrollDirection: Axis.horizontal,
-                    autoPlay: true,
-                    onPageChanged: (index, val) {
-                      //print("Index $index");
-                      setState(() {
-                        currentPos = index;
-                      });
-                    }),
-                itemBuilder: (context, index, h) {
-                  return sliderImageContainer(imgList[index]);
-                },
-              ),
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(imgList.length, (index) {
-                  return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin:
+    return Consumer<OffersSliderProvider>(
+      builder: (context,data,_){
+        return Container(
+            height: 230,
+            child: Column(
+              children: [
+                Expanded(
+                  child: CarouselSlider.builder(
+                    itemCount: data.modelData!.data!.length,
+                    options: CarouselOptions(
+                        aspectRatio: 2.5,
+                        enlargeCenterPage: true,
+                        viewportFraction: 1,
+                        scrollDirection: Axis.horizontal,
+                        autoPlay: true,
+                        onPageChanged: (index, val) {
+                          //print("Index $index");
+                          setState(() {
+                            currentPos = index;
+                          });
+                        }),
+                    itemBuilder: (context, index, h) {
+                      return sliderImageContainer(data.modelData!.data![index]!.imageFilename!);
+                    },
+                  ),
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(data.modelData!.data!.length, (index) {
+                      return Container(
+                        width: 8.0,
+                        height: 8.0,
+                        margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: currentPos == index
-                          ? Color(ColorCodes.GOLDEN_COLOR)
-                          : Color(ColorCodes.LITE_GOLDEN_COLOR),
-                    ),
-                  );
-                }))
-          ],
-        ));
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: currentPos == index
+                              ? Color(ColorCodes.GOLDEN_COLOR)
+                              : Color(ColorCodes.LITE_GOLDEN_COLOR),
+                        ),
+                      );
+                    }))
+              ],
+            ));
+      },
+    );
+
+
   }
 
   Widget sliderImageContainer(String image) {
@@ -219,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: double.maxFinite,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+          image: DecorationImage(image: CachedNetworkImageProvider(image), fit: BoxFit.cover)),
     );
   }
 

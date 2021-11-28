@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/categories/Widget/categoriesCard.dart';
+import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -37,14 +39,21 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 fontWeight: FontWeight.w400),
           ),
           Expanded(
-              child: GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            children: List.generate(20, (i) {
-              return CategoriesCard();
-            }),
-          ))
+              child: Consumer<CategoriesOfferProvider>(
+                builder: (context,data,_) {
+                  return  GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    children: List.generate(data.modelData!.data!.length, (i) {
+                      return CategoriesCard(modelData: data.modelData!.data![i]!,);
+                    }),
+                  );
+                },
+              )
+
+
+          )
         ],
       ),
     );

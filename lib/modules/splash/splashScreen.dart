@@ -4,7 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
 import 'package:happiness_club/modules/dashboard/homeBase.dart';
+import 'package:happiness_club/modules/home/controller/homeController.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,12 +16,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 5)).then((value) {
+
+  loadData()async{
+    await getOfferCategories(context);
+    await getSliderImages(context);
       Navigator.pushReplacement(
           context, CupertinoPageRoute(builder: (_) => HomeBase()));
-    });
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(

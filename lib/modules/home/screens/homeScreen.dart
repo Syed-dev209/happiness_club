@@ -71,10 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: ListView(
                   children: [
-                    SizedBox(
-                      height: 25,
-                    ),
-                    creditCard(), ///credit card
+                    // SizedBox(
+                    //   height: 25,
+                    // ),
+                   // creditCard(), ///credit card
                     SizedBox(
                       height: 20,
                     ),

@@ -7,4 +7,8 @@ class APIS {
   static const String FEATURED_OFFERS = BASE_URL + "offers/featured";
   static const String NEARBY_OFFERS =
       BASE_URL + "offers/nearby-limited"; // params lat lang
+  static const String OFFER_DETAILS =BASE_URL+"offers/detail"; //param in link
+  static const String OFFER_LOCATION =BASE_URL+"offers/locations"; //param in link
+  static const String OFFER_REVIEWS =BASE_URL+"offers/reviews"; //param in link
+  static const String OFFER_BY_CATEGORY =BASE_URL+"offers/category"; //param in query parameters
 }

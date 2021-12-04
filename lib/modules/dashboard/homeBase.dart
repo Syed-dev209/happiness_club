@@ -6,6 +6,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/categories/Screens/categoriesScreen.dart';
 import 'package:happiness_club/modules/home/screens/homeScreen.dart';
 import 'package:happiness_club/modules/home/widgets/drawer.dart';
+import 'package:happiness_club/modules/nearby/nearby_screen.dart';
 import 'package:happiness_club/modules/offers/Screens/offerScreen.dart';
 import 'package:happiness_club/modules/search/Screens/searchScreen.dart';
 
@@ -95,10 +96,12 @@ class _HomeBaseState extends State<HomeBase> {
                 } else if (index == 1) {
                   body = CategoriesScreen();
                 } else if (index == 2) {
-                  //pageSelector = HorseRaceScreen();
                   body = OffersScreen();
                 } else if (index == 4) {
                   body = SearchScreen();
+                }
+                else{
+                  body = NearbyScreen();
                 }
                 selectedIndex = index;
               });

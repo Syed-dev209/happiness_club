@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:happiness_club/constants/network_constants.dart';
+import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
@@ -93,6 +94,37 @@ Future<OfferReviesModel?> getOfferReviews({required String offerId})async{
       var response = storage.readDataFromStorage(offerId);
       if(response!=""){
         return OfferReviesModel.fromJson(response);
+      }
+      else{
+        return null;
+      }
+    }
+  }
+  on DioError catch(e){
+    return null;
+  }
+}
+
+Future<OffersModel?> getOffersByCategory({required String catId})async{
+  try{
+    bool check = await InternetService.checkConnectivity();
+    if(check){
+      var response = await dio.get(APIS.OFFER_BY_CATEGORY,queryParameters: {
+        "cat":catId
+      });
+      if(response.statusCode==200){
+        OffersModel model = OffersModel.fromJson(response.data);
+        storage.writeDataToStorage("category$catId", model.toJson());
+        return model;
+      }
+      else{
+        return null;
+      }
+    }
+    else{
+      var response = storage.readDataFromStorage("category$catId");
+      if(response!=""){
+        return OffersModel.fromJson(response);
       }
       else{
         return null;

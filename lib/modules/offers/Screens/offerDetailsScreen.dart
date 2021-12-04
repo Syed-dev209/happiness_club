@@ -11,6 +11,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
+import 'package:happiness_club/modules/offers/Widget/offersLocationScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersReviewsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersSummaryScreen.dart';
 
@@ -134,7 +135,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                         controller: controller,
                         children: [
                           OffersSummary(modelData: snapshot.data!.data!,),
-                          Text(''),
+                          OfferLocation(offerId: widget.offerId),
                           OffersReview(offerId: widget.offerId,),
                         ],
                       ),

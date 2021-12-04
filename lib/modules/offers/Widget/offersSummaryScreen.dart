@@ -105,9 +105,11 @@ class _OffersSummaryState extends State<OffersSummary> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              SvgPicture.asset(
-                                Images.DIRECTION_ICON,
-                                color: Color(ColorCodes.GOLDEN_COLOR),
+                              Expanded(
+                                child: SvgPicture.asset(
+                                  Images.DIRECTION_ICON,
+                                  color: Color(ColorCodes.GOLDEN_COLOR),
+                                ),
                               ),
                               Text(
                                 '${widget.modelData.distance!.toStringAsFixed(2)}km',

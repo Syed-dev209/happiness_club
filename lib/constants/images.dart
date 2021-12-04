@@ -65,4 +65,6 @@ class Images {
 
 
    static const String NO_IMAGE_PLACEHOLDER = "assets/PNG/noImagePlaceholder.jpeg";
+   static const String NEARBY_MARKER = "assets/PNG/nearbyMarker.png";
+   static const String OFFER_MARKER = "assets/PNG/offerMarker.png";
 }

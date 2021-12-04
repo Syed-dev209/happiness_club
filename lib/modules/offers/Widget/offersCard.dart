@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,10 +7,12 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
+import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 
 class OffersCard extends StatefulWidget {
-  const OffersCard({Key? key}) : super(key: key);
+  OffersModelData modelData;
+  OffersCard({required this.modelData});
 
   @override
   _OffersCardState createState() => _OffersCardState();
@@ -20,7 +24,7 @@ class _OffersCardState extends State<OffersCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-      //  Navigator.push(context,CupertinoPageRoute(builder: (_)=> OfferDetailsScreen()));
+        Navigator.push(context,CupertinoPageRoute(builder: (_)=> OfferDetailsScreen(offerId: widget.modelData.id.toString(),)));
       },
       child: Container(
         height: 296,
@@ -40,7 +44,7 @@ class _OffersCardState extends State<OffersCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Restaurants",
+                        "${widget.modelData.categoryName}",
                         style: FontStyle.PoppinsStyle(
                             11, Color(ColorCodes.BLUE_COLOR),
                             fontWeight: FontWeight.w500),
@@ -53,35 +57,49 @@ class _OffersCardState extends State<OffersCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Mc Donald Burger Deal",
-                            style: FontStyle.PoppinsStyle(14, Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                like = !like;
-                              });
-                            },
+                          Expanded(
+                            flex:8,
                             child: Container(
-                              height: 35,
-                              width: 35,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0,1),
-                                    blurRadius: 2,
-                                    color: Colors.black.withOpacity(0.2)
-                                  )
-                                ]
+                              constraints:BoxConstraints(
+                                minHeight: 0,
+                                maxHeight: 20
                               ),
-                              child: Center(
-                                child: Image.asset(
-                                  like ? Images.LIKE_ICON_FILLED : Images.LIKE_ICON3,
-                                height: 13,
+                              child: AutoSizeText(
+                                "${widget.modelData.title}",
+                                style: FontStyle.PoppinsStyle(14, Colors.black,
+                                    fontWeight: FontWeight.w500),
+                                minFontSize: 9,
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  like = !like;
+                                });
+                              },
+                              child: Container(
+                                height: 35,
+                                width: 35,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(0,1),
+                                      blurRadius: 2,
+                                      color: Colors.black.withOpacity(0.2)
+                                    )
+                                  ]
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    like ? Images.LIKE_ICON_FILLED : Images.LIKE_ICON3,
+                                  height: 13,
+                                  ),
                                 ),
                               ),
                             ),
@@ -116,7 +134,8 @@ class _OffersCardState extends State<OffersCard> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(Images.DEAL_BG), fit: BoxFit.cover),
+                image: CachedNetworkImageProvider(widget.modelData.featuredImage!),
+                fit: BoxFit.cover),
             color: Colors.white,
             borderRadius: BorderRadius.circular(14)),
         child: Stack(
@@ -134,7 +153,7 @@ class _OffersCardState extends State<OffersCard> {
                     padding: EdgeInsets.only(bottom: 8),
                     child: Center(
                       child: Text(
-                        "10% off",
+                        "${widget.modelData.offerDiscount} off",
                         style: FontStyle.PoppinsStyle(10, Colors.white,
                             fontWeight: FontWeight.w500),
                       ),
@@ -164,7 +183,7 @@ class _OffersCardState extends State<OffersCard> {
                       children: [
                         SvgPicture.asset(Images.DIRECTION_ICON),
                         Text(
-                          '4.5km',
+                          '${widget.modelData.distance!.toStringAsFixed(2)}km',
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],
@@ -185,11 +204,16 @@ class _OffersCardState extends State<OffersCard> {
           SizedBox(
             width: 10,
           ),
-          Text('Zar Mall, Dubai',
-              style: FontStyle.PoppinsStyle(
-                11,
-                Colors.black26,
-              ))
+          Expanded(
+            child: AutoSizeText(
+                '${widget.modelData.location}',
+                style: FontStyle.PoppinsStyle(
+                  11,
+                  Colors.black26,
+                ),
+              minFontSize: 8,
+            ),
+          )
         ],
       ),
     );
@@ -231,7 +255,7 @@ class _OffersCardState extends State<OffersCard> {
                   width: 2,
                 ),
                 Text(
-                  "4.2",
+                  "${widget.modelData.ratings}",
                   style: FontStyle.PoppinsStyle(11, Colors.black),
                 )
               ],

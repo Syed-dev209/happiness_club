@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Widget/offersCard.dart';
 
 class OffersScreen extends StatefulWidget {
-  const OffersScreen({Key? key}) : super(key: key);
+  const   OffersScreen({Key? key}) : super(key: key);
 
   @override
   _OffersScreenState createState() => _OffersScreenState();
@@ -27,7 +28,7 @@ class _OffersScreenState extends State<OffersScreen> {
           Expanded(
               child: ListView.separated(
                   itemBuilder: (context, i) {
-                    return OffersCard();
+                    return Text('');
                   },
                   separatorBuilder: (context, i) => SizedBox(
                         height: 10,

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -17,6 +18,7 @@ import 'package:happiness_club/modules/home/controller/homeController.dart';
 import 'package:happiness_club/modules/home/widgets/dealCard.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:happiness_club/modules/home/widgets/deal_shimmer_card.dart';
+import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -161,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return DealCard(
                                   width: 230,
                                   smallBox: false,
-                                  modelData: data.modelData!.data![i],
+                                  modelData: data.modelData!.data![i]!,
                                   type: StorageKeys.MOST_VIEWED_OFFERS,
                                 );
                               },
@@ -219,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                  return DealCard(
                                    width: 161,
                                    smallBox: true,
-                                   modelData: data.modelData!.data![i],
+                                   modelData: data.modelData!.data![i]!,
                                    type: StorageKeys.LATEST_OFFERS,
                                  );
                                },
@@ -277,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return DealCard(
                                   width: 161,
                                   smallBox: true,
-                                  modelData: data.modelData!.data![i],
+                                  modelData: data.modelData!.data![i]!,
                                   type: StorageKeys.FEATURED_OFFERS,
                                 );
                               },
@@ -325,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         }),
                     itemBuilder: (context, index, h) {
-                      return sliderImageContainer(data.modelData!.data![index]!.imageFilename!);
+                      return sliderImageContainer(data.modelData!.data![index]!);
                     },
                   ),
                 ),
@@ -353,12 +355,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-  Widget sliderImageContainer(String image) {
-    return Container(
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(image: CachedNetworkImageProvider(image), fit: BoxFit.cover)),
+  Widget sliderImageContainer(OffersSliderModelData data) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, CupertinoPageRoute(builder: (_)=>OfferDetailsScreen(offerId: data.offerId.toString())));
+      },
+      child: Container(
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: data.imageFilename!=null? DecorationImage(
+                image: CachedNetworkImageProvider(data.imageFilename!), fit: BoxFit.cover
+            ): DecorationImage(
+              image: AssetImage(Images.NO_IMAGE_PLACEHOLDER),
+            )
+        ),
+      ),
     );
   }
 

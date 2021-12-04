@@ -14,7 +14,11 @@ class CustomAppBar extends StatelessWidget {
       width: double.maxFinite,
       child: Row(
         children: [
-          SvgPicture.asset(Images.BACK_BUTTON),
+          GestureDetector(
+            onTap: (){
+              Navigator.maybePop(context);
+            },
+              child: SvgPicture.asset(Images.BACK_BUTTON)),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.3,
           ),

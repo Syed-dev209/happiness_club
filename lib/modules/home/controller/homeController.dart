@@ -5,6 +5,7 @@ import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/latest_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
@@ -47,7 +48,7 @@ Future getMostViewedOffers(context)async{
     if(check){
       var response = await dio.get(APIS.MOST_VIEWED_OFFERS);
       if(response.statusCode==200){
-        MostViewedOffersModel model = MostViewedOffersModel.fromJson(response.data);
+        OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.MOST_VIEWED_OFFERS, model.toJson());
       }
@@ -55,7 +56,7 @@ Future getMostViewedOffers(context)async{
     else{
       var response = storage.readDataFromStorage(StorageKeys.MOST_VIEWED_OFFERS);
       if(response!="") {
-        MostViewedOffersModel model = MostViewedOffersModel.fromJson(response);
+        OffersModel model = OffersModel.fromJson(response);
         Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
       }
       //showNoInternetSnackBar(context);
@@ -72,7 +73,7 @@ Future getLatestOffers(context)async{
     if(check){
       var response = await dio.get(APIS.LATEST_OFFERS);
       if(response.statusCode==200){
-        LatestOffersModel model = LatestOffersModel.fromJson(response.data);
+        OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.LATEST_OFFERS, model.toJson());
       }
@@ -80,7 +81,7 @@ Future getLatestOffers(context)async{
     else{
       var response = storage.readDataFromStorage(StorageKeys.LATEST_OFFERS);
       if(response!=""){
-        LatestOffersModel model = LatestOffersModel.fromJson(response);
+        OffersModel model = OffersModel.fromJson(response);
         Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
       }
       //showNoInternetSnackBar(context);
@@ -97,7 +98,7 @@ Future getFeaturedOffers(context)async{
     if(check){
       var response = await dio.get(APIS.FEATURED_OFFERS);
       if(response.statusCode==200){
-        FeaturedOffersModel model = FeaturedOffersModel.fromJson(response.data);
+        OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.FEATURED_OFFERS, model.toJson());
       }
@@ -105,7 +106,7 @@ Future getFeaturedOffers(context)async{
     else{
       var response = storage.readDataFromStorage(StorageKeys.FEATURED_OFFERS);
       if(response!="") {
-        FeaturedOffersModel model = FeaturedOffersModel.fromJson(response);
+        OffersModel model = OffersModel.fromJson(response);
         Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
       }
       //showNoInternetSnackBar(context);

@@ -1,10 +1,14 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
+import 'package:html/parser.dart' as htmlparser;
+import 'package:html/dom.dart' as dom;
 
 class OffersSummary extends StatefulWidget {
   OfferDetailsModelData modelData;
@@ -15,6 +19,16 @@ class OffersSummary extends StatefulWidget {
 }
 
 class _OffersSummaryState extends State<OffersSummary> {
+
+  String? htmlData;
+  dom.Document? document;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    htmlData = """${widget.modelData.description}""";
+    document = htmlparser.parse(htmlData);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,62 +47,77 @@ class _OffersSummaryState extends State<OffersSummary> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${widget.modelData.categoryName}",
-                          style: FontStyle.PoppinsStyle(
-                              14, Color(ColorCodes.BLUE_COLOR),
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          "${widget.modelData.title}",
-                          style: FontStyle.PoppinsStyle(16, Colors.black,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        locationRow(),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        ratingAndTime(),
-                      ]),
-                  Container(
-                    height: 28,
-                    width: 65,
-                    // padding: EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      //color: Colors.black
-                    ),
-                  ).blurred(
-                      //blur: 1,
-                      blurColor: Color(ColorCodes.GOLDEN_COLOR),
-                      colorOpacity: 0.2,
-                      borderRadius: BorderRadius.circular(20),
-                      overlay: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SvgPicture.asset(
-                              Images.DIRECTION_ICON,
-                              color: Color(ColorCodes.GOLDEN_COLOR),
+                  Expanded(
+                    flex:5,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${widget.modelData.categoryName}",
+                            style: FontStyle.PoppinsStyle(
+                                14, Color(ColorCodes.BLUE_COLOR),
+                                fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Container(
+                            constraints: BoxConstraints(
+                              minHeight: 0.0,
+                              maxHeight: 40
                             ),
-                            Text(
-                              '${widget.modelData.distance!.toStringAsFixed(2)}km',
+                            child: AutoSizeText(
+                              "${widget.modelData.title}",
                               style: FontStyle.PoppinsStyle(
-                                  11, Color(ColorCodes.GOLDEN_COLOR)),
-                            )
-                          ],
-                        ),
-                      ))
+                                  16, Colors.black,
+                                  fontWeight: FontWeight.w500),
+                              maxLines: 2,
+                              minFontSize: 12,
+                              maxFontSize: 16,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          locationRow(),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          ratingAndTime(),
+                        ]),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 28,
+                      width: 65,
+                      // padding: EdgeInsets.symmetric(horizontal: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        //color: Colors.black
+                      ),
+                    ).blurred(
+                        //blur: 1,
+                        blurColor: Color(ColorCodes.GOLDEN_COLOR),
+                        colorOpacity: 0.2,
+                        borderRadius: BorderRadius.circular(20),
+                        overlay: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SvgPicture.asset(
+                                Images.DIRECTION_ICON,
+                                color: Color(ColorCodes.GOLDEN_COLOR),
+                              ),
+                              Text(
+                                '${widget.modelData.distance!.toStringAsFixed(2)}km',
+                                style: FontStyle.PoppinsStyle(
+                                    11, Color(ColorCodes.GOLDEN_COLOR)),
+                              )
+                            ],
+                          ),
+                        )),
+                  )
                 ],
               ),
             ),
@@ -101,10 +130,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                   fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 10,),
-            Text(
-              "${widget.modelData.description}",
-              style: FontStyle.PoppinsStyle(12, Colors.black.withOpacity(0.7)),
-            ),
+           Html(data: htmlData,),
             SizedBox(
               height: 8,
             ),

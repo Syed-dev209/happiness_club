@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:blur/blur.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 
 class DealCard extends StatefulWidget {
   double width;
   bool smallBox;
-  dynamic modelData;
+  OffersModelData modelData;
   String? type;
   DealCard({required this.width, required this.smallBox, required this.modelData,required this.type});
 
@@ -27,7 +29,7 @@ class _DealCardState extends State<DealCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-     DateTime endDate = DateTime.parse(widget.modelData.endDate);
+     DateTime endDate = DateTime.parse(widget.modelData.endDate!);
      int days = endDate.difference(DateTime.now()).inDays;
      days <=0 ? daysLeft ="0": daysLeft=days.toString();
   }
@@ -93,9 +95,6 @@ class _DealCardState extends State<DealCard> {
   }
 
   Widget dealImage() {
-    if(widget.modelData.imageGallery!=null){
-      widget.modelData.imageGallery = widget.modelData.imageGallery.substring(1,widget.modelData.imageGallery.length-1);
-    }
     return Expanded(
       flex: 2,
       child: Container(
@@ -103,9 +102,9 @@ class _DealCardState extends State<DealCard> {
         width: double.maxFinite,
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-            image: widget.modelData.imageGallery!=null?DecorationImage(
+            image: widget.modelData.featuredImage!=null?DecorationImage(
                 image: CachedNetworkImageProvider(
-                    widget.modelData.imageGallery,
+                    widget.modelData.featuredImage!,
                 ),
                 fit: BoxFit.cover):DecorationImage(image:AssetImage(Images.NO_IMAGE_PLACEHOLDER)),
             color: Colors.white,
@@ -160,7 +159,7 @@ class _DealCardState extends State<DealCard> {
                       children: [
                         SvgPicture.asset(Images.DIRECTION_ICON),
                         Text(
-                          '4.5km',
+                          '${widget.modelData.distance!.toStringAsFixed(2)}km',
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],
@@ -181,11 +180,13 @@ class _DealCardState extends State<DealCard> {
           SizedBox(
             width: 10,
           ),
-          Text('Zar Mall, Dubai',
-              style: FontStyle.PoppinsStyle(
-                11.5,
-                Colors.black26,
-              ))
+          Expanded(
+            child: AutoSizeText('${widget.modelData.location}',
+                style: FontStyle.PoppinsStyle(
+                  11.5,
+                  Colors.black26,
+                ),minFontSize: 8,maxLines: 2,),
+          )
         ],
       ),
     );
@@ -227,7 +228,7 @@ class _DealCardState extends State<DealCard> {
                   width: 2,
                 ),
                 Text(
-                  "4.2",
+                  "${widget.modelData.ratings}",
                   style: FontStyle.PoppinsStyle(10, Colors.black),
                 )
               ],

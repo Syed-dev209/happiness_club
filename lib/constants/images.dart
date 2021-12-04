@@ -62,4 +62,7 @@ class Images {
 
    static const String CALENDER_ICON = "assets/PNG/calendarIcon.png";
    static const String DOTTED_LINE = "assets/PNG/dottedLine.png";
+
+
+   static const String NO_IMAGE_PLACEHOLDER = "assets/PNG/noImagePlaceholder.jpeg";
 }

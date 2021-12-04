@@ -4,9 +4,11 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
+import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 
 class OffersSummary extends StatefulWidget {
-  const OffersSummary({Key? key}) : super(key: key);
+  OfferDetailsModelData modelData;
+   OffersSummary({required this.modelData});
 
   @override
   _OffersSummaryState createState() => _OffersSummaryState();
@@ -35,16 +37,16 @@ class _OffersSummaryState extends State<OffersSummary> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Restaurants",
+                          "${widget.modelData.categoryName}",
                           style: FontStyle.PoppinsStyle(
                               14, Color(ColorCodes.BLUE_COLOR),
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 3,
                         ),
                         Text(
-                          "Mc Donald Burger Deal",
+                          "${widget.modelData.title}",
                           style: FontStyle.PoppinsStyle(16, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
@@ -80,7 +82,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                               color: Color(ColorCodes.GOLDEN_COLOR),
                             ),
                             Text(
-                              '4.5km',
+                              '${widget.modelData.distance!.toStringAsFixed(2)}km',
                               style: FontStyle.PoppinsStyle(
                                   11, Color(ColorCodes.GOLDEN_COLOR)),
                             )
@@ -100,16 +102,7 @@ class _OffersSummaryState extends State<OffersSummary> {
             ),
             SizedBox(height: 10,),
             Text(
-              "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and "
-              "demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the"
-              " pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty"
-              " through weakness of will, which is the same as saying through shrinking from toil and pain."
-              " These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is "
-              "untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be"
-              " welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the "
-              "obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted."
-              " The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures "
-              "to secure other greater pleasures, or else he endures pains to avoid worse pains.",
+              "${widget.modelData.description}",
               style: FontStyle.PoppinsStyle(12, Colors.black.withOpacity(0.7)),
             ),
             SizedBox(
@@ -164,7 +157,7 @@ class _OffersSummaryState extends State<OffersSummary> {
           SizedBox(
             width: 10,
           ),
-          Text('Zar Mall, Dubai',
+          Text('',
               style: FontStyle.PoppinsStyle(
                 14,
                 Colors.black26,
@@ -210,7 +203,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                   width: 2,
                 ),
                 Text(
-                  "4.2",
+                  "${widget.modelData.ratings}",
                   style: FontStyle.PoppinsStyle(11, Colors.black),
                 )
               ],

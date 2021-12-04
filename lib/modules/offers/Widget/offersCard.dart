@@ -20,7 +20,7 @@ class _OffersCardState extends State<OffersCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,CupertinoPageRoute(builder: (_)=> OfferDetailsScreen()));
+      //  Navigator.push(context,CupertinoPageRoute(builder: (_)=> OfferDetailsScreen()));
       },
       child: Container(
         height: 296,

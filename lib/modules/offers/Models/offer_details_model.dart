@@ -1,5 +1,4 @@
 class OfferDetailsModelData {
-
   int? id;
   String? endDate;
   String? title;

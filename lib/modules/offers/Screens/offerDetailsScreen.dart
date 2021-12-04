@@ -1,15 +1,23 @@
+import 'dart:async';
+
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
+import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
+import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
 import 'package:happiness_club/modules/offers/Widget/offersReviewsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersSummaryScreen.dart';
 
 class OfferDetailsScreen extends StatefulWidget {
-  const OfferDetailsScreen({Key? key}) : super(key: key);
+  String offerId;
+
+  OfferDetailsScreen({required this.offerId});
 
   @override
   _OfferDetailsScreenState createState() => _OfferDetailsScreenState();
@@ -29,12 +37,30 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     ),
   ];
   TabController? controller;
+  StreamController<OfferDetailsModel?>? offersDetailStream;
+
+
+  loadOfferDetails()async{
+    getOffersDetail(offerId: widget.offerId).then((value) {
+      print(value);
+      if(value!=null){
+       offersDetailStream!.add(value);
+       return value;
+      }
+      else{
+        offersDetailStream!.add(null);
+        return null;
+      }
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     controller = TabController(length: tabs.length, vsync: this);
+    offersDetailStream= StreamController<OfferDetailsModel?>();
+    loadOfferDetails();
   }
 
   @override
@@ -42,6 +68,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     // TODO: implement dispose
     super.dispose();
     controller!.dispose();
+    offersDetailStream!.close();
   }
 
   @override
@@ -53,60 +80,77 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
             height: size.height,
             width: size.width,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Column(
-              children: [
-                imageCard(),
-                SizedBox(height: 15,),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.0),
-                    height: 45.0,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        border: Border.all(color: Colors.black26,width: 1.5),
-                        borderRadius: BorderRadius.circular(20.0)),
-                    child: TabBar(
-                      tabs: tabs,
-                      controller: controller,
-                      unselectedLabelColor: Colors.black,
-                      unselectedLabelStyle: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      labelStyle: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      labelColor: Color(ColorCodes.GOLDEN_COLOR),
-                      //  indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorPadding: EdgeInsets.zero,
-                      indicator: BubbleTabIndicator(
-                        indicatorRadius: 20.0,
-                        indicatorHeight: 35.0,
-                        indicatorColor: ColorCodes.WHITE_COLOR,
-                        // tabBarIndicatorSize: TabBarIndicatorSize.tab,
+            child: StreamBuilder<OfferDetailsModel?>(
+              stream: offersDetailStream!.stream,
+              builder: (context,snapshot){
+                if(snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if(snapshot.data==null){
+                  return Center(
+                    child: Text('No Offer details found'),
+                  );
+                }
+                return Column(
+                  children: [
+                    imageCard(snapshot.data!.data!.featuredImage!),
+                    SizedBox(height: 15,),
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        height: 45.0,
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.black26,width: 1.5),
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: TabBar(
+                          tabs: tabs,
+                          controller: controller,
+                          unselectedLabelColor: Colors.black,
+                          unselectedLabelStyle: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          labelStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          labelColor: Color(ColorCodes.GOLDEN_COLOR),
+                          //  indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorPadding: EdgeInsets.zero,
+                          indicator: BubbleTabIndicator(
+                            indicatorRadius: 20.0,
+                            indicatorHeight: 35.0,
+                            indicatorColor: ColorCodes.WHITE_COLOR,
+                            // tabBarIndicatorSize: TabBarIndicatorSize.tab,
+                          ),
+                        )
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        //physics: NeverScrollableScrollPhysics(),
+                        controller: controller,
+                        children: [
+                          OffersSummary(modelData: snapshot.data!.data!,),
+                          Text(''),
+                          OffersReview(offerId: widget.offerId,),
+                        ],
                       ),
-                    )),
-                Expanded(
-                  child: TabBarView(
-                    //physics: NeverScrollableScrollPhysics(),
-                    controller: controller,
-                    children: [
-                     OffersSummary(),
-                      Text(''),
-                      OffersReview(),
-                    ],
-                  ),
-                )
-              ],
-            )),
+                    )
+                  ],
+                );
+              },
+            )
+        ),
       ),
     );
   }
 
-  imageCard() {
+  imageCard(String imageUrl) {
     return Container(
-      height: 320,
+      height: 300,
       width: double.maxFinite,
       decoration: BoxDecoration(
           boxShadow: [
@@ -117,7 +161,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           ],
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: AssetImage(Images.DEAL_BG), fit: BoxFit.cover)),
+              image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover)),
       child: GestureDetector(
         onTap: () {
           Navigator.pop(context);

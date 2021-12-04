@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -7,6 +8,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:blur/blur.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
+import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 
 class DealCard extends StatefulWidget {
   double width;
@@ -31,56 +33,61 @@ class _DealCardState extends State<DealCard> {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      padding: !widget.smallBox
-          ? EdgeInsets.symmetric(horizontal: 10, vertical: 10)
-          : EdgeInsets.zero,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(14)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          dealImage(),
-          Expanded(
-            child: Padding(
-              padding: widget.smallBox
-                  ? EdgeInsets.symmetric(horizontal: 10, vertical: 2)
-                  : EdgeInsets.zero,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "${widget.modelData.categoryName}",
-                      style: FontStyle.PoppinsStyle(
-                          11, Color(ColorCodes.BLUE_COLOR),
-                          fontWeight: FontWeight.w500),
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, CupertinoPageRoute(builder: (context)=>OfferDetailsScreen(offerId: widget.modelData.id.toString())));
+      },
+      child: Container(
+        width: widget.width,
+        padding: !widget.smallBox
+            ? EdgeInsets.symmetric(horizontal: 10, vertical: 10)
+            : EdgeInsets.zero,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(14)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            dealImage(),
+            Expanded(
+              child: Padding(
+                padding: widget.smallBox
+                    ? EdgeInsets.symmetric(horizontal: 10, vertical: 2)
+                    : EdgeInsets.zero,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "${widget.modelData.categoryName}",
+                        style: FontStyle.PoppinsStyle(
+                            11, Color(ColorCodes.BLUE_COLOR),
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                  // SizedBox(
-                  //   height: 3,
-                  // ),
-                  Expanded(
-                    child: Text(
-                      "${widget.modelData.title}",
-                      style: FontStyle.PoppinsStyle(14, Colors.black,
-                          fontWeight: FontWeight.w500),
+                    // SizedBox(
+                    //   height: 3,
+                    // ),
+                    Expanded(
+                      child: Text(
+                        "${widget.modelData.title}",
+                        style: FontStyle.PoppinsStyle(14, Colors.black,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  locationRow(),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  ratingAndTime(),
-                ],
+                    SizedBox(
+                      height: 3,
+                    ),
+                    locationRow(),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    ratingAndTime(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -96,11 +103,11 @@ class _DealCardState extends State<DealCard> {
         width: double.maxFinite,
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-            image: DecorationImage(
+            image: widget.modelData.imageGallery!=null?DecorationImage(
                 image: CachedNetworkImageProvider(
-                    widget.modelData.imageGallery ?? Constants.NOT_FOUND_IMAGE_URL,
+                    widget.modelData.imageGallery,
                 ),
-                fit: BoxFit.cover),
+                fit: BoxFit.cover):DecorationImage(image:AssetImage(Images.NO_IMAGE_PLACEHOLDER)),
             color: Colors.white,
             borderRadius: !widget.smallBox
                 ? BorderRadius.circular(14)

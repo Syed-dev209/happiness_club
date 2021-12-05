@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/aboutUs/aboutusScreen.dart';
 import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
+import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
 import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
 import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
+import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final style =
@@ -133,6 +136,10 @@ class CustomDrawer extends StatelessWidget {
                     title: Text("About Us", style: style),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                          CupertinoPageRoute(builder: (_) => ContactUsScreen()));
+                    },
                     leading: Image.asset(Images.CONATCT, height: 20),
                     title: Text("Contact Us", style: style),
                   ),
@@ -141,10 +148,18 @@ class CustomDrawer extends StatelessWidget {
                     title: Text("Suggestions", style: style),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                          CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.TERMS)));
+                    },
                     leading: Image.asset(Images.TERMS, height: 20),
                     title: Text("Terms & Conditions", style: style),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                          CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.PRIVACY)));
+                    },
                     leading: Image.asset(Images.PRIVACY, height: 20),
                     title: Text("Privacy Policy", style: style),
                   ),

@@ -23,7 +23,11 @@ class DealShimmerCard extends StatelessWidget {
                 child: Container(
                   height: 130,
                   width: double.maxFinite,
-                  color: Colors.black,
+
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(14)
+                  ),
                 ),
                 baseColor: ColorCodes.SHIMMER_BASE_COLOR,
                 highlightColor: ColorCodes.SHIMMER_HIGHLIGHT_COLOR
@@ -31,13 +35,16 @@ class DealShimmerCard extends StatelessWidget {
           ),
           SizedBox(height: 12,),
           SizedBox(
-            height: 30,
+            height: 15,
             width: double.maxFinite,
             child: Shimmer.fromColors(
                 child: Container(
                   height: 30,
                   width: double.maxFinite,
-                  color: Colors.black,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(14)
+                  ),
                 ),
                 baseColor: ColorCodes.SHIMMER_BASE_COLOR,
                 highlightColor: ColorCodes.SHIMMER_HIGHLIGHT_COLOR
@@ -51,7 +58,10 @@ class DealShimmerCard extends StatelessWidget {
                 child: Container(
                   height: 18,
                   width: double.maxFinite,
-                  color: Colors.black,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(14)
+                  ),
                 ),
                 baseColor: ColorCodes.SHIMMER_BASE_COLOR,
                 highlightColor: ColorCodes.SHIMMER_HIGHLIGHT_COLOR

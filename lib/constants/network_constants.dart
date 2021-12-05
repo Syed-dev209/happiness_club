@@ -11,4 +11,7 @@ class APIS {
   static const String OFFER_LOCATION =BASE_URL+"offers/locations"; //param in link
   static const String OFFER_REVIEWS =BASE_URL+"offers/reviews"; //param in link
   static const String OFFER_BY_CATEGORY =BASE_URL+"offers/category"; //param in query parameters
+  static const String ABOUT = BASE_URL+"about";
+  static const String PRIVACY = BASE_URL+"privacy";
+  static const String TERMS = BASE_URL+"terms";
 }

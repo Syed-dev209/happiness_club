@@ -26,7 +26,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
 
   loadData()async{
     LatLng pos = await LocationService().getCurrentLocation();
-    getNearbyOffers(pos).then((value) {
+    getOffersLocation(offerId: widget.offerId.toString()).then((value) {
       if(value!=null){
         streamController!.add(value);
         return value;

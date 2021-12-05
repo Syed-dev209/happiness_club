@@ -157,7 +157,7 @@ class _DealCardState extends State<DealCard> {
                     overlay: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SvgPicture.asset(Images.DIRECTION_ICON),
+                        Expanded(child: SvgPicture.asset(Images.DIRECTION_ICON)),
                         Text(
                           '${widget.modelData.distance!.toStringAsFixed(2)}km',
                           style: FontStyle.PoppinsStyle(9, Colors.white),

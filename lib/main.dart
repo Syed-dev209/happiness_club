@@ -5,6 +5,7 @@ import 'package:happiness_club/modules/categories/model/offers_category_model.da
 import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/latest_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
+import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/modules/splash/splashScreen.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MostViewedOffersProvider()),
         ChangeNotifierProvider(create: (_) => LatestOffersProvider()),
         ChangeNotifierProvider(create: (_) => FeaturedOffersProvider()),
+        ChangeNotifierProvider(create: (_) => AllOffersProvider()),
       ],
       child: MaterialApp(
         title: 'Happiness Club',

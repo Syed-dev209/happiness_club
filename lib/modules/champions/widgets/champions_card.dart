@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/champions/Model/champions_model.dart';
 
 
 class ChampionsCard extends StatelessWidget {
-  const ChampionsCard({ Key? key }) : super(key: key);
+  ChampionsModelData modelData;
+  ChampionsCard({required this.modelData});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class ChampionsCard extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: ColorCodes.WHITE_COLOR),
               image: DecorationImage(
-                image: AssetImage(Images.DEAL_BG),
+                image: CachedNetworkImageProvider(modelData.photo ?? Constants.ALT_IMAGE),
                 fit: BoxFit.cover
               )
             ),
@@ -46,7 +50,7 @@ class ChampionsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Black Adam',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
+              Text('${modelData.fullName}',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
               SizedBox(height: 10,),
               Text('Champion',style: FontStyle.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),)
             ],

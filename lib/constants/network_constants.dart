@@ -14,4 +14,8 @@ class APIS {
   static const String ABOUT = BASE_URL+"about";
   static const String PRIVACY = BASE_URL+"privacy";
   static const String TERMS = BASE_URL+"terms";
+  static const String CONTACT = BASE_URL+"contact";
+  static const String ALL_OFFERS = BASE_URL+"offers/all";
+  static const String COMPANIES = BASE_URL+"companies";
+  static const String CHAMPIONS = BASE_URL+"champions";
 }

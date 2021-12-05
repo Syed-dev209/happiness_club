@@ -3,7 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
+import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
+import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/modules/offers/Widget/offersCard.dart';
+import 'package:provider/provider.dart';
 
 class OffersScreen extends StatefulWidget {
   const   OffersScreen({Key? key}) : super(key: key);
@@ -13,6 +16,45 @@ class OffersScreen extends StatefulWidget {
 }
 
 class _OffersScreenState extends State<OffersScreen> {
+  ScrollController? scrollController;
+
+  int start=0, end=10;
+  _scrollListener() {
+    if (scrollController!.offset >= scrollController!.position.maxScrollExtent &&
+        !scrollController!.position.outOfRange) {
+        loadData();
+      // setState(() {
+      //   message = "reach the bottom";
+      // });
+    }
+    if (scrollController!.offset <= scrollController!.position.minScrollExtent &&
+        !scrollController!.position.outOfRange) {
+      // setState(() {
+      //   message = "reach the top";
+      // });
+    }
+  }
+
+  loadData(){
+    getAllOffers(context, start, end).then((value) {
+      if(start==0){
+        start = start+11;
+        end = end +10;
+      }
+      else{
+        start = start +10;
+        end = end + 10;
+      }
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController = ScrollController();
+    scrollController!.addListener(_scrollListener);
+    loadData();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,14 +68,30 @@ class _OffersScreenState extends State<OffersScreen> {
           ),
           appBar(),
           Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, i) {
-                    return Text('');
-                  },
-                  separatorBuilder: (context, i) => SizedBox(
+              child: Consumer<AllOffersProvider>(
+                builder: (context,data,_){
+                  if(data.modelData==null){
+                    return ListView.separated(
+                        itemBuilder: (context, i) {
+                          return OfferCardShimmer();
+                        },
+                        separatorBuilder: (context, i) => SizedBox(
+                          height: 10,
+                        ),
+                        itemCount:3);
+                  }
+                  return ListView.separated(
+                      controller: scrollController!,
+                      itemBuilder: (context, i) {
+                        return OffersCard(modelData: data.modelData!.data![i]!);
+                      },
+                      separatorBuilder: (context, i) => SizedBox(
                         height: 10,
                       ),
-                  itemCount: 10))
+                      itemCount: data.modelData!.data!.length);
+                },
+
+              ))
         ],
       ),
     );

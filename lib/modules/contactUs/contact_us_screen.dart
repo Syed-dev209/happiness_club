@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/modules/contactUs/contact_us_controller.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
 
@@ -36,7 +37,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 phoneTextField(),
                 SizedBox(height: 16,),
                 messageTextField(),
-                SizedBox(height: size.height*0.18,),
+                SizedBox(height: size.height*0.12,),
                 submitButton()
               ],
             ),
@@ -56,7 +57,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             borderRadius: BorderRadius.circular(12)
           )
         ),
-        onPressed: (){},
+        onPressed: (){
+          postMessage(context, fullName.text, email.text, message.text).then((value) {
+            fullName.clear();
+            email.clear();
+            phoneNumber.clear();
+            message.clear();
+          });
+        },
         child: Text("Submit Message",style: FontStyle.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
       ),
     );
@@ -64,7 +72,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   fullNameTextField(){
     return SizedBox(
-      height: 40,
+      height: 55,
       width: double.maxFinite,
       child: TextFormField(
         controller: fullName,
@@ -79,7 +87,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   emailTextField(){
     return SizedBox(
-      height: 40,
+      height: 55,
       width: double.maxFinite,
       child: TextFormField(
         controller: email,
@@ -94,7 +102,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   phoneTextField(){
     return SizedBox(
-      height: 40,
+      height: 55,
       width: double.maxFinite,
       child: TextFormField(
         controller: phoneNumber,

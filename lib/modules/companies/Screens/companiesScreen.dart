@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:happiness_club/modules/companies/Controller/companies_controller.dart';
+import 'package:happiness_club/modules/companies/Model/companies_model.dart';
+import 'package:happiness_club/modules/companies/Widget/companies_card_shimmer.dart';
 import 'package:happiness_club/modules/companies/Widget/companyCard.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
@@ -10,6 +15,34 @@ class CompaniesScreen extends StatefulWidget {
 }
 
 class _CompaniesScreenState extends State<CompaniesScreen> {
+
+  StreamController<CompaniesModel?>? companiesController;
+  loadData()async{
+    getAllCompanies(context).then((value) {
+      if(value!=null){
+        companiesController!.add(value);
+        return value;
+      }
+      else{
+        companiesController!.add(null);
+        return null;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    companiesController = StreamController<CompaniesModel?>();
+    loadData();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    companiesController!.close();
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -26,14 +59,35 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
         ),
         SizedBox(height: 20,),
               Expanded(
-                child: GridView.count(
-                  shrinkWrap: true,
-                  childAspectRatio: 1.2,
-                  crossAxisCount: 2,
-                   crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  children:List.generate(20, (index) =>CompanyCard())
-                  ),
+                child: StreamBuilder<CompaniesModel?>(
+                  stream: companiesController!.stream,
+                  builder: (context,snapshot){
+                    if(snapshot.hasError || !snapshot.hasData || snapshot.connectionState == ConnectionState.waiting){
+                      return GridView.count(
+                          shrinkWrap: true,
+                          childAspectRatio: 1.2,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                          children:List.generate(4, (index) =>CompaniesCardShimmer())
+                      );
+                    }
+                    if(snapshot.data == null){
+                      return Text("No companies found");
+                    }
+                    CompaniesModel model = snapshot.data!;
+                    return GridView.count(
+                        shrinkWrap: true,
+                        childAspectRatio: 1.2,
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        children:List.generate(model.data!.length, (index) =>CompanyCard(modelData: model.data![index]!,))
+                    );
+                  },
+                )
+
+
               ),
             ],
           ),

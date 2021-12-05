@@ -6,6 +6,8 @@ import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -13,6 +15,39 @@ var dio = Dio();
 var storage = StorageServices();
 
 
+
+
+Future getAllOffers(context,int start, int end)async{
+  try{
+    bool check = await InternetService.checkConnectivity();
+    if(check){
+      var response = await dio.get(APIS.ALL_OFFERS,queryParameters:{
+        "start":start,
+        "end":end
+      });
+      if(response.statusCode==200){
+        OffersModel model = OffersModel.fromJson(response.data);
+        if(start==0){
+          Provider.of<AllOffersProvider>(context,listen: false).addModel(model);
+        }
+        else{
+          Provider.of<AllOffersProvider>(context,listen: false).addModelData(model.data!);
+        }
+        storage.writeDataToStorage("offers$start $end", model.toJson());
+      }
+    }
+    else{
+      showNoInternetSnackBar(context);
+      var response = storage.readDataFromStorage("offers$start $end");
+      if(response!=""){
+        Provider.of<AllOffersProvider>(context,listen: false).addModel(OffersModel.fromJson(response));
+      }
+    }
+  }
+  on DioError catch(e){
+
+  }
+}
 
 Future<OfferDetailsModel?> getOffersDetail({required String offerId})async{
 

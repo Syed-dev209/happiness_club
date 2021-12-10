@@ -6,6 +6,8 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/auth/Screens/login_screen.dart';
+import 'package:happiness_club/modules/auth/Screens/signup_screen.dart';
 import 'package:happiness_club/modules/categories/Widget/categoriesCard.dart';
 import 'package:happiness_club/modules/categories/Widget/category_card_shimmer.dart';
 import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
@@ -421,9 +423,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Expanded(
-          child: Text("Sign Up/Login",
-              style: FontStyle.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
-                  fontWeight: FontWeight.bold)),
+          child: GestureDetector(
+            onTap: (){
+              Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginScreen()));
+            },
+            child: Text("Sign Up/Login",
+                style: FontStyle.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
+                    fontWeight: FontWeight.bold)),
+          ),
         )
       ],
     );

@@ -9,7 +9,7 @@ var dio = Dio();
 var storage = StorageServices();
 
 
-Future<String?> getTermsAndPrivacy(String type)async{
+Future<String?>  getTermsAndPrivacy(String type)async{
   try{
     String url="";
     if(type == Constants.PRIVACY){

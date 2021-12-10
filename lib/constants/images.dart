@@ -67,4 +67,10 @@ class Images {
    static const String NO_IMAGE_PLACEHOLDER = "assets/PNG/noImagePlaceholder.jpeg";
    static const String NEARBY_MARKER = "assets/PNG/nearbyMarker.png";
    static const String OFFER_MARKER = "assets/PNG/offerMarker.png";
+
+
+   static const String APPLE_LOGIN ="assets/PNG/apple_icon.png";
+   static const String GOOGLE_LOGIN ="assets/PNG/google_icon.png";
+   static const String TWITTER_LOGIN ="assets/PNG/twitter_icon.png";
+   static const String FACEBOOK_LOGIN ="assets/PNG/facebook_icon.png";
 }

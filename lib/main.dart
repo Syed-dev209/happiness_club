@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
 import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/latest_offers_model.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LatestOffersProvider()),
         ChangeNotifierProvider(create: (_) => FeaturedOffersProvider()),
         ChangeNotifierProvider(create: (_) => AllOffersProvider()),
+        ChangeNotifierProvider(create: (_) => UserModelProvider()),
       ],
       child: MaterialApp(
         title: 'Happiness Club',

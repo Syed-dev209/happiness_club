@@ -1,14 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/modules/auth/Screens/phone_input_screen.dart';
+import 'package:happiness_club/modules/dashboard/homeBase.dart';
+import 'package:happiness_club/modules/home/screens/homeScreen.dart';
+import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({Key? key}) : super(key: key);
+  String otp;
+  OtpScreen({required this.otp});
 
   @override
   _OtpScreenState createState() => _OtpScreenState();
@@ -16,6 +26,8 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   TextEditingController otpText=TextEditingController();
+  var storage = StorageServices();
+  int failCount=0;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -44,7 +56,27 @@ class _OtpScreenState extends State<OtpScreen> {
                 SizedBox(height: 20,),
                 resendCode(),
                 SizedBox(height: size.height*0.1,),
-                CustomFullWidthButton(title: "Verify", onTap: (){})
+                CustomFullWidthButton(title: "Verify", onTap: (){
+                  if(otpText.text == widget.otp){
+                    Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
+                    storage.writeDataToStorage(StorageKeys.LOGGED_IN, "true");
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>HomeBase()));
+                    showToast(context, "Welcome to Happiness Club");
+                  }
+                  else{
+                    //fail count
+
+                    otpText.clear();
+                    failCount = failCount + 1;
+                    if(failCount==3){
+                      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>PhoneInputScreen()));
+                      showToast(context, "Failed to log in");
+                    }
+                    else{
+                      showToast(context, "Wrong password. Try again.");
+                    }
+                  }
+                })
               ],
             ),
           ),

@@ -42,84 +42,84 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  formWidget(){
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
+    formWidget(){
+      return Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            children: [
+              CustomTextField(
+                controller: email,
+                labelText: "Email",
+                keyboardType: TextInputType.emailAddress,
+                validator:
+                  MultiValidator([
+                    RequiredValidator(errorText: "Email required*"),
+                    EmailValidator(errorText: "Please enter a correct email address")
+                  ]),
+              ),
+              SizedBox(height: 15,),
+              CustomTextField(
+                controller: pass,
+                labelText: "Password",
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                validator:
+                  MultiValidator([
+                    RequiredValidator(errorText: "Password is required*"),
+                    PatternValidator(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$', errorText: "You must enter one uppercase, one lower case, one digit and one symbol")
+                  ]),
+              ),
+              SizedBox(height: 18,),
+              rememberMeRow(),
+              SizedBox(height: 18,),
+              CustomFullWidthButton(title: "Login to my Account", onTap: (){
+                if(formKey.currentState!.validate()){
+                  print("pappu");
+                }
+              }),
+              SizedBox(
+                height: 20,
+              ),
+              SocialLoginFooter(onApplePressed: (){}, onFacebookPressed:(){}, onGoogle: (){}, onTwitterPressed: (){},signup: false,)
+            ],
+          ),
+        ),
+      );
+    }
+
+    rememberMeRow(){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          radioButton(),
+          Text("Forget Password?",style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
+        ],
+      );
+    }
+
+    radioButton(){
+      return Container(
+        child: Row(
           children: [
-            CustomTextField(
-              controller: email,
-              labelText: "Email",
-              keyboardType: TextInputType.emailAddress,
-              validator:
-                MultiValidator([
-                  RequiredValidator(errorText: "Email required*"),
-                  EmailValidator(errorText: "Please enter a correct email address")
-                ]),
-            ),
-            SizedBox(height: 15,),
-            CustomTextField(
-              controller: pass,
-              labelText: "Password",
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              validator:
-                MultiValidator([
-                  RequiredValidator(errorText: "Password is required*"),
-                  PatternValidator(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$', errorText: "You must enter one uppercase, one lower case, one digit and one symbol")
-                ]),
-            ),
-            SizedBox(height: 18,),
-            rememberMeRow(),
-            SizedBox(height: 18,),
-            CustomFullWidthButton(title: "Login to my Account", onTap: (){
-              if(formKey.currentState!.validate()){
-                print("pappu");
-              }
+            Radio(
+              toggleable: true,
+                value: 0,
+                groupValue: groupVal,
+                onChanged: (val){
+              setState(() {
+                if(groupVal < 0){
+                  groupVal = val as int;
+                }
+                else{
+                  groupVal = -1;
+                }
+              });
             }),
-            SizedBox(
-              height: 20,
-            ),
-            SocialLoginFooter(onApplePressed: (){}, onFacebookPressed:(){}, onGoogle: (){}, onTwitterPressed: (){},signup: false,)
+            Text("Remember me",style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
           ],
         ),
-      ),
-    );
-  }
-
-  rememberMeRow(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        radioButton(),
-        Text("Forget Password?",style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
-      ],
-    );
-  }
-
-  radioButton(){
-    return Container(
-      child: Row(
-        children: [
-          Radio(
-            toggleable: true,
-              value: 0,
-              groupValue: groupVal,
-              onChanged: (val){
-            setState(() {
-              if(groupVal < 0){
-                groupVal = val as int;
-              }
-              else{
-                groupVal = -1;
-              }
-            });
-          }),
-          Text("Remember me",style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
-        ],
-      ),
-    );
-  }
+      );
+    }
 }

@@ -14,6 +14,8 @@ class StorageKeys {
 
   static const String STATE_LOADING = "loading";
   static const String STATE_FINISHED = "finish";
+  static const USER_DATA ="User data";
+  static const LOGGED_IN ="Login status";
 }
 
 
@@ -23,4 +25,5 @@ class Constants{
   static const GOOGLE_MAP_KEY="AIzaSyD_N2eSTMwq8cx0dvMk2kBvwFJlDfLrgGY";
   static const TERMS ="Terms & Conditions";
   static const PRIVACY ="Privacy Policy";
+
 }

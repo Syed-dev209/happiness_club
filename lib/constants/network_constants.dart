@@ -18,4 +18,5 @@ class APIS {
   static const String ALL_OFFERS = BASE_URL+"offers/all";
   static const String COMPANIES = BASE_URL+"companies";
   static const String CHAMPIONS = BASE_URL+"champions";
+  static const String LOGIN = BASE_URL+"login";
 }

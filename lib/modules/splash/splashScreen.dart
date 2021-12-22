@@ -4,9 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
 import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/modules/home/controller/homeController.dart';
+import 'package:happiness_club/services/storage_service.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,7 +21,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  var storage = StorageServices();
   loadData()async{
+    var response = storage.readDataFromStorage(StorageKeys.LOGGED_IN);
+    if(response!=""){
+      Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
+    }
     await getOfferCategories(context);
     await getSliderImages(context);
     await getMostViewedOffers(context);
@@ -25,7 +34,6 @@ class _SplashScreenState extends State<SplashScreen> {
     await getFeaturedOffers(context);
       Navigator.pushReplacement(
           context, CupertinoPageRoute(builder: (_) => HomeBase()));
-
   }
 
   @override

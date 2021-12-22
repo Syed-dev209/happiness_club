@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
+import 'package:provider/provider.dart';
 
 class OffersReview extends StatefulWidget {
   String offerId;
@@ -17,6 +20,7 @@ class OffersReview extends StatefulWidget {
 
 class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClientMixin{
   bool keepAlive = false;
+  TextEditingController reviewController = TextEditingController();
   StreamController<OfferReviesModel?>? offersReviewStream;
 
   loadOfferReviews()async{
@@ -44,14 +48,11 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
   Widget build(BuildContext context) {
     return Stack(
       children: [
-
         StreamBuilder<OfferReviesModel?>(
           stream: offersReviewStream!.stream,
             builder: (context,snapshot){
               if(!snapshot.hasData || snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return getLoader();
               }
               if(snapshot.data==null){
                 return Center(
@@ -169,6 +170,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
   }
 
   reviewPopup() {
+    double rating = 0;
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -209,10 +211,10 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     SizedBox(height: 5,),
                     RatingBar.builder(
                       itemSize: 20,
-                      initialRating: 3,
+                      initialRating: 1,
                       minRating: 1,
                       direction: Axis.horizontal,
-                      allowHalfRating: true,
+                      allowHalfRating: false,
                       itemCount: 5,
                       itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                       itemBuilder: (context, _) => Icon(
@@ -220,7 +222,9 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                         color: Color(ColorCodes.STAR_COLOR),
                         size: 10,
                       ),
-                      onRatingUpdate: (val) {},
+                      onRatingUpdate: (val) {
+                        rating = val;
+                      },
                     ),
                      SizedBox(height: 5,),
                     Text(
@@ -229,7 +233,9 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                           14, Colors.black.withOpacity(0.5)),
                     ),
                      SizedBox(height: 5,),
-                    TextFormField(),
+                    TextFormField(
+                      controller: reviewController,
+                    ),
                      SizedBox(height: 20,),
                     Center(
                       child: SizedBox(
@@ -241,7 +247,19 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                               borderRadius: BorderRadius.circular(10)
                             )
                           ),
-                          onPressed: () {}, 
+                          onPressed: () {
+                            final userCheck = Provider.of<UserModelProvider>(context,listen: false).loggedIn;
+                            if(userCheck) {
+                              postAReview(context, widget.offerId,
+                                  reviewController.text, rating).then((value) {
+                                Navigator.pop(context);
+                              });
+                            }
+                            else{
+                              Navigator.pop(context);
+                              showToast(context, "You must Log in to post a review.");
+                            }
+                          },
                         child: Text("Submit review")
                         ),
                       )

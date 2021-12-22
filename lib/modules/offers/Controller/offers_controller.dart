@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:happiness_club/constants/network_constants.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
@@ -168,5 +169,35 @@ Future<OffersModel?> getOffersByCategory({required String catId})async{
   }
   on DioError catch(e){
     return null;
+  }
+}
+
+
+Future postAReview(context, String offerId,String review,double rating)async{
+
+  try{
+    bool check = await InternetService.checkConnectivity();
+    String userId = Provider.of<UserModelProvider>(context,listen: false).customerId;
+    print(userId);
+    print(offerId);
+    if(check){
+      var response = await dio.post(APIS.ADD_REVIEW,data: {
+        "stars" :rating,
+        "review":review,
+        "offer_id":offerId,
+        "customer_id": userId
+      });
+      if(response.statusCode == 200){
+        print(response.data);
+        showToast(context, "Thank you for rating us.");
+      }
+    }
+    else{
+      showNoInternetSnackBar(context);
+    }
+  }
+  on DioError catch(w){
+    print(w);
+    showToast(context, "Unable to post review");
   }
 }

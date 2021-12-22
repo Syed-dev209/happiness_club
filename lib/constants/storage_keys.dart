@@ -10,6 +10,7 @@ class StorageKeys {
   static const PRIVACY ="privacy";
   static const COMPANIES ="companies";
   static const CHAMPIONS ="champions";
+  static const NEWSLETTERS ="newsletters";
 
 
   static const String STATE_LOADING = "loading";

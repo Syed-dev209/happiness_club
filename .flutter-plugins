@@ -1,7 +1,9 @@
 # This is a generated file; do not edit or check into version control.
+barcode_scan2=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/barcode_scan2-4.2.0/
 connectivity=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-3.0.6/
 connectivity_for_web=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.4.0+1/
 connectivity_macos=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.2.1+2/
+flutter_pdfview=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_pdfview-1.2.1/
 flutter_plugin_android_lifecycle=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.5/
 geolocator=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-8.0.0/
 geolocator_android=/Users/ilhan/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_android-3.0.0+4/

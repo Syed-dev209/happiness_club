@@ -19,4 +19,7 @@ class APIS {
   static const String COMPANIES = BASE_URL+"companies";
   static const String CHAMPIONS = BASE_URL+"champions";
   static const String LOGIN = BASE_URL+"login";
+  static const String NEWSLETTER = BASE_URL+"newsletters";
+  static const String ADD_REVIEW = BASE_URL+"offers/rating";
+  static const String SCAN_QR = BASE_URL+"event/scan";
 }

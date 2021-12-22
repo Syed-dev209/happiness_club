@@ -1,3 +1,4 @@
+import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -9,6 +10,7 @@ import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
 import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
+import 'package:happiness_club/modules/home/controller/qr_controller.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
 import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
@@ -76,6 +78,14 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
+                    onTap: ()async{
+                      var result = await BarcodeScanner.scan();
+                      scanQrResult(context, result.rawContent);
+                      //print(result.type); // The result type (barcode, cancelled, failed)
+                      print(result.rawContent); // The barcode content
+                      //print(result.format); // The barcode format (as enum)
+                      //print(result.formatNote);
+                    },
                     leading: Image.asset(Images.SCAN_ICON, height: 20),
                     title: Text("Scan QR Code", style: style),
                   ),

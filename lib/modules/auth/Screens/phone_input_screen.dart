@@ -8,6 +8,8 @@ import 'package:happiness_club/widgets/custom_full_width_button.dart';
 import 'package:happiness_club/widgets/custom_text_field.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 
 class PhoneInputScreen extends StatefulWidget {
@@ -19,10 +21,9 @@ class PhoneInputScreen extends StatefulWidget {
 
 class _PhoneInputScreenState extends State<PhoneInputScreen> {
   TextEditingController phoneNumber = TextEditingController();
-  //TextEditingController pass = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var maskFormatter = new MaskTextInputFormatter(mask: '+(###) ##-###-####', filter: { "#": RegExp(r'[0-9]') },initialText: "+(971) 58 123 4567");
-
+  bool loading = false;
   int groupVal = -1;
   @override
   Widget build(BuildContext context) {
@@ -77,12 +78,15 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
             SizedBox(height: 18,),
             rememberMeRow(),
             SizedBox(height: 18,),
-            CustomFullWidthButton(title: "Login to my Account", onTap: (){
+           !loading? CustomFullWidthButton(title: "Login to my Account", onTap: (){
               if(formKey.currentState!.validate()){
+                setState(() {
+                  loading = true;
+                });
                 loginWithPhoneNumber(context: context, phoneNumber: maskFormatter.getUnmaskedText());
                 print(maskFormatter.getUnmaskedText());
               }
-            }),
+            }):Center(child: loader()),
             SizedBox(
               height: 20,
             ),
@@ -91,6 +95,10 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
         ),
       ),
     );
+  }
+
+  loader(){
+    return Platform.isAndroid? CircularProgressIndicator():CupertinoActivityIndicator();
   }
 
   rememberMeRow(){

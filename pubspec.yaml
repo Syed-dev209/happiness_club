@@ -52,6 +52,8 @@ dependencies:
   mask_text_input_formatter: ^2.0.0
   flutter_cached_pdfview: ^0.4.1
   barcode_scan2: ^4.2.0
+  firebase_core: ^1.10.6
+  firebase_messaging: ^11.2.4
 
 dev_dependencies:
   flutter_test:

@@ -17,6 +17,7 @@ class StorageKeys {
   static const String STATE_FINISHED = "finish";
   static const USER_DATA ="User data";
   static const LOGGED_IN ="Login status";
+  static const FAVORITES ="favorites";
 }
 
 

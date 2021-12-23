@@ -7,6 +7,7 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
+import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 
@@ -80,6 +81,7 @@ class _OffersCardState extends State<OffersCard> {
                                 setState(() {
                                   like = !like;
                                 });
+                                markAsFavorite(context, widget.modelData.id.toString());
                               },
                               child: Container(
                                 height: 35,

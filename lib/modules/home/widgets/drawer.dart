@@ -6,14 +6,17 @@ import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/aboutUs/aboutusScreen.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
 import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
+import 'package:happiness_club/modules/favourites/Screen/favourites_screen.dart';
 import 'package:happiness_club/modules/home/controller/qr_controller.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
 import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   final style =
@@ -80,7 +83,11 @@ class CustomDrawer extends StatelessWidget {
                   ListTile(
                     onTap: ()async{
                       var result = await BarcodeScanner.scan();
-                      scanQrResult(context, result.rawContent);
+                      scanQrResult(context, result.rawContent).then((value) {
+                        if(Provider.of<UserModelProvider>(context,listen: false).loggedIn){
+                          validateCustomer(context, result.rawContent);
+                        }
+                      });
                       //print(result.type); // The result type (barcode, cancelled, failed)
                       print(result.rawContent); // The barcode content
                       //print(result.format); // The barcode format (as enum)
@@ -90,6 +97,12 @@ class CustomDrawer extends StatelessWidget {
                     title: Text("Scan QR Code", style: style),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => FavouritesScreen()));
+                    },
                     leading: Image.asset(Images.FAVOURITES_ICON, height: 20),
                     title: Text("Favourites", style: style),
                   ),

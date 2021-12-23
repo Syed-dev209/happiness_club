@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108815845631",
+    "project_id": "happiness-club-50fd7",
+    "storage_bucket": "happiness-club-50fd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108815845631:android:63375362120da025c0a4ca",
+        "android_client_info": {
+          "package_name": "m.hpc.ae"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108815845631-1qs8l50rsjssr71rsofuojca7scnft8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjES08ilY7vkD2Y9Lv5I6eCJOYrcqddgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108815845631-1qs8l50rsjssr71rsofuojca7scnft8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

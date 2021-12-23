@@ -73,4 +73,7 @@ class Images {
    static const String GOOGLE_LOGIN ="assets/PNG/google_icon.png";
    static const String TWITTER_LOGIN ="assets/PNG/twitter_icon.png";
    static const String FACEBOOK_LOGIN ="assets/PNG/facebook_icon.png";
+
+
+   static const String ALERT_ERROR_ICON ="assets/PNG/errorAlertIcon.png";
 }

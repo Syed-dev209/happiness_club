@@ -16,17 +16,23 @@ var storage = StorageServices();
 
 
 loginWithPhoneNumber({required context,required String phoneNumber})async{
+  print('in spi');
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
       var response = await dio.post(APIS.LOGIN,data: {
         "mobile":phoneNumber
       });
+      print(response.data);
       if(response.data['responseStatus']=="success"){
         print(response.data["data"]["otp"]);
         Provider.of<UserModelProvider>(context,listen: false).addCustomerId(response.data["data"]["id"].toString());
         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));
       }
+      else{
+        showToast(context, response.data["message"]);
+      }
+
     }
     else{
       showNoInternetSnackBar(context);

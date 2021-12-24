@@ -64,7 +64,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                           Container(
                             constraints: BoxConstraints(
                               minHeight: 0.0,
-                              maxHeight: 40
+                              maxHeight: 30
                             ),
                             child: AutoSizeText(
                               "${widget.modelData.title}",
@@ -76,13 +76,13 @@ class _OffersSummaryState extends State<OffersSummary> {
                               maxFontSize: 16,
                             ),
                           ),
-                          SizedBox(
-                            height: 3,
-                          ),
+                          // SizedBox(
+                          //   height: 3,
+                          // ),
                           locationRow(),
-                          SizedBox(
-                            height: 3,
-                          ),
+                          // SizedBox(
+                          //   height: 3,
+                          // ),
                           ratingAndTime(),
                         ]),
                   ),
@@ -149,7 +149,6 @@ class _OffersSummaryState extends State<OffersSummary> {
                           ),
                           width: 2)),
                   child: Image.asset(
-              
                     Images.LIKE_ICON3,
                     cacheHeight: 25,
                     filterQuality: FilterQuality.high,
@@ -185,11 +184,15 @@ class _OffersSummaryState extends State<OffersSummary> {
           SizedBox(
             width: 10,
           ),
-          Text('',
-              style: FontStyle.PoppinsStyle(
-                14,
-                Colors.black26,
-              ))
+          Expanded(
+            child: AutoSizeText('${widget.modelData.location}',
+                style: FontStyle.PoppinsStyle(
+                  14,
+                  Colors.black26,
+                ),
+              minFontSize: 8,
+            ),
+          )
         ],
       ),
     );
@@ -202,15 +205,20 @@ class _OffersSummaryState extends State<OffersSummary> {
           Container(
             height: 25,
             width: 68,
+            constraints: BoxConstraints(
+              minHeight: 15,
+              maxHeight: 25,
+            ),
             decoration: BoxDecoration(
                 color: Color(ColorCodes.LIGHT_PINK_COLOR),
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
-              child: Text(
+              child: AutoSizeText(
                 "9 days left",
                 style: FontStyle.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
+                minFontSize: 5,
               ),
             ),
           ),
@@ -218,8 +226,12 @@ class _OffersSummaryState extends State<OffersSummary> {
             width: 5,
           ),
           Container(
-            // height: 20,
+             height: 25,
             width: 42,
+            constraints: BoxConstraints(
+              minHeight: 15,
+              maxHeight: 25
+            ),
             decoration: BoxDecoration(
                 color: Color(ColorCodes.LITE_YELLOW_COLOR),
                 borderRadius: BorderRadius.circular(20)),
@@ -230,9 +242,10 @@ class _OffersSummaryState extends State<OffersSummary> {
                 SizedBox(
                   width: 2,
                 ),
-                Text(
+                AutoSizeText(
                   "${widget.modelData.ratings}",
                   style: FontStyle.PoppinsStyle(11, Colors.black),
+                  minFontSize: 5,
                 )
               ],
             ),

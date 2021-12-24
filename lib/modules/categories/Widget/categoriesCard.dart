@@ -23,32 +23,52 @@ class CategoriesCard extends StatelessWidget {
       child: Container(
         height: 80,
         width: 165,
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+        //padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
         decoration: BoxDecoration(
-            color: Colors.black,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: CachedNetworkImageProvider(
-                    modelData.imageFilename ??
-                    Constants.NOT_FOUND_IMAGE_URL,
-                  errorListener: (){
-                       Icon(Icons.error);
-                  }
-                ),
-                fit: BoxFit.cover)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+            // image: DecorationImage(
+            //     image: CachedNetworkImageProvider(
+            //         modelData.imageFilename ??
+            //         Constants.NOT_FOUND_IMAGE_URL,
+            //       errorListener: (){
+            //            Icon(Icons.error);
+            //       }
+            //     ),
+            //     fit: BoxFit.cover)
+        ),
+        child: Stack(
           children: [
-            Text(
-              "${modelData.categoryName}",
-              style: FontStyle.PoppinsStyle(17, Colors.white,
-                  fontWeight: FontWeight.w600),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Center(
+                child: CachedNetworkImage(
+                  height:modelData.imageFilename==null ?100: 200,
+                  width: double.maxFinite,
+                  imageUrl:modelData.imageFilename ??  Constants.NOT_FOUND_IMAGE_URL,fit: modelData.imageFilename==null ?BoxFit.contain:BoxFit.cover,
+                  errorWidget: (context,am,s){
+                  return Center(child: Image.asset(Images.NO_IMAGE,fit: BoxFit.contain,height: 100,));
+                }, ),
+              ),
             ),
-            Text(
-              "${modelData.offersCount} Offers",
-              style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR)),
-            )
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${modelData.categoryName}",
+                    style: FontStyle.PoppinsStyle(17, modelData.imageFilename==null?Colors.black:Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "${modelData.offersCount} Offers",
+                    style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR)),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

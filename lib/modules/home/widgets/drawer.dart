@@ -7,6 +7,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/aboutUs/aboutusScreen.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/modules/auth/Screens/customer_info_input_screen.dart';
 import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
@@ -87,11 +88,14 @@ class CustomDrawer extends StatelessWidget {
                         if(Provider.of<UserModelProvider>(context,listen: false).loggedIn){
                           validateCustomer(context, result.rawContent);
                         }
+                        else{
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => InputCustomerInfo(qrResult: result.rawContent,)));
+                        }
                       });
-                      //print(result.type); // The result type (barcode, cancelled, failed)
                       print(result.rawContent); // The barcode content
-                      //print(result.format); // The barcode format (as enum)
-                      //print(result.formatNote);
                     },
                     leading: Image.asset(Images.SCAN_ICON, height: 20),
                     title: Text("Scan QR Code", style: style),

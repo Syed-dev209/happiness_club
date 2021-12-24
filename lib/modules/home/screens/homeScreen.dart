@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text("No Offers"),
                             );
                           }
-                          return  ListView.separated(
+                          return  data.modelData!.data!.isNotEmpty?  ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, i) {
                                 return DealCard(
@@ -173,7 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               separatorBuilder: (context, i) => SizedBox(
                                 width: 10,
                               ),
-                              itemCount: data.modelData!.data!.length);
+                              itemCount: data.modelData!.data!.length):Center(
+                            child: Text("No Offers"),
+                          );
                         },
                       )
                     ),
@@ -367,11 +369,17 @@ class _HomeScreenState extends State<HomeScreen> {
         width: double.maxFinite,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            image: data.imageFilename!=null? DecorationImage(
-                image: CachedNetworkImageProvider(data.imageFilename!), fit: BoxFit.cover
-            ): DecorationImage(
-              image: AssetImage(Images.NO_IMAGE_PLACEHOLDER),
-            )
+            // image: data.imageFilename!=null? DecorationImage(
+            //     image: CachedNetworkImageProvider(data.imageFilename!), fit: BoxFit.cover
+            // ): DecorationImage(
+            //   image: AssetImage(Images.NO_IMAGE_PLACEHOLDER),
+            // )
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: CachedNetworkImage(imageUrl: data.imageFilename!,errorWidget: (context,s,dd){
+            return Image.asset(Images.NO_IMAGE);
+          },),
         ),
       ),
     );

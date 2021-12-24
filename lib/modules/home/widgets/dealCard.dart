@@ -127,11 +127,12 @@ class _DealCardState extends State<DealCard> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 8,left: 2,right: 2),
                     child: Center(
-                      child: Text(
+                      child: AutoSizeText(
                         "${widget.modelData.offerDiscount} off",
                         style: FontStyle.PoppinsStyle(10, Colors.white,
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
+                        minFontSize: 5,
                       ),
                     ),
                   )

@@ -76,4 +76,5 @@ class Images {
 
 
    static const String ALERT_ERROR_ICON ="assets/PNG/errorAlertIcon.png";
+   static const String NO_IMAGE ="assets/PNG/defaultImage.jpeg";
 }

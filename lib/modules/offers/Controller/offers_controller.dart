@@ -201,3 +201,19 @@ Future postAReview(context, String offerId,String review,double rating)async{
     showToast(context, "Unable to post review");
   }
 }
+
+
+addViewToOffer(String offerId)async {
+  try{
+    bool check = await InternetService.checkConnectivity();
+    if(check){
+      var response = await dio.post(APIS.ADD_VIEW,queryParameters: {
+        "offer_id":offerId
+      });
+      print("view added to offer");
+    }
+  }
+  catch(e){
+
+  }
+}

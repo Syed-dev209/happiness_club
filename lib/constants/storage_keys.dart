@@ -22,7 +22,7 @@ class StorageKeys {
 
 
 class Constants{
-  static const NOT_FOUND_IMAGE_URL ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQZUYP1nWYaAFpSvhTYPwzO91_T6Sbdiysw-juuJQ5daDmBCjKm3oA_oP2toTI4Ni8Y98&usqp=CAU";
+  static const NOT_FOUND_IMAGE_URL ="https://firebasestorage.googleapis.com/v0/b/happiness-club-50fd7.appspot.com/o/defaultImage.jpeg?alt=media&token=69e58e01-09b6-49aa-aeaf-b4a4bd9d1d4b";
   static const ALT_IMAGE ="https://hpc.softlinks.ae/public/assets/images/placeholder.png";
   static const GOOGLE_MAP_KEY="AIzaSyD_N2eSTMwq8cx0dvMk2kBvwFJlDfLrgGY";
   static const TERMS ="Terms & Conditions";

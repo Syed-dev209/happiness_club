@@ -26,4 +26,7 @@ class APIS {
   static const String REMOVE_FAVORITES = BASE_URL+"favorites/remove";
   static const String ADD_TO_FAVORITES = BASE_URL+"favorites/add";
   static const String VALIDATE_QR = BASE_URL+"event/customer-info";
+  static const String ADD_CUSTOMER = BASE_URL+"event/customer-add";
+  static const String ADD_VIEW = BASE_URL+"offers/add-view";
+  static const String HELP = BASE_URL+"help";
 }

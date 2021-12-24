@@ -14,8 +14,9 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
   await Firebase.initializeApp();
+  await GetStorage.init();
+
   runApp(MyApp());
 }
 

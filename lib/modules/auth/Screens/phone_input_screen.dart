@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/modules/auth/Controller/auth_controller.dart';
+import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/auth/widgets/header_login_signup.dart';
 import 'package:happiness_club/modules/auth/widgets/social_login_footer.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
@@ -90,7 +92,9 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
             SizedBox(
               height: 20,
             ),
-            SocialLoginFooter(onApplePressed: (){}, onFacebookPressed:(){}, onGoogle: (){}, onTwitterPressed: (){},signup: false,)
+            SocialLoginFooter(onApplePressed: (){}, onFacebookPressed:(){}, onGoogle: (){}, onTwitterPressed: (){},signup: false,),
+            SizedBox(height: 10,),
+            helpRow()
           ],
         ),
       ),
@@ -133,5 +137,37 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
         ],
       ),
     );
+  }
+
+
+  helpRow(){
+    return RichText(text: TextSpan(
+      text: "Need Help? ",
+        style: TextStyle(
+            fontSize: 14,
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w300,
+            decoration: TextDecoration.none,
+            color: Colors.black
+        ),
+      children: [
+        TextSpan(
+          text: "Contact us",
+          recognizer: TapGestureRecognizer()
+            ..onTap = () {
+            //  if(signup!){
+              Navigator.push(context, CupertinoPageRoute(builder: (context)=>HelpCustomerScreen()));
+             // }
+            },
+          style: TextStyle(
+              fontSize: 14,
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w600,
+              decoration: TextDecoration.underline,
+              color: Color(ColorCodes.GOLDEN_COLOR)
+          ),
+        )
+      ]
+    ));
   }
 }

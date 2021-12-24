@@ -53,6 +53,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
         return null;
       }
     });
+    addViewToOffer(widget.offerId);
   }
 
   @override
@@ -131,7 +132,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                     ),
                     Expanded(
                       child: TabBarView(
-                        //physics: NeverScrollableScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         controller: controller,
                         children: [
                           OffersSummary(modelData: snapshot.data!.data!,),

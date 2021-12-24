@@ -98,6 +98,7 @@ Future getFeaturedOffers(context)async{
     if(check){
       var response = await dio.get(APIS.FEATURED_OFFERS);
       if(response.statusCode==200){
+        print(response.data);
         OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.FEATURED_OFFERS, model.toJson());

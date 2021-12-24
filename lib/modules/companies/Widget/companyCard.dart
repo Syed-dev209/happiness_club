@@ -28,24 +28,25 @@ class CompanyCard extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Expanded(
               flex: 2,
-              child: Container(
-                height: 76,
-                width: 76,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(1,1),
-                        color: Colors.black26,
-                        blurRadius: 5
-
-                      )
-                    ],
-                    image: DecorationImage(
-                        image: CachedNetworkImageProvider(
-                          modelData.logo ?? Constants.ALT_IMAGE
-                        ), fit: BoxFit.cover)),
-              ),
+              child: CachedNetworkImage(imageUrl: modelData.logo ?? Constants.ALT_IMAGE,)
+              // Container(
+              //   height: 76,
+              //   width: 76,
+              //   decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       boxShadow: [
+              //         BoxShadow(
+              //           offset: Offset(1,1),
+              //           color: Colors.black26,
+              //           blurRadius: 5
+              //
+              //         )
+              //       ],
+              //       image: DecorationImage(
+              //           image: CachedNetworkImageProvider(
+              //             modelData.logo ?? Constants.ALT_IMAGE
+              //           ), fit: BoxFit.fill)),
+              // ),
             ),
             SizedBox(
               height: 10,

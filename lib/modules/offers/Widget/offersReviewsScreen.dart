@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
@@ -24,6 +26,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
   StreamController<OfferReviesModel?>? offersReviewStream;
 
   loadOfferReviews()async{
+    print(widget.offerId);
     getOfferReviews(offerId: widget.offerId).then((value) {
       if(value!=null){
         offersReviewStream!.add(value);
@@ -78,14 +81,19 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     height: 10,
                   ),
                   Expanded(
-                    child: ListView.separated(
-                        itemBuilder: (context, i) {
-                          return offerCard[i];
-                        },
-                        separatorBuilder: (context, i) => SizedBox(
-                          height: 10,
-                        ),
-                        itemCount:offerCard.length),
+                    child: RefreshIndicator(
+                      onRefresh:()async{
+                        loadOfferReviews();
+                      },
+                      child: ListView.separated(
+                          itemBuilder: (context, i) {
+                            return offerCard[i];
+                          },
+                          separatorBuilder: (context, i) => SizedBox(
+                            height: 10,
+                          ),
+                          itemCount:offerCard.length),
+                    ),
                   ),
                 ],
               );
@@ -119,21 +127,25 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
 
   reviewCard(OfferReviesModelData data) {
     String rating = data.ratingStars.toString();
+    DateTime createdAt = DateTime.parse(data.createdAt!);
+    int days = createdAt.difference(DateTime.now()).inDays;
     return Container(
       height: 120,
       width: double.maxFinite,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(15)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
             leading: CircleAvatar(
               radius: 23,
+              backgroundImage: CachedNetworkImageProvider(Constants.NOT_FOUND_IMAGE_URL),
             ),
             title: Text(
-              "Peter Parker",
-              style: FontStyle.PoppinsStyle(18, Colors.black,
-                  fontWeight: FontWeight.w600),
+              "${data.fullName}",
+              style: FontStyle.PoppinsStyle(14, Colors.black,
+                  fontWeight: FontWeight.w500),
             ),
             subtitle: RatingBar.builder(
               ignoreGestures: true,
@@ -143,7 +155,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
               itemBuilder: (context, _) => Icon(
                 Icons.star,
                 color: Color(ColorCodes.STAR_COLOR),
@@ -152,16 +164,16 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
               onRatingUpdate: (val) {},
             ),
             trailing: Text(
-              "2 days ago",
-              style: FontStyle.PoppinsStyle(15, Colors.black.withOpacity(0.5),
+              "$days days ago",
+              style: FontStyle.PoppinsStyle(12, Colors.black.withOpacity(0.5),
                   fontWeight: FontWeight.w600),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.only(left: 82),
             child: Text(
               "${data.feedbacks}",
-              style: FontStyle.PoppinsStyle(14, Colors.black.withOpacity(0.5)),
+              style: FontStyle.PoppinsStyle(12, Colors.black.withOpacity(0.5)),
             ),
           )
         ],

@@ -30,6 +30,9 @@ loginWithPhoneNumber({required context,required String phoneNumber})async{
       if(response.data['responseStatus']=="success"){
         print(response.data["data"]["otp"]);
         Provider.of<UserModelProvider>(context,listen: false).addCustomerId(response.data["data"]["id"].toString());
+        Provider.of<UserModelProvider>(context,listen: false).addName(response.data["data"]["full_name"]);
+        storage.writeDataToStorage(StorageKeys.USER_ID, response.data["data"]["id"].toString());
+        storage.writeDataToStorage(StorageKeys.USER_NAME, response.data["data"]["full_name"].toString());
         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));
       }
       else{

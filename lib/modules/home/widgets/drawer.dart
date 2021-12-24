@@ -1,4 +1,5 @@
 import 'package:barcode_scan2/platform_wrapper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -50,11 +51,12 @@ class CustomDrawer extends StatelessWidget {
                                   color: Colors.black,
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
+                                    fit: BoxFit.fitWidth,
                                       image:
-                                          AssetImage(Images.CATEGORIES_BG))))),
+                                          CachedNetworkImageProvider(Constants.NOT_FOUND_IMAGE_URL))))),
                     ),
                     title: Text(
-                      "John Smith",
+                      Provider.of<UserModelProvider>(context,listen: false).name,
                       style: FontStyle.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
@@ -110,16 +112,16 @@ class CustomDrawer extends StatelessWidget {
                     leading: Image.asset(Images.FAVOURITES_ICON, height: 20),
                     title: Text("Favourites", style: style),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => PrizeHistoryScreen()));
-                    },
-                    leading: Image.asset(Images.PRIZE_ICON, height: 20),
-                    title: Text("Prize History", style: style),
-                  ),
+                  // ListTile(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         CupertinoPageRoute(
+                  //             builder: (context) => PrizeHistoryScreen()));
+                  //   },
+                  //   leading: Image.asset(Images.PRIZE_ICON, height: 20),
+                  //   title: Text("Prize History", style: style),
+                  // ),
                   ListTile(
                     onTap: () {
                       Navigator.push(
@@ -150,10 +152,10 @@ class CustomDrawer extends StatelessWidget {
                     },
                     title: Text("Newsletters", style: style),
                   ),
-                  ListTile(
-                    leading: Image.asset(Images.ARTICLE, height: 20),
-                    title: Text("Articles & News", style: style),
-                  ),
+                  // ListTile(
+                  //   leading: Image.asset(Images.ARTICLE, height: 20),
+                  //   title: Text("Articles & News", style: style),
+                  // ),
                   ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
                     onTap: () {

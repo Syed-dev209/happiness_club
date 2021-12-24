@@ -6,9 +6,13 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:html/parser.dart' as htmlparser;
 import 'package:html/dom.dart' as dom;
+import 'package:provider/provider.dart';
 
 class OffersSummary extends StatefulWidget {
   OfferDetailsModelData modelData;
@@ -22,6 +26,7 @@ class _OffersSummaryState extends State<OffersSummary> {
 
   String? htmlData;
   dom.Document? document;
+  bool like = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -138,21 +143,46 @@ class _OffersSummaryState extends State<OffersSummary> {
             ),
             Row(
               children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          color: Color(
-                            ColorCodes.GOLDEN_COLOR,
-                          ),
-                          width: 2)),
-                  child: Image.asset(
-                    Images.LIKE_ICON3,
-                    cacheHeight: 25,
-                    filterQuality: FilterQuality.high,
-                    // width: 10,
+                GestureDetector(
+                  onTap: (){
+                    final user = Provider.of<UserModelProvider>(
+                        context,
+                        listen: false);
+                    if (user.loggedIn) {
+                      setState(() {
+                        like = !like;
+                      });
+                      markAsFavorite(
+                          context, widget.modelData.id.toString()).then((value) {
+                        if(value != "success"){
+                          setState(() {
+                            like =!like;
+                          });
+                        }
+                      });
+                    }
+                    else{
+                      showToast(context, "You must login to mark favorite.");
+                    }
+                  },
+                  child: Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: Color(
+                              ColorCodes.GOLDEN_COLOR,
+                            ),
+                            width: 2)),
+                    child: Center(
+                      child: Image.asset(
+                        Images.LIKE_ICON3,
+                        height: 25,
+                        filterQuality: FilterQuality.high,
+                        // width: 10,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(width: 10,),

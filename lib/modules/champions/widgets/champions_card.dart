@@ -43,6 +43,20 @@ class ChampionsCard extends StatelessWidget {
                 fit: BoxFit.cover
               )
             ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Center(
+                child: CachedNetworkImage(
+                  height: 51,
+                  width: 51,
+                  imageUrl: modelData.photo ?? Constants.NOT_FOUND_IMAGE_URL,
+                  fit: BoxFit.cover,
+                  errorWidget: (context,a,s){
+                    return CachedNetworkImage(imageUrl: Constants.NOT_FOUND_IMAGE_URL,fit: BoxFit.cover,);
+                  },
+                ),
+              ),
+            ),
           ),
 
           SizedBox(width: 15,),
@@ -52,7 +66,7 @@ class ChampionsCard extends StatelessWidget {
             children: [
               Text('${modelData.fullName}',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
               SizedBox(height: 10,),
-              Text('Champion',style: FontStyle.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),)
+              Text('${modelData.companyDesignation}',style: FontStyle.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),)
             ],
           )
         ]

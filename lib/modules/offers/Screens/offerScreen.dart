@@ -6,6 +6,7 @@ import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/modules/offers/Widget/offersCard.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 class OffersScreen extends StatefulWidget {
@@ -17,11 +18,14 @@ class OffersScreen extends StatefulWidget {
 
 class _OffersScreenState extends State<OffersScreen> {
   ScrollController? scrollController;
-
-  int start=0, end=10;
+  int start=0, end=9;
+  bool loading = false;
   _scrollListener() {
     if (scrollController!.offset >= scrollController!.position.maxScrollExtent &&
         !scrollController!.position.outOfRange) {
+      setState(() {
+        loading = true;
+      });
         loadData();
       // setState(() {
       //   message = "reach the bottom";
@@ -35,16 +39,13 @@ class _OffersScreenState extends State<OffersScreen> {
     }
   }
 
-  loadData(){
+ Future loadData()async{
     getAllOffers(context, start, end).then((value) {
-      if(start==0){
-        start = start+11;
-        end = end +10;
-      }
-      else{
         start = start +10;
         end = end + 10;
-      }
+        setState(() {
+          loading = false;
+        });
     });
   }
   @override
@@ -91,7 +92,8 @@ class _OffersScreenState extends State<OffersScreen> {
                       itemCount: data.modelData!.data!.length);
                 },
 
-              ))
+              )),
+          loading ? getLoader():Text("")
         ],
       ),
     );

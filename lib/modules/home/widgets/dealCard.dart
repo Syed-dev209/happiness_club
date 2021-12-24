@@ -152,15 +152,15 @@ class _DealCardState extends State<DealCard> {
                   ),
                 ).blurred(
                     blur: 3,
-                    //blurColor: Colors.black26,
-                    colorOpacity: 0.1,
+                    blurColor: Colors.black,
+                    colorOpacity: 0.3,
                     borderRadius: BorderRadius.circular(20),
                     overlay: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Expanded(child: SvgPicture.asset(Images.DIRECTION_ICON)),
                         Text(
-                          '${widget.modelData.distance!.toStringAsFixed(2)}km',
+                            widget.modelData.distance!=null?'${widget.modelData.distance!.toStringAsFixed(2)} km':"0 Km",
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],

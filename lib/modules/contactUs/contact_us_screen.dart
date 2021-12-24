@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_controller.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
@@ -15,6 +16,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
   TextEditingController message = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +28,23 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           width: size.width,
           padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CustomAppBar(title: "Contact Us"),
-                SizedBox(height: 20,),
-                fullNameTextField(),
-                SizedBox(height: 20,),
-                emailTextField(),
-                SizedBox(height: 16,),
-                phoneTextField(),
-                SizedBox(height: 16,),
-                messageTextField(),
-                SizedBox(height: size.height*0.12,),
-                submitButton()
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  CustomAppBar(title: "Contact Us"),
+                  SizedBox(height: 20,),
+                  fullNameTextField(),
+                  SizedBox(height: 20,),
+                  emailTextField(),
+                  SizedBox(height: 16,),
+                  phoneTextField(),
+                  SizedBox(height: 16,),
+                  messageTextField(),
+                  SizedBox(height: size.height*0.12,),
+                  submitButton()
+                ],
+              ),
             ),
           ),
         ),
@@ -58,12 +63,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           )
         ),
         onPressed: (){
-          postMessage(context, fullName.text, email.text, message.text).then((value) {
-            fullName.clear();
-            email.clear();
-            phoneNumber.clear();
-            message.clear();
-          });
+          if(formKey.currentState!.validate()) {
+            postMessage(context, fullName.text, email.text, message.text).then((
+                value) {
+              fullName.clear();
+              email.clear();
+              phoneNumber.clear();
+              message.clear();
+            });
+          }
         },
         child: Text("Submit Message",style: FontStyle.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
       ),
@@ -76,6 +84,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       width: double.maxFinite,
       child: TextFormField(
         controller: fullName,
+        validator: MultiValidator([
+          RequiredValidator(errorText: "Name is required*")
+        ]),
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           labelText: "Full Name",
@@ -91,6 +102,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       width: double.maxFinite,
       child: TextFormField(
         controller: email,
+        validator: MultiValidator([
+          RequiredValidator(errorText: "Email is required*"),
+          EmailValidator(errorText: "Enter a valid email")
+        ]),
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: "Email",
@@ -106,6 +121,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       width: double.maxFinite,
       child: TextFormField(
         controller: phoneNumber,
+        validator: MultiValidator([
+          RequiredValidator(errorText: "Phone number is required*"),
+          PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: "Please enter a valid mobile number")
+        ]),
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
             labelText: "Phone Number",
@@ -119,6 +138,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     return TextFormField(
       maxLines: 5,
       controller: message,
+      validator: MultiValidator([
+        RequiredValidator(errorText: "Message is required*")
+      ]),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
           labelText: "Message Here",

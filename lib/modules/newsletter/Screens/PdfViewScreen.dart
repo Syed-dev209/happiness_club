@@ -13,6 +13,9 @@ class PdfViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Uri url = Uri.parse(pdfUrl);
+    print(url.hasAbsolutePath);
+    print(url.origin+url.path);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,7 +29,7 @@ class PdfViewScreen extends StatelessWidget {
         ),
       ),
       body: const PDF().fromUrl(
-        pdfUrl,
+        url.origin+url.path,
         placeholder: (double progress) => loader(),
         errorWidget: (dynamic error) => Center(child: Text("Unable to load newsletter.")),
       ),

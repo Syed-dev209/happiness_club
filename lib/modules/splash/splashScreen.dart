@@ -24,8 +24,12 @@ class _SplashScreenState extends State<SplashScreen> {
   var storage = StorageServices();
   loadData()async{
     var response = storage.readDataFromStorage(StorageKeys.LOGGED_IN);
-    if(response!=""){
+    var uid = storage.readDataFromStorage(StorageKeys.USER_ID);
+    var name = storage.readDataFromStorage(StorageKeys.USER_NAME);
+    if(response!="" && uid!="" && name!=""){
       Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
+      Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);
+      Provider.of<UserModelProvider>(context,listen: false).addName(name);
     }
     await getOfferCategories(context);
     await getSliderImages(context);

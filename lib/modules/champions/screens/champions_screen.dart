@@ -67,11 +67,16 @@ class _ChampionsScreenState extends State<ChampionsScreen> {
                   stream: championsController!.stream,
                   builder: (context,snapshot){
                     if(snapshot.hasError || !snapshot.hasData || snapshot.connectionState == ConnectionState.waiting){
-                      return ListView.separated(
-                          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
-                          itemBuilder: (context,i)=>ChampionsCardShimmer(),
-                          separatorBuilder: (context,i)=>SizedBox(height: 12,),
-                          itemCount: 3
+                      return RefreshIndicator(
+                        onRefresh: ()async{
+                          loadData();
+                        },
+                        child: ListView.separated(
+                            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
+                            itemBuilder: (context,i)=>ChampionsCardShimmer(),
+                            separatorBuilder: (context,i)=>SizedBox(height: 12,),
+                            itemCount: 3
+                        ),
                       );
                     }
                     if(snapshot.data == null){

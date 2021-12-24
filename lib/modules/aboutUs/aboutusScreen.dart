@@ -9,6 +9,8 @@ import 'package:happiness_club/modules/aboutUs/widget/partnersCard.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'model/about_us_model.dart';
+
 class AboutUsScreen extends StatefulWidget {
   const AboutUsScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class AboutUsScreen extends StatefulWidget {
 }
 
 class _AboutUsScreenState extends State<AboutUsScreen> {
-  StreamController<String?>? aboutController;
+  StreamController<AboutUsModel?>? aboutController;
 
   loadData()async{
     getAbout().then((value) {
@@ -36,7 +38,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    aboutController = StreamController<String?>.broadcast();
+    aboutController = StreamController<AboutUsModel?>.broadcast();
     loadData();
   }
 
@@ -99,7 +101,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                     height: 15,
                   ),
 
-                  StreamBuilder<String?>(
+                  StreamBuilder<AboutUsModel?>(
                     stream: aboutController!.stream,
                       builder: (context,snapshot){
                       if(snapshot.hasError || !snapshot.hasData || snapshot.connectionState == ConnectionState.waiting){
@@ -116,7 +118,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                         );
                       }
                       return  Text(
-                        "${snapshot.data}",
+                        "${snapshot.data!.data!.content}",
                         style: FontStyle.PoppinsStyle(17, Color(ColorCodes.GREY_COLOR),
                             fontWeight: FontWeight.w500),
                       );

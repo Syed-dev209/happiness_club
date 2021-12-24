@@ -78,7 +78,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
             //   ]),
             // ),
             SizedBox(height: 18,),
-            rememberMeRow(),
+           // rememberMeRow(),
             SizedBox(height: 18,),
            !loading? CustomFullWidthButton(title: "Login to my Account", onTap: (){
               if(formKey.currentState!.validate()){
@@ -92,7 +92,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
             SizedBox(
               height: 20,
             ),
-            SocialLoginFooter(onApplePressed: (){}, onFacebookPressed:(){}, onGoogle: (){}, onTwitterPressed: (){},signup: false,),
+           // SocialLoginFooter(onApplePressed: (){}, onFacebookPressed:(){}, onGoogle: (){}, onTwitterPressed: (){},signup: false,),
             SizedBox(height: 10,),
             helpRow()
           ],

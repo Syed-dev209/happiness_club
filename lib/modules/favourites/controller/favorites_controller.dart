@@ -47,25 +47,24 @@ Future markAsFavorite(context, String offerId)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       final user = Provider.of<UserModelProvider>(context,listen: false);
-      if(user.loggedIn){
         var response = await dio.post(APIS.ADD_TO_FAVORITES,queryParameters: {
           "customer_id":user.customerId,
           "offer_id":offerId
         });
+        print(response.data);
         if(response.statusCode == 200){
           showToast(context, response.data["message"]);
+          return response.data["responseStatus"];
         }
-      }
-      else{
-        showToast(context, "You must login to mark favorite.");
-      }
     }
     else{
       showNoInternetSnackBar(context);
+      return " ";
     }
   }
   on DioError catch(e){
-
+    print(e.response!.data);
+    return " ";
   }
 }
 

@@ -7,8 +7,10 @@ import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/aboutUs/aboutusScreen.dart';
+import 'package:happiness_club/modules/announcements/announcements_screen.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/auth/Screens/customer_info_input_screen.dart';
+import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
@@ -61,7 +63,7 @@ class CustomDrawer extends StatelessWidget {
                           fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
-                      "johnsmith@gmail.com",
+                      "",
                       style: FontStyle.PoppinsStyle(12, Colors.black26,
                           fontWeight: FontWeight.w400),
                     ),
@@ -87,14 +89,24 @@ class CustomDrawer extends StatelessWidget {
                     onTap: ()async{
                       var result = await BarcodeScanner.scan();
                       scanQrResult(context, result.rawContent).then((value) {
-                        if(Provider.of<UserModelProvider>(context,listen: false).loggedIn){
-                          validateCustomer(context, result.rawContent);
+                        print("==>$value");
+                        if(value=="success") {
+                          if (Provider
+                              .of<UserModelProvider>(context, listen: false)
+                              .loggedIn) {
+                            validateCustomer(context, result.rawContent);
+                          }
+                          else {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) =>
+                                        InputCustomerInfo(
+                                          qrResult: result.rawContent,)));
+                          }
                         }
                         else{
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => InputCustomerInfo(qrResult: result.rawContent,)));
+                          //Navigator.pop(context);
                         }
                       });
                       print(result.rawContent); // The barcode content
@@ -157,6 +169,14 @@ class CustomDrawer extends StatelessWidget {
                   //   title: Text("Articles & News", style: style),
                   // ),
                   ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                          CupertinoPageRoute(builder: (_) => AnnouncementsScreen()));
+                    },
+                    leading: Image.asset(Images.ARTICLE, height: 20),
+                    title: Text("Announcements", style: style),
+                  ),
+                  ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
                     onTap: () {
                       Navigator.push(context,
@@ -173,6 +193,10 @@ class CustomDrawer extends StatelessWidget {
                     title: Text("Contact Us", style: style),
                   ),
                   ListTile(
+                    onTap: (){
+                      Navigator.push(context,
+                          CupertinoPageRoute(builder: (_) => HelpCustomerScreen()));
+                    },
                     leading: Image.asset(Images.SUGGESTIONS, height: 20),
                     title: Text("Suggestions", style: style),
                   ),

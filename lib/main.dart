@@ -10,7 +10,9 @@ import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart'
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/modules/splash/splashScreen.dart';
+import 'package:happiness_club/services/navigatorKey.dart';
 import 'package:provider/provider.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,13 +50,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AllOffersProvider()),
         ChangeNotifierProvider(create: (_) => UserModelProvider()),
       ],
-      child: MaterialApp(
-        title: 'Happiness Club',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: myColor,
+      child: OverlaySupport(
+        child: MaterialApp(
+          navigatorKey: GlobalVariable.navState,
+          title: 'Happiness Club',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: myColor,
+          ),
+          home: SplashScreen(),
         ),
-        home: SplashScreen(),
       ),
     );
   }

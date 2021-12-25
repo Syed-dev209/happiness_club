@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:blur/blur.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
@@ -177,7 +179,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                             width: 2)),
                     child: Center(
                       child: Image.asset(
-                        Images.LIKE_ICON3,
+                        like?Images.LIKE_ICON_FILLED :Images.LIKE_ICON3,
                         height: 25,
                         filterQuality: FilterQuality.high,
                         // width: 10,
@@ -194,7 +196,11 @@ class _OffersSummaryState extends State<OffersSummary> {
                         borderRadius: BorderRadius.circular(10)
                       )
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (_) => HelpCustomerScreen()));
+
+                    },
                     child: Text("Report a problem",style: FontStyle.PoppinsStyle(17, Colors.white),),
                   ),
                 )

@@ -20,6 +20,9 @@ class StorageKeys {
   static const FAVORITES ="favorites";
   static const USER_ID ="uid";
   static const USER_NAME ="username";
+
+  static const DC_BLOB ="digitalcardblob";
+  static const ANNOUNCEMENTS ="announcements";
 }
 
 

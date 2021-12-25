@@ -84,11 +84,16 @@ class _ChampionsScreenState extends State<ChampionsScreen> {
                     }
 
                     ChampionsModel model = snapshot.data!;
-                    return ListView.separated(
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
-                        itemBuilder: (context,i)=>ChampionsCard(modelData: model.data![i]!,),
-                        separatorBuilder: (context,i)=>SizedBox(height: 12,),
-                        itemCount: model.data!.length
+                    return RefreshIndicator(
+                      onRefresh: ()async{
+                        loadData();
+                      },
+                      child: ListView.separated(
+                          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
+                          itemBuilder: (context,i)=>ChampionsCard(modelData: model.data![i]!,),
+                          separatorBuilder: (context,i)=>SizedBox(height: 12,),
+                          itemCount: model.data!.length
+                      ),
                     );
                   },
                 )

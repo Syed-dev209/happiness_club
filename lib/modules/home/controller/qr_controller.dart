@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
@@ -18,20 +19,26 @@ Future scanQrResult(context,String qrResult)async{
       });
       if(response.statusCode == 200){
         if(response.data["responseStatus"]=="failed"){
+          Navigator.pop(context);
           showToast(context, response.data["message"]);
+          return null;
         }
         else{
           showToast(context, "Successfully scanned.");
+          print(response.data);
+          return "success";
         }
-        print(response.data);
+
       }
     }
     else{
       showNoInternetSnackBar(context);
+      return null;
     }
   }
   on DioError catch(e){
     showToast(context, "Unable to process your request now");
+    return null;
   }
 }
 

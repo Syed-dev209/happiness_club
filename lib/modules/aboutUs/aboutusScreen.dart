@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
@@ -117,34 +118,42 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                               fontWeight: FontWeight.w500),
                         );
                       }
-                      return  Text(
-                        "${snapshot.data!.data!.content}",
-                        style: FontStyle.PoppinsStyle(17, Color(ColorCodes.GREY_COLOR),
-                            fontWeight: FontWeight.w500),
+                      return  Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${snapshot.data!.data!.content}",
+                            style: FontStyle.PoppinsStyle(17, Color(ColorCodes.GREY_COLOR),
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 15,),
+                          statsContainer(snapshot.data!.data!),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Text(
+                            "Videos",
+                            style: FontStyle.PoppinsStyle(16, Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(height: 15,),
+                          SizedBox(
+                              height: 100,
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, i) {
+                                    return VideoCard(videoModel: snapshot.data!.data!.videos![i]!,);
+                                  },
+                                  separatorBuilder: (context, i) => SizedBox(
+                                    width: 12,
+                                  ),
+                                  itemCount: snapshot.data!.data!.videos!.length))
+                        ],
                       );
                       }
                   ),
 
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    "Preferred Partners",
-                    style: FontStyle.PoppinsStyle(16, Colors.black,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 15,),
-                  SizedBox(
-                    height: 100,
-                      child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, i) {
-                            return PartnersCard();
-                          },
-                          separatorBuilder: (context, i) => SizedBox(
-                                width: 12,
-                              ),
-                          itemCount: 10))
+
                 ],
               ),
             ),
@@ -191,6 +200,107 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           ),
         )
       ],
+    );
+  }
+
+
+  statsContainer(AboutUsModelData data) {
+    return Container(
+      height: 102,
+      width: double.maxFinite,
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Text(
+                      "Total\nMembers",
+                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                          fontWeight: FontWeight.w400),
+                      textAlign: TextAlign.center,
+                    )),
+                //SizedBox(height: 8,),
+                Expanded(
+                    child: AutoSizeText("${data.totalMembers}",
+                        style: FontStyle.PoppinsStyle(
+                            22, Color(ColorCodes.GOLDEN_COLOR),
+                            fontWeight: FontWeight.w700),minFontSize: 15,))
+              ],
+            ),
+          ),
+          Image.asset(Images.DOTTED_LINE),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Text(
+                      "Total\nPartners",
+                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                          fontWeight: FontWeight.w400),
+                      textAlign: TextAlign.center,
+                    )),
+                //SizedBox(height: 8,),
+                Expanded(
+                    child: AutoSizeText("${data.totalPartners}",
+                        style: FontStyle.PoppinsStyle(
+                            22, Color(ColorCodes.GOLDEN_COLOR),
+                            fontWeight: FontWeight.w700),minFontSize: 15,))
+              ],
+            ),
+          ),
+          Image.asset(Images.DOTTED_LINE),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Text(
+                      "Total Staff\nChampions",
+                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                          fontWeight: FontWeight.w400),
+                      textAlign: TextAlign.center,
+                    )),
+                //SizedBox(height: 8,),
+                Expanded(
+                    child: AutoSizeText("${data.totalChampions}",
+                        style: FontStyle.PoppinsStyle(
+                            22, Color(ColorCodes.GOLDEN_COLOR),
+                            fontWeight: FontWeight.w700),minFontSize: 15,))
+              ],
+            ),
+          ),
+          Image.asset(Images.DOTTED_LINE),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Text(
+                      "Total Staff\nCompanies",
+                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                          fontWeight: FontWeight.w400),
+                      textAlign: TextAlign.center,
+                    )),
+                //SizedBox(height: 8,),
+                Expanded(
+                    child: AutoSizeText("${data.totalCompanies}",
+                        style: FontStyle.PoppinsStyle(
+                            22, Color(ColorCodes.GOLDEN_COLOR),
+                            fontWeight: FontWeight.w700),
+                      minFontSize: 15,
+                    )
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

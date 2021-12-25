@@ -89,7 +89,7 @@ Future addCustomer(context,String qrResult,String name, String email, String num
 }
 
 
-Future postCustomerHelp(context,String message,String name, String email, String number,String company)async{
+Future postCustomerHelp(context,String message,String name, String email, String number,String company,String type)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
@@ -98,7 +98,8 @@ Future postCustomerHelp(context,String message,String name, String email, String
         "company":company,
         "mobile":number,
         "email":email,
-        "message":message
+        "message":message,
+        "type":type
       });
       if(response.statusCode == 200){
         showToast(context, response.data["message"]);

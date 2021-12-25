@@ -1,9 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/images.dart';
 
 
 class DigitalCardWidget extends StatelessWidget {
-  const DigitalCardWidget({ Key? key }) : super(key: key);
+  Uint8List imageBlob;
+  DigitalCardWidget({required this.imageBlob});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +14,17 @@ class DigitalCardWidget extends StatelessWidget {
       height: 217,
       width: double.maxFinite,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0,1),
+            color: Colors.black26,
+            blurRadius: 1,
+            spreadRadius: 1
+          )
+        ],
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(Images.CREDIT_CARD),
+          image: MemoryImage(imageBlob),
           fit: BoxFit.cover
           )
       ),

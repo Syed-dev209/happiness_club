@@ -9,6 +9,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
 import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/modules/home/controller/homeController.dart';
+import 'package:happiness_club/services/notification_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   var storage = StorageServices();
-  loadData()async{
+
+  Future loadData()async{
     var response = storage.readDataFromStorage(StorageKeys.LOGGED_IN);
     var uid = storage.readDataFromStorage(StorageKeys.USER_ID);
     var name = storage.readDataFromStorage(StorageKeys.USER_NAME);
@@ -44,7 +46,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadData();
+    PushNotificationServices().getDeviceToken();
+    PushNotificationServices().requestPermission();
+    loadData().then((value) {
+      PushNotificationServices().initializeNotifications(context);
+    });
   }
   @override
   Widget build(BuildContext context) {

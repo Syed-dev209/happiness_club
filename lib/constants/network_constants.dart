@@ -29,4 +29,6 @@ class APIS {
   static const String ADD_CUSTOMER = BASE_URL+"event/customer-add";
   static const String ADD_VIEW = BASE_URL+"offers/add-view";
   static const String HELP = BASE_URL+"help";
+  static const String DIGITAL_CARD = BASE_URL+"dc";
+  static const String ANNOUNCEMENTS = BASE_URL+"announcements";
 }

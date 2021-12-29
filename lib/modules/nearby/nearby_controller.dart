@@ -5,6 +5,7 @@ import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
+import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
 
 var dio = Dio();
@@ -14,7 +15,12 @@ Future<OffersModel?> getNearbyOffers(LatLng currentPosition) async {
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
-      var response = await dio.get(APIS.NEARBY_OFFERS);
+      LatLng location = await LocationService().getCurrentLocation();
+
+      var response = await dio.get(APIS.NEARBY_OFFERS,queryParameters: {
+        "lat":location.latitude,
+        "long":location.longitude
+      });
       if (response.statusCode == 200) {
         print(response.data);
         OffersModel model = OffersModel.fromJson(response.data);

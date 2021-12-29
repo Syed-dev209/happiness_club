@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
@@ -97,7 +98,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                 }
                 return Column(
                   children: [
-                    imageCard(snapshot.data!.data!.featuredImage!),
+                    imageCard(snapshot.data!.data!.featuredImage ?? Constants.NOT_FOUND_IMAGE_URL,snapshot.data!.data!.offerDiscount ?? "0"),
                     SizedBox(height: 15,),
                     Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -150,35 +151,67 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     );
   }
 
-  imageCard(String imageUrl) {
-    return Container(
-      height: 300,
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(5, 7),
-                color: Colors.black.withOpacity(0.8),
-                blurRadius: 100)
-          ],
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-              image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover)),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Padding(
-          padding: EdgeInsets.only(left: 15, top: 20),
-          child: Align(
-              alignment: Alignment.topLeft,
-              child: CircleAvatar(
-                radius: 14,
-                backgroundColor: ColorCodes.WHITE_COLOR,
-                child: SvgPicture.asset(Images.BACK_BUTTON),
-              )),
+  imageCard(String imageUrl, String offer) {
+    return Stack(
+      children: [
+        Container(
+          height: 300,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(5, 7),
+                    color: Colors.black.withOpacity(0.8),
+                    blurRadius: 100)
+              ],
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                  image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover)),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: EdgeInsets.only(left: 15, top: 20),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: CircleAvatar(
+                    radius: 14,
+                    backgroundColor: ColorCodes.WHITE_COLOR,
+                    child: SvgPicture.asset(Images.BACK_BUTTON),
+                  )),
+            ),
+          ),
         ),
-      ),
+
+        Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            height: 40,
+            width: 60,
+            margin: EdgeInsets.only(right: 15),
+            child: Stack(
+              children: [
+                SvgPicture.asset(
+                  Images.DISCOUNT_FLAG,
+                  fit: BoxFit.fill,
+                  // height: 30,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: Center(
+                    child: Text(
+                      "$offer off",
+                      style: FontStyle.PoppinsStyle(10, Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

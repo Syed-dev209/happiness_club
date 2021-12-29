@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -60,14 +61,22 @@ class ChampionsCard extends StatelessWidget {
           ),
 
           SizedBox(width: 15,),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${modelData.fullName}',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
-              SizedBox(height: 10,),
-              Text('${modelData.companyDesignation}',style: FontStyle.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),)
-            ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${modelData.fullName}',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
+                SizedBox(height: 10,),
+                Expanded(
+                  child: AutoSizeText('${modelData.companyDesignation}',
+                    style: FontStyle.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),
+                    minFontSize: 8,
+                    softWrap: true,
+                  ),
+                )
+              ],
+            ),
           )
         ]
       ),

@@ -152,6 +152,7 @@ class _OffersCardState extends State<OffersCard> {
   }
 
   Widget dealImage() {
+    double distance = widget.modelData.distance ?? 0.0;
     return Expanded(
       flex: 2,
       child: Container(
@@ -189,7 +190,7 @@ class _OffersCardState extends State<OffersCard> {
                 ],
               ),
             ),
-            Padding(
+          distance>=0.0?  Padding(
               padding: EdgeInsets.only(bottom: 8),
               child: Align(
                 alignment: Alignment.bottomRight,
@@ -210,13 +211,13 @@ class _OffersCardState extends State<OffersCard> {
                       children: [
                         SvgPicture.asset(Images.DIRECTION_ICON),
                         Text(
-                          '${widget.modelData.distance!.toStringAsFixed(2)}km',
+                          '${ widget.modelData.distance==null?"0.0":widget.modelData.distance!.toStringAsFixed(2)}km',
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],
                     )),
               ),
-            )
+            ):Text('')
           ],
         ),
       ),
@@ -247,6 +248,8 @@ class _OffersCardState extends State<OffersCard> {
   }
 
   ratingAndTime() {
+    DateTime endDate = DateTime.parse(widget.modelData.endDate??DateTime.now().toString());
+    int daysLeft = endDate.difference(DateTime.now()).inDays;
     return Expanded(
       child: Row(
         children: [
@@ -258,7 +261,7 @@ class _OffersCardState extends State<OffersCard> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: Text(
-                "9 days left",
+                "$daysLeft days left",
                 style: FontStyle.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
@@ -268,7 +271,7 @@ class _OffersCardState extends State<OffersCard> {
           SizedBox(
             width: 5,
           ),
-          Container(
+          widget.modelData.ratings!="0.0"?   Container(
             // height: 20,
             width: 38,
             decoration: BoxDecoration(
@@ -281,13 +284,13 @@ class _OffersCardState extends State<OffersCard> {
                 SizedBox(
                   width: 2,
                 ),
-                Text(
+               Text(
                   "${widget.modelData.ratings}",
                   style: FontStyle.PoppinsStyle(11, Colors.black),
                 )
               ],
             ),
-          )
+          ):Text('')
         ],
       ),
     );

@@ -38,6 +38,7 @@ class _OffersSummaryState extends State<OffersSummary> {
   }
   @override
   Widget build(BuildContext context) {
+    double distance = widget.modelData.distance??0.0;
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.maxFinite,
@@ -93,7 +94,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                           ratingAndTime(),
                         ]),
                   ),
-                  Expanded(
+                  distance>=0.0? Expanded(
                     child: Container(
                       height: 28,
                       width: 65,
@@ -119,14 +120,14 @@ class _OffersSummaryState extends State<OffersSummary> {
                                 ),
                               ),
                               Text(
-                                '${widget.modelData.distance!.toStringAsFixed(2)}km',
+                                '${widget.modelData.distance==null?"0.0":widget.modelData.distance!.toStringAsFixed(2)}km',
                                 style: FontStyle.PoppinsStyle(
                                     11, Color(ColorCodes.GOLDEN_COLOR)),
                               )
                             ],
                           ),
                         )),
-                  )
+                  ):Text("")
                 ],
               ),
             ),
@@ -235,6 +236,10 @@ class _OffersSummaryState extends State<OffersSummary> {
   }
 
   ratingAndTime() {
+    print(widget.modelData.endDate);
+    DateTime endDate = DateTime.parse(widget.modelData.endDate??DateTime.now().toString());
+    int daysLeft = endDate.difference(DateTime.now()).inDays;
+    print(daysLeft);
     return Expanded(
       child: Row(
         children: [
@@ -250,7 +255,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: AutoSizeText(
-                "9 days left",
+                "$daysLeft days left",
                 style: FontStyle.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),

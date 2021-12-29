@@ -1,9 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
+import 'package:happiness_club/modules/offers/Screens/offers_by_category_screen.dart';
+import 'package:happiness_club/modules/search/Screens/search_controller.dart';
+import 'package:happiness_club/modules/search/Screens/search_result_screen.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -13,21 +20,24 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  TextEditingController search = TextEditingController();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     FocusNode focus = FocusNode();
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: double.maxFinite,
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.maxFinite,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            Container(
-              height: size.height*0.47,
-              width: double.maxFinite,
+            Expanded(
+              flex: 2,
+            //  height: size.height*0.5,
+             // width: double.maxFinite,
               child: Column(
                 children: [
             SizedBox(
@@ -44,27 +54,32 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(
               height: 12,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Wrap(
-                spacing: 15,
-                runSpacing: 3,
-                children: [
-                  tagsCard("Automotive"),
-                  tagsCard("Education"),
-                  tagsCard("Family"),
-                  tagsCard("Health"),
-                  tagsCard("Online Shopping"),
-                  tagsCard("Residential"),
-                  tagsCard("Resturant"),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Consumer<CategoriesOfferProvider>(
+                  builder: (context, data,_){
+                    if(data.modelData==null){
+                      return Center(
+                        child: getLoader(),
+                      );
+                    }
+
+                    return Wrap(
+                      spacing: 15,
+                      runSpacing: 3,
+                      children: List.generate(data.modelData!.data!.length, (i) => tagsCard(
+                          data.modelData!.data![i]!.categoryName!,data.modelData!.data![i]!.id.toString()))
+                    );
+                  },
+                )
+              ),
+            ),
+
                 ],
               ),
             ),
-            
-                ],
-              ),
-            ),
-            
+
             Container(
               height: 15,
               width: double.maxFinite,
@@ -75,10 +90,11 @@ class _SearchScreenState extends State<SearchScreen> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: Text("Recent Searches",style: FontStyle.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
             ),
-            SizedBox(
-              height: size.height*047,
-              width: double.maxFinite,
-              child: recentSearches(),
+            Expanded(
+              //height: size.height*04,
+              //width: double.maxFinite,
+              //child: recentSearches(),
+              child: Text(''),
             ),
           ],
         ),
@@ -86,17 +102,23 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  tagsCard(String tag) {
-    return Container(
-      height: 32.5,
-      padding: EdgeInsets.only(left: 10, top: 3, bottom: 3, right: 10),
-      margin: EdgeInsets.all(3),
-      decoration: BoxDecoration(
-          border: Border.all(color: Color(0xffcbcbcb), width: 1.5),
-          borderRadius: BorderRadius.circular(12)),
-      child: Text(
-        tag,
-        style: FontStyle.PoppinsStyle(15, Colors.black),
+  tagsCard(String tag,String id) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, CupertinoPageRoute(builder: (_)=>OffersByCategoryScreen(catId: id, catName: tag)));
+
+      },
+      child: Container(
+        height: 32.5,
+        padding: EdgeInsets.only(left: 10, top: 3, bottom: 3, right: 10),
+        margin: EdgeInsets.all(3),
+        decoration: BoxDecoration(
+            border: Border.all(color: Color(0xffcbcbcb), width: 1.5),
+            borderRadius: BorderRadius.circular(12)),
+        child: Text(
+          tag,
+          style: FontStyle.PoppinsStyle(15, Colors.black),
+        ),
       ),
     );
   }
@@ -135,6 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               flex: 6,
               child: TextFormField(
+                controller: search,
                 focusNode: focus,
                 decoration: InputDecoration(
                     // contentPadding: EdgeInsets.symmetric(horizontal: 100),
@@ -162,16 +185,27 @@ class _SearchScreenState extends State<SearchScreen> {
               width: 7,
             ),
             Expanded(
-              child: GestureDetector(
-                onTap: () {
+              child: !loading? GestureDetector(
+                onTap: () async{
                   focus.unfocus();
+                  setState(() {
+                    loading = true;
+                  });
+                  searchUserInput(context,search.text).then((value) {
+                    setState(() {
+                      loading = false;
+                    });
+                    if(value!=null){
+                      Navigator.push(context, CupertinoPageRoute(builder: (_)=>SearchResultsScreen(modelData: value)));
+                    }
+                  });
                 },
                 child: SvgPicture.asset(
-                  Images.FILTER_ICON,
+                  Images.SEARCH_ACTIVE,
                   // height: 20,
                   // width: 20,
                 ),
-              ),
+              ):getLoader(),
             )
           ],
         ),

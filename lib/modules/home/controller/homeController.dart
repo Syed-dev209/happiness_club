@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
@@ -8,6 +9,7 @@ import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart'
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
+import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +39,7 @@ Future getSliderImages(context) async {
       showNoInternetSnackBar(context);
     }
   } on DioError catch (e) {
+    print(e);
     print("Sliders failed to load from API");
   }
 }
@@ -46,7 +49,11 @@ Future getMostViewedOffers(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      var response = await dio.get(APIS.MOST_VIEWED_OFFERS);
+      LatLng location = await LocationService().getCurrentLocation();
+      var response = await dio.get(APIS.MOST_VIEWED_OFFERS,queryParameters: {
+        "lat":location.latitude,
+        "long":location.longitude
+      });
       if(response.statusCode==200){
         OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
@@ -71,7 +78,11 @@ Future getLatestOffers(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      var response = await dio.get(APIS.LATEST_OFFERS);
+      LatLng location = await LocationService().getCurrentLocation();
+      var response = await dio.get(APIS.LATEST_OFFERS,queryParameters: {
+      "lat":location.latitude,
+      "long":location.longitude
+      });
       if(response.statusCode==200){
         OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
@@ -96,7 +107,11 @@ Future getFeaturedOffers(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      var response = await dio.get(APIS.FEATURED_OFFERS);
+      LatLng location = await LocationService().getCurrentLocation();
+      var response = await dio.get(APIS.FEATURED_OFFERS,queryParameters: {
+        "lat":location.latitude,
+        "long":location.longitude
+      });
       if(response.statusCode==200){
         print(response.data);
         OffersModel model = OffersModel.fromJson(response.data);

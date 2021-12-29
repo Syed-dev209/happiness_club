@@ -14,6 +14,7 @@ import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/champions/screens/champions_screen.dart';
 import 'package:happiness_club/modules/companies/Screens/companiesScreen.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
+import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
 import 'package:happiness_club/modules/favourites/Screen/favourites_screen.dart';
 import 'package:happiness_club/modules/home/controller/qr_controller.dart';
@@ -72,6 +73,16 @@ class CustomDrawer extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
+                  ListTile(
+                    onTap: () {
+                      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>HomeBase()));
+                    },
+                    leading: Icon(Icons.home,color: Color(ColorCodes.GOLDEN_COLOR),size: 28,),
+                    title: Text(
+                      "Dashboard",
+                      style: style,
+                    ),
+                  ),
                   ListTile(
                     onTap: () {
                       Navigator.push(context, CupertinoPageRoute(builder: (context)=>DigitalCardScreen()));

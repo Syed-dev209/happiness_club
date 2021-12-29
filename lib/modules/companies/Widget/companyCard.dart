@@ -16,7 +16,7 @@ class CompanyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, CupertinoPageRoute(builder: (_)=>CompanyDetailsScreen()));
+      //  Navigator.push(context, CupertinoPageRoute(builder: (_)=>CompanyDetailsScreen()));
       },
       child: Container(
         height: 50,
@@ -28,7 +28,12 @@ class CompanyCard extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Expanded(
               flex: 2,
-              child: CachedNetworkImage(imageUrl: modelData.logo ?? Constants.ALT_IMAGE,)
+              child: CachedNetworkImage(
+                imageUrl: modelData.logo ?? Constants.ALT_IMAGE,
+                errorWidget: (context,a,s){
+                  return CachedNetworkImage(imageUrl: Constants.NOT_FOUND_IMAGE_URL,);
+                },
+              )
               // Container(
               //   height: 76,
               //   width: 76,

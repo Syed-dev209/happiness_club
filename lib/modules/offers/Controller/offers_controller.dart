@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
@@ -6,6 +7,7 @@ import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
+import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +16,6 @@ import 'package:provider/provider.dart';
 
 var dio = Dio();
 var storage = StorageServices();
-
-
-
 
 Future getAllOffers(context,int start, int end)async{
   try{
@@ -55,7 +54,11 @@ Future<OfferDetailsModel?> getOffersDetail({required String offerId})async{
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
-      var response = await dio.get("${APIS.OFFER_DETAILS}/$offerId");
+      LatLng location = await LocationService().getCurrentLocation();
+      var response = await dio.get("${APIS.OFFER_DETAILS}/$offerId",queryParameters: {
+        "lat":location.latitude,
+        "long":location.longitude
+      });
       if (response.statusCode == 200) {
         OfferDetailsModel model = OfferDetailsModel.fromJson(response.data);
         storage.writeDataToStorage(offerId, model.toJson());

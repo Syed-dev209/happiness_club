@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
@@ -11,6 +12,7 @@ import 'package:happiness_club/modules/nearby/nearby_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/services/location_services.dart';
+import 'package:happiness_club/constants/fontStyles.dart';
 
 class NearbyScreen extends StatefulWidget {
   const NearbyScreen({Key? key}) : super(key: key);
@@ -102,7 +104,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                 );
               }
               if(snapshot.data == null || snapshot.data!.data!.isEmpty){
-                return Center(child: Text("No Nearby offers found"));
+                return Center(child: noDataFound());
               }
               List<OffersModelData?> dataList= [];
               dataList.addAll(snapshot.data!.data!);
@@ -168,6 +170,22 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
 
         ),
       ),
+    );
+  }
+
+  noDataFound(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(Images.NO_DATA),
+        SizedBox(height: 15,),
+        Text(
+          "No nearby offers found",
+          style: FontStyle.PoppinsStyle(
+              15,
+              Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
+              fontWeight: FontWeight.w600),)
+      ],
     );
   }
 

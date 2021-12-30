@@ -90,14 +90,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   SizedBox(
                     height: 15,
                   ),
-                  Center(
-                    child: Text(
-                      "https://happinessclub.ae/",
-                      style: FontStyle.PoppinsStyle(
-                          20, Color(ColorCodes.BLUE_COLOR),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  // Center(
+                  //   child: Text(
+                  //     "https://happinessclub.ae/",
+                  //     style: FontStyle.PoppinsStyle(
+                  //         16, Color(ColorCodes.BLUE_COLOR),
+                  //         fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 15,
                   ),
@@ -114,8 +114,9 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                               "and was established in January 2017. This initiative was started with three goals in mind, Enjoyment,"
                               "Inspiration, and Work Smart. With over 61,000+ members and 3000+ partners, the Happiness Club aims to"
                               "bring our members and partners together into a beneficial relationship.",
-                          style: FontStyle.PoppinsStyle(17, Color(ColorCodes.GREY_COLOR),
+                          style: FontStyle.PoppinsStyle(14, Color(0xff7C86A2),
                               fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
                         );
                       }
                       return  Column(
@@ -123,8 +124,9 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                         children: [
                           Text(
                             "${snapshot.data!.data!.content}",
-                            style: FontStyle.PoppinsStyle(17, Color(ColorCodes.GREY_COLOR),
+                            style: FontStyle.PoppinsStyle(14, Color(0xff7C86A2),
                                 fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(height: 15,),
                           statsContainer(snapshot.data!.data!),

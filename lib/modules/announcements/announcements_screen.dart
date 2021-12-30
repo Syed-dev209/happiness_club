@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/announcements/Model/announcement_model.dart';
 import 'package:happiness_club/modules/announcements/announcement_details_screen.dart';
 import 'package:happiness_club/modules/announcements/controller/announcement_controller.dart';
@@ -91,7 +94,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
   announcementCard(AnnouncementModelData data){
     String htmlData = """${data.description}""";
     return Container(
-      height: 122,
+      height: 296,
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
       decoration: BoxDecoration(
@@ -108,20 +111,34 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("${data.title}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w500),),
-          SizedBox(height: 5,),
-          Expanded(
-              child: Html(
-                shrinkWrap: true,
-                  data: htmlData,
-                style: {
-                    "p":Style(
-                      textOverflow: TextOverflow.fade
-                    )
+          
+          SizedBox(
+            height: 174,
+            width: double.maxFinite,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CachedNetworkImage(
+                imageUrl:  data.imageUrl??Constants.NOT_FOUND_IMAGE_URL,
+                fit: BoxFit.fill,
+                placeholder: (context,s){
+                  return Center(
+                    child: getLoader(),
+                  );
                 },
-              )
+                errorWidget: (context , a,s){
+                  return Center();
+                },
+              ),
+            ),
           ),
+          //SizedBox(height: 5,),
+          AutoSizeText("${data.title}",
+            style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
+            minFontSize: 10,
+          ),
+          Text("${data.description}....",style: FontStyle.PoppinsStyle(12, Colors.black),),
           GestureDetector(
             onTap: (){
               Navigator.push(context, CupertinoPageRoute(builder: (_)=>AnnouncementDetailsScreen(id: data.id!.toString())));
@@ -129,7 +146,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
               child: Text(
                 "Read More...",
                 style: FontStyle.PoppinsStyle(
-                    12, Color(ColorCodes.BLUE_COLOR),
+                    14, Color(ColorCodes.BLUE_COLOR),
                     fontWeight: FontWeight.w500),
               )
           )

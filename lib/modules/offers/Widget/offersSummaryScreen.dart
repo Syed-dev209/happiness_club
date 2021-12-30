@@ -97,8 +97,8 @@ class _OffersSummaryState extends State<OffersSummary> {
                   distance>=0.0? Expanded(
                     child: Container(
                       height: 28,
-                      width: 65,
-                      // padding: EdgeInsets.symmetric(horizontal: 5),
+                      width: 75,
+                       padding: EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         //color: Colors.black
@@ -119,10 +119,16 @@ class _OffersSummaryState extends State<OffersSummary> {
                                   color: Color(ColorCodes.GOLDEN_COLOR),
                                 ),
                               ),
-                              Text(
-                                '${widget.modelData.distance==null?"0.0":widget.modelData.distance!.toStringAsFixed(2)}km',
-                                style: FontStyle.PoppinsStyle(
-                                    11, Color(ColorCodes.GOLDEN_COLOR)),
+                              SizedBox(height: 1,),
+                              Expanded(
+                                flex: 3,
+                                child: AutoSizeText(
+                                  '${widget.modelData.distance==null?"0":widget.modelData.distance!.toStringAsFixed(0)}km',
+                                  style: FontStyle.PoppinsStyle(
+                                      11, Color(ColorCodes.GOLDEN_COLOR)),
+                                  minFontSize: 8,
+                                  maxLines: 1,
+                                ),
                               )
                             ],
                           ),

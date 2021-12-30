@@ -141,17 +141,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Consumer<MostViewedOffersProvider>(
                       builder: (context,data,_){
                         if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
-                          return ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, i) {
-                                return DealShimmerCard(
-                                  smallCard: false,
-                                );
-                              },
-                              separatorBuilder: (context, i) => SizedBox(
-                                width: 10,
-                              ),
-                              itemCount: 4);
+                          return SizedBox(
+                            height: 260,
+                            child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return DealShimmerCard(
+                                    smallCard: false,
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                  width: 10,
+                                ),
+                                itemCount: 4),
+                          );
                         }
                         if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
                           return Center(
@@ -201,17 +204,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Consumer<LatestOffersProvider>(
                       builder:  (context, data , _){
                         if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
-                          return ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, i) {
-                                return DealShimmerCard(
-                                  smallCard: true,
-                                );
-                              },
-                              separatorBuilder: (context, i) => SizedBox(
-                                width: 10,
-                              ),
-                              itemCount: 4);
+                          return SizedBox(
+                            height: 220,
+                            child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return DealShimmerCard(
+                                    smallCard: true,
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                  width: 10,
+                                ),
+                                itemCount: 4),
+                          );
                         }
                         if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
                           return Center(
@@ -261,17 +267,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Consumer<FeaturedOffersProvider>(
                       builder: (context,data,_){
                         if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
-                          return ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, i) {
-                                return DealShimmerCard(
-                                  smallCard: true,
-                                );
-                              },
-                              separatorBuilder: (context, i) => SizedBox(
-                                width: 10,
-                              ),
-                              itemCount: 4);
+                          return SizedBox(
+                            height: 220,
+                            child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return DealShimmerCard(
+                                    smallCard: true,
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                  width: 10,
+                                ),
+                                itemCount: 4),
+                          );
                         }
                         if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
                           return Center(
@@ -338,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                Row(
+                data.modelData!.data!.isNotEmpty? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(data.modelData!.data!.length, (index) {
                       return Container(
@@ -353,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               : Color(ColorCodes.LITE_GOLDEN_COLOR),
                         ),
                       );
-                    }))
+                    })):Text('No Offer discounts found')
               ],
             ));
       },
@@ -382,7 +391,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CachedNetworkImage(
             height: 230,
             width: double.maxFinite,
-            imageUrl: data.imageFilename!,fit: BoxFit.cover,errorWidget: (context,s,dd){
+            imageUrl: data.imageFilename??Constants.NOT_FOUND_IMAGE_URL,fit: BoxFit.cover,
+            errorWidget: (context,s,dd){
             return Image.asset(Images.NO_IMAGE);
           },),
         ),

@@ -51,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
     loadData().then((value) {
       PushNotificationServices().initializeNotifications(context);
     });
+    PushNotificationServices().registerUserToken();
   }
   @override
   Widget build(BuildContext context) {

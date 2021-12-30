@@ -203,15 +203,15 @@ class _OffersCardState extends State<OffersCard> {
                   ),
                 ).blurred(
                     blur: 3,
-                    //blurColor: Colors.black26,
-                    colorOpacity: 0.1,
+                    blurColor: Colors.black,
+                    colorOpacity: 0.3,
                     borderRadius: BorderRadius.circular(20),
                     overlay: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SvgPicture.asset(Images.DIRECTION_ICON),
                         Text(
-                          '${ widget.modelData.distance==null?"0.0":widget.modelData.distance!.toStringAsFixed(2)}km',
+                          '${ widget.modelData.distance==null?"0":widget.modelData.distance!.toStringAsFixed(0)}km',
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],

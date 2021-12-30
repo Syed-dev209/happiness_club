@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/favourites/Widget/favourites_card.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
@@ -70,16 +72,16 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       print(snapshot.data);
                       if(snapshot.data == null){
                         return Center(
-                          child: Text("No Favorites are marked",style: FontStyle.PoppinsStyle(16, Colors.black),),
+                          child: getLoader(),
                         );
                       }
                       if( snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: getLoader(),
                         );
                       }
 
-                      return ListView.separated(
+                      return snapshot.data!.data!.isNotEmpty?ListView.separated(
                           padding: EdgeInsets.symmetric(horizontal: 14,vertical: 10),
                           itemBuilder: (context,i){
                             return FavouritesCard(modelData:snapshot.data!.data![i]!,reload: (){
@@ -88,6 +90,8 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                           },
                           separatorBuilder: (context,i)=>SizedBox(height: 12,),
                           itemCount: snapshot.data!.data!.length
+                      ):Center(
+                        child: noDataFound()
                       );
                     },
                   )
@@ -96,6 +100,22 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  noDataFound(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(Images.NO_DATA),
+        SizedBox(height: 15,),
+        Text(
+          "No favourites marked",
+          style: FontStyle.PoppinsStyle(
+              15,
+              Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
+              fontWeight: FontWeight.w600),)
+      ],
     );
   }
 }

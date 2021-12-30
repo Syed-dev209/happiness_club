@@ -21,7 +21,8 @@ Future getSliderImages(context) async {
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
-
+      // var ab =await dio.get("https://hpcapi.happinessclub.ae/api/v1/offers/featured?v=123");
+      // print(ab.data);
       var response = await dio.get(APIS.SLIDER_IMAGED);
       if (response.statusCode == 200) {
         OffersSliderModel model = OffersSliderModel.fromJson(response.data);
@@ -50,6 +51,7 @@ Future getMostViewedOffers(context)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       LatLng location = await LocationService().getCurrentLocation();
+      print(APIS.MOST_VIEWED_OFFERS);
       var response = await dio.get(APIS.MOST_VIEWED_OFFERS,queryParameters: {
         "lat":location.latitude,
         "long":location.longitude
@@ -79,6 +81,7 @@ Future getLatestOffers(context)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       LatLng location = await LocationService().getCurrentLocation();
+      print(APIS.LATEST_OFFERS);
       var response = await dio.get(APIS.LATEST_OFFERS,queryParameters: {
       "lat":location.latitude,
       "long":location.longitude

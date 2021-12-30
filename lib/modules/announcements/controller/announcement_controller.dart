@@ -38,15 +38,15 @@ Future<AnnouncementModel?> getAnnouncements()async{
   }
 }
 
-Future<AnnouncementModel?> getAnnouncementsById(String id)async{
+Future<AnnouncementModelData?> getAnnouncementsById(String id)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      var response = await dio.get(APIS.ANNOUNCEMENTS,queryParameters: {
+      var response = await dio.get(APIS.ANNOUNCEMENT,queryParameters: {
         "aid":id
       });
       if(response.statusCode == 200) {
-        AnnouncementModel model = AnnouncementModel.fromJson(response.data);
+        AnnouncementModelData model = AnnouncementModelData.fromJson(response.data['data']);
         storage.writeDataToStorage(StorageKeys.ANNOUNCEMENTS+"id", model.toJson());
         return model;
       }
@@ -54,7 +54,7 @@ Future<AnnouncementModel?> getAnnouncementsById(String id)async{
     else{
       var response = storage.readDataFromStorage(StorageKeys.ANNOUNCEMENTS+"id");
       if(response!=""){
-        AnnouncementModel model = AnnouncementModel.fromJson(response);
+        AnnouncementModelData model = AnnouncementModelData.fromJson(response);
         return model;
       }
       else{

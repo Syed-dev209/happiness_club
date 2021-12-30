@@ -31,5 +31,7 @@ class APIS {
   static const String HELP = BASE_URL+"help";
   static const String DIGITAL_CARD = BASE_URL+"dc";
   static const String ANNOUNCEMENTS = BASE_URL+"announcements";
+  static const String ANNOUNCEMENT = BASE_URL+"announcement";
   static const String SEARCH = BASE_URL+"offers/search";
+  static const String REGISTER_TOKEN = BASE_URL+"get-token";
 }

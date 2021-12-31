@@ -83,6 +83,9 @@ Future<OfferDetailsModel?> getOffersDetail({required String offerId})async{
   on DioError catch(e){
     return null;
   }
+  catch(e){
+    return null;
+  }
 }
 
 

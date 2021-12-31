@@ -24,14 +24,14 @@ class DealCard extends StatefulWidget {
 }
 
 class _DealCardState extends State<DealCard> {
-  String daysLeft="0";
+  int daysLeft=0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
      DateTime endDate = DateTime.parse(widget.modelData.endDate!);
      int days = endDate.difference(DateTime.now()).inDays;
-     days <=0 ? daysLeft ="0": daysLeft=days.toString();
+     days <=0 ? daysLeft =0: daysLeft=days;
   }
   @override
   Widget build(BuildContext context) {
@@ -70,10 +70,11 @@ class _DealCardState extends State<DealCard> {
                     //   height: 3,
                     // ),
                     Expanded(
-                      child: Text(
+                      child: AutoSizeText(
                         "${widget.modelData.title}",
                         style: FontStyle.PoppinsStyle(14, Colors.black,
                             fontWeight: FontWeight.w500),
+                        minFontSize: 9,
                       ),
                     ),
                     SizedBox(
@@ -206,7 +207,7 @@ class _DealCardState extends State<DealCard> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: AutoSizeText(
-                "$daysLeft days left",
+                daysLeft<=0?"1 day left" :"$daysLeft days left",
                 style: FontStyle.PoppinsStyle(
                     10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
@@ -218,7 +219,7 @@ class _DealCardState extends State<DealCard> {
           SizedBox(
             width: 5,
           ),
-          Container(
+          widget.modelData.ratings!="0.0"?  Container(
             // height: 20,
             width: 38,
             decoration: BoxDecoration(
@@ -237,7 +238,7 @@ class _DealCardState extends State<DealCard> {
                 )
               ],
             ),
-          )
+          ):Text('')
         ],
       ),
     );

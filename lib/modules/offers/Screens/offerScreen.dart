@@ -100,53 +100,58 @@ class _OffersScreenState extends State<OffersScreen> {
   }
 
   appBar() {
-    return Container(
-      height: 50,
-      width: double.maxFinite,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SvgPicture.asset(Images.BACK_BUTTON),
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width * 0.3,
-          // ),
-          Text(
-            "Offers",
-            style: FontStyle.PoppinsStyle(17, Colors.black,
-                fontWeight: FontWeight.w600),
-          ),
-          PopupMenuButton(
-            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8)
+    return GestureDetector(
+      onTap: (){
+        Navigator.maybePop(context);
+      },
+      child: Container(
+        height: 50,
+        width: double.maxFinite,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(Images.BACK_BUTTON),
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width * 0.3,
+            // ),
+            Text(
+              "Offers",
+              style: FontStyle.PoppinsStyle(17, Colors.black,
+                  fontWeight: FontWeight.w600),
             ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 05, 
-                    vertical: 10
+            PopupMenuButton(
+              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8)
+              ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 05,
+                      vertical: 10
+                    ),
+                    child: SvgPicture.asset(Images.APPBAR_DROP_ICON),
                   ),
-                  child: SvgPicture.asset(Images.APPBAR_DROP_ICON),
-                ),
-                itemBuilder: (context) => [
-                   PopupMenuItem(
-                    child: Text("Most viewed",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
-                    value: 1,
-                  ),
-                  PopupMenuItem(
-                    child: Text("Best rated",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
-                    value: 2,
-                  ),
-                   PopupMenuItem(
-                    child: Text("Featured",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
-                    value: 3,
-                  ),
-                ]
-            )
-          // GestureDetector(
-          //     onTap: () {
+                  itemBuilder: (context) => [
+                     PopupMenuItem(
+                      child: Text("Most viewed",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
+                      value: 1,
+                    ),
+                    PopupMenuItem(
+                      child: Text("Best rated",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                      value: 2,
+                    ),
+                     PopupMenuItem(
+                      child: Text("Featured",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                      value: 3,
+                    ),
+                  ]
+              )
+            // GestureDetector(
+            //     onTap: () {
 
-          //     }, child: SvgPicture.asset(Images.APPBAR_DROP_ICON))
-        ],
+            //     }, child: SvgPicture.asset(Images.APPBAR_DROP_ICON))
+          ],
+        ),
       ),
     );
   }

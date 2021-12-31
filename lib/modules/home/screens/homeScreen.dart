@@ -10,6 +10,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/auth/Screens/login_screen.dart';
 import 'package:happiness_club/modules/auth/Screens/phone_input_screen.dart';
 import 'package:happiness_club/modules/auth/Screens/signup_screen.dart';
+import 'package:happiness_club/modules/categories/Screens/categoriesScreen.dart';
 import 'package:happiness_club/modules/categories/Widget/categoriesCard.dart';
 import 'package:happiness_club/modules/categories/Widget/category_card_shimmer.dart';
 import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
@@ -23,6 +24,7 @@ import 'package:happiness_club/modules/home/widgets/dealCard.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:happiness_club/modules/home/widgets/deal_shimmer_card.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
+import 'package:happiness_club/modules/offers/Screens/offerScreen.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -93,11 +95,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: FontStyle.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
-                        Text(
-                          "View All",
-                          style: FontStyle.PoppinsStyle(
-                              12, Color(ColorCodes.GOLDEN_COLOR),
-                              fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: CategoriesScreen(),)));
+                          },
+                          child: Text(
+                            "View All",
+                            style: FontStyle.PoppinsStyle(
+                                12, Color(ColorCodes.GOLDEN_COLOR),
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),
@@ -193,11 +200,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: FontStyle.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
-                        Text(
-                          "View All",
-                          style: FontStyle.PoppinsStyle(
-                              12, Color(ColorCodes.GOLDEN_COLOR),
-                              fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen())));
+                          },
+                          child: Text(
+                            "View All",
+                            style: FontStyle.PoppinsStyle(
+                                12, Color(ColorCodes.GOLDEN_COLOR),
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),
@@ -256,11 +268,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: FontStyle.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
-                        Text(
-                          "View All",
-                          style: FontStyle.PoppinsStyle(
-                              12, Color(ColorCodes.GOLDEN_COLOR),
-                              fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen(),)));
+                          },
+                          child: Text(
+                            "View All",
+                            style: FontStyle.PoppinsStyle(
+                                12, Color(ColorCodes.GOLDEN_COLOR),
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),

@@ -72,7 +72,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
     final size = MediaQuery.of(context).size;
     markers.add(Marker(
         markerId: MarkerId("1"),
-        icon: customIcon??BitmapDescriptor.defaultMarker,
+        icon: BitmapDescriptor.defaultMarker,
         position: currentPosition
     ));
     return RefreshIndicator(

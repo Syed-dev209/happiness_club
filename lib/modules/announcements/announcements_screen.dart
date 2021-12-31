@@ -138,11 +138,18 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
             ),
           ),
           //SizedBox(height: 5,),
-          AutoSizeText("${data.title}",
-            style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
-            minFontSize: 10,
+          Expanded(
+            child: AutoSizeText("${data.title}",
+              style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
+              minFontSize: 10,
+            ),
           ),
-          Text("${data.description}....",style: FontStyle.PoppinsStyle(12, Colors.black),),
+          Expanded(
+              child: AutoSizeText(
+                "${data.description}....",
+                style: FontStyle.PoppinsStyle(12, Colors.black),
+                minFontSize: 8,
+              )),
           GestureDetector(
             onTap: (){
               Navigator.push(context, CupertinoPageRoute(builder: (_)=>AnnouncementDetailsScreen(id: data.id!.toString())));

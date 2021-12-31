@@ -15,6 +15,7 @@ import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
 import 'package:happiness_club/modules/offers/Widget/offersLocationScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersReviewsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersSummaryScreen.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 
 class OfferDetailsScreen extends StatefulWidget {
   String offerId;
@@ -88,12 +89,12 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
               builder: (context,snapshot){
                 if(snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: getLoader(),
                   );
                 }
                 if(snapshot.data==null){
                   return Center(
-                    child: Text('No Offer details found'),
+                    child: noDataFound(),
                   );
                 }
                 return Column(
@@ -150,7 +151,21 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
       ),
     );
   }
-
+  noDataFound(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(Images.NO_DATA),
+        SizedBox(height: 15,),
+        Text(
+          "No offer details found",
+          style: FontStyle.PoppinsStyle(
+              15,
+              Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
+              fontWeight: FontWeight.w600),)
+      ],
+    );
+  }
   imageCard(String imageUrl, String offer) {
     return Stack(
       children: [

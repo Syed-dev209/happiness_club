@@ -67,7 +67,11 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
               for(var i in snapshot.data!.data!) {
                 offerCard.add(reviewCard(i!));
               }
-              return Column(
+              return offerCard.length<=0?
+              Center(
+                child: Image.asset(Images.NO_REVIEW,height: 100,),
+              )
+                  :Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(

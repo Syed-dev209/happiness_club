@@ -121,7 +121,11 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
               borderRadius: BorderRadius.circular(12),
               child: CachedNetworkImage(
                 imageUrl:  data.imageUrl??Constants.NOT_FOUND_IMAGE_URL,
-                fit: BoxFit.fill,
+                height: 174,
+                width: double.maxFinite,
+                //fit: BoxFit.cover,
+                //fit: BoxFit.fill,
+               // fit: BoxFit.,
                 placeholder: (context,s){
                   return Center(
                     child: getLoader(),

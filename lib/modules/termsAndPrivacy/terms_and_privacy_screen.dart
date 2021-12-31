@@ -71,7 +71,8 @@ class _TermsAndPrivacyScreenState extends State<TermsAndPrivacyScreen> {
                       return Text("No ${widget.type} were found",style: FontStyle.PoppinsStyle(16, Colors.black26,fontWeight: FontWeight.w600),);
                     }
                     return Text("${snapshot.data}",
-                      style: FontStyle.PoppinsStyle(16, Colors.black26,fontWeight: FontWeight.w600),);
+                      style: FontStyle.PoppinsStyle(14, Color(0xff7C86A2),
+                          fontWeight: FontWeight.w500),);
                   },
                 )
 

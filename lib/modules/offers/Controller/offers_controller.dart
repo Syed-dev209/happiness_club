@@ -60,6 +60,7 @@ Future<OfferDetailsModel?> getOffersDetail({required String offerId})async{
         "long":location.longitude
       });
       if (response.statusCode == 200) {
+        print(response.data);
         OfferDetailsModel model = OfferDetailsModel.fromJson(response.data);
         storage.writeDataToStorage(offerId, model.toJson());
         return model;

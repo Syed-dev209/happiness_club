@@ -160,7 +160,7 @@ class _DealCardState extends State<DealCard> {
                       children: [
                         Expanded(child: SvgPicture.asset(Images.DIRECTION_ICON)),
                         Text(
-                            widget.modelData.distance!=null?'${widget.modelData.distance!.toStringAsFixed(2)} km':"0 Km",
+                            widget.modelData.distance!=null?'${widget.modelData.distance!.toStringAsFixed(0)} km':"0 Km",
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],
@@ -198,17 +198,20 @@ class _DealCardState extends State<DealCard> {
       child: Row(
         children: [
           Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
             height: 25,
             width: 60,
             decoration: BoxDecoration(
                 color: Color(ColorCodes.LIGHT_PINK_COLOR),
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
-              child: Text(
+              child: AutoSizeText(
                 "$daysLeft days left",
                 style: FontStyle.PoppinsStyle(
                     10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
+                minFontSize: 6,
+                maxLines: 1,
               ),
             ),
           ),

@@ -59,12 +59,35 @@ class CategoriesCard extends StatelessWidget {
                 children: [
                   Text(
                     "${modelData.categoryName}",
-                    style: FontStyle.PoppinsStyle(17, modelData.imageFilename==null?Colors.black:Colors.white,
-                        fontWeight: FontWeight.w600),
+                    // style: FontStyle.PoppinsStyle(17, modelData.imageFilename==null?Colors.black:Colors.white,
+                    //     fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      color:  modelData.imageFilename==null?Colors.black:Colors.white,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0,2),
+                          color: Colors.black,
+                          blurRadius: 3,
+                        )
+                      ]
+                    ),
                   ),
                   Text(
                     "${modelData.offersCount} Offers",
-                    style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR)),
+                   // style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR)),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(ColorCodes.GOLDEN_COLOR),
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0,2),
+                          color: Colors.black,
+                          blurRadius: 3,
+                        )
+                      ]
+                    ),
                   )
                 ],
               ),

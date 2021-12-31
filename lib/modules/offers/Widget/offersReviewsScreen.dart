@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
@@ -59,7 +60,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
               }
               if(snapshot.data==null){
                 return Center(
-                  child: Text('No Offer Reviews were found'),
+                  child: Image.asset(Images.NO_REVIEW),
                 );
               }
               List<Widget> offerCard=[];

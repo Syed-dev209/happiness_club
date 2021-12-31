@@ -254,17 +254,20 @@ class _OffersCardState extends State<OffersCard> {
       child: Row(
         children: [
           Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
             height: 25,
             width: 60,
             decoration: BoxDecoration(
                 color: Color(ColorCodes.LIGHT_PINK_COLOR),
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
-              child: Text(
+              child: AutoSizeText(
                 "$daysLeft days left",
                 style: FontStyle.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
+                minFontSize: 5,
+                maxLines: 1,
               ),
             ),
           ),

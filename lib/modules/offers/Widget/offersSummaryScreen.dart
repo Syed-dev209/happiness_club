@@ -261,7 +261,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: AutoSizeText(
-                "$daysLeft days left",
+                daysLeft<=0?"1 day left" :"$daysLeft days left",
                 style: FontStyle.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),

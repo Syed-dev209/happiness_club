@@ -4,11 +4,13 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/categories/Screens/categoriesScreen.dart';
+import 'package:happiness_club/modules/home/controller/homeController.dart';
 import 'package:happiness_club/modules/home/screens/homeScreen.dart';
 import 'package:happiness_club/modules/home/widgets/drawer.dart';
 import 'package:happiness_club/modules/nearby/nearby_screen.dart';
 import 'package:happiness_club/modules/offers/Screens/offerScreen.dart';
 import 'package:happiness_club/modules/search/Screens/searchScreen.dart';
+import 'package:happiness_club/services/notification_services.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({Key? key}) : super(key: key);
@@ -21,11 +23,18 @@ class _HomeBaseState extends State<HomeBase> {
   int selectedIndex = 0;
   Widget? body;
 
+
+  loadData()async{
+    await getFeaturedOffers(context);
+    PushNotificationServices().registerUserToken();
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     body = HomeScreen();
+    loadData();
+
   }
 
   @override

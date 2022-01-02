@@ -137,9 +137,9 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                         double mid = dataList.length/2;
                         double lat = double.parse(dataList[mid.floor()]!.latitude!);
                         double long = double.parse(dataList[mid.floor()]!.longitude!);
-                        mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(lat,long),zoom: 1)));
+                        mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(lat,long),zoom: 12)));
                       },
-                      initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 5)
+                      initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,

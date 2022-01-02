@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await getSliderImages(context);
     await getMostViewedOffers(context);
     await getLatestOffers(context);
-    await getFeaturedOffers(context);
+
       Navigator.pushReplacement(
           context, CupertinoPageRoute(builder: (_) => HomeBase()));
   }
@@ -46,12 +46,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    PushNotificationServices().getDeviceToken();
+    //PushNotificationServices().getDeviceToken();
     PushNotificationServices().requestPermission();
     loadData().then((value) {
       PushNotificationServices().initializeNotifications(context);
     });
-    PushNotificationServices().registerUserToken();
+
   }
   @override
   Widget build(BuildContext context) {

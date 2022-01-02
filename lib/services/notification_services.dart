@@ -8,6 +8,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/announcements/announcement_details_screen.dart';
+import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -52,6 +53,16 @@ class PushNotificationServices {
                       MaterialPageRoute(
                           builder: (_) =>
                              AnnouncementDetailsScreen(id: message.data["aid"])
+                      )
+                  );
+                });
+              }
+              else if(message.data["type"]=="offer"){
+                SchedulerBinding.instance!.addPostFrameCallback((_) {
+                  Navigator.of(GlobalVariable.navState.currentContext!).push(
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              OfferDetailsScreen(offerId: message.data["offer_id"])
                       )
                   );
                 });
@@ -101,6 +112,16 @@ class PushNotificationServices {
             );
           });
         }
+        else if(message.data["type"]=="offer"){
+          SchedulerBinding.instance!.addPostFrameCallback((_) {
+            Navigator.of(GlobalVariable.navState.currentContext!).push(
+                MaterialPageRoute(
+                    builder: (_) =>
+                        OfferDetailsScreen(offerId: message.data["offer_id"])
+                )
+            );
+          });
+        }
       });
     });
 
@@ -115,6 +136,16 @@ class PushNotificationServices {
                 MaterialPageRoute(
                     builder: (_) =>
                         AnnouncementDetailsScreen(id: terminatedMessage.data["aid"])
+                )
+            );
+          });
+        }
+        else if(terminatedMessage.data["type"]=="offer"){
+          SchedulerBinding.instance!.addPostFrameCallback((_) {
+            Navigator.of(GlobalVariable.navState.currentContext!).push(
+                MaterialPageRoute(
+                    builder: (_) =>
+                        OfferDetailsScreen(offerId: terminatedMessage.data["offer_id"])
                 )
             );
           });

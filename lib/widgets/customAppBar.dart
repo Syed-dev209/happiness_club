@@ -18,14 +18,18 @@ class CustomAppBar extends StatelessWidget {
             onTap: (){
               Navigator.maybePop(context);
             },
-              child: SvgPicture.asset(Images.BACK_BUTTON)),
+              child: SizedBox(
+                width: 20,
+                  child: SvgPicture.asset(Images.BACK_BUTTON))),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.3,
           ),
-          Text(
-            title,
-            style: FontStyle.PoppinsStyle(17, Colors.black,
-                fontWeight: FontWeight.w600),
+          Expanded(
+            child: Text(
+              title,
+              style: FontStyle.PoppinsStyle(17, Colors.black,
+                  fontWeight: FontWeight.w600),
+            ),
           )
         ],
       ),

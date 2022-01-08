@@ -81,12 +81,12 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  Center(
-                      child: Text(
-                    "Happiness Club",
-                    style: FontStyle.PoppinsStyle(24, Colors.black,
-                        fontWeight: FontWeight.bold),
-                  )),
+                  // Center(
+                  //     child: Text(
+                  //   "Happiness Club",
+                  //   style: FontStyle.PoppinsStyle(24, Colors.black,
+                  //       fontWeight: FontWeight.bold),
+                  // )),
                   SizedBox(
                     height: 15,
                   ),

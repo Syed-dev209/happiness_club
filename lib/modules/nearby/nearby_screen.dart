@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -9,7 +10,9 @@ import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/widgets/dealCard.dart';
 import 'package:happiness_club/modules/home/widgets/deal_shimmer_card.dart';
 import 'package:happiness_club/modules/nearby/nearby_controller.dart';
+import 'package:happiness_club/modules/nearby/widget/nearby_deal_card.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
+import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
@@ -117,44 +120,53 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                     icon: customIcon!,
                     position: LatLng(lat,long),
                     infoWindow: InfoWindow(
-                      title: "${i.title}"
+                      title: "${i.title}",
+                      snippet: "${i.categoryName}",
+                      onTap: (){
+                        Navigator.push(context, CupertinoPageRoute(builder: (_)=>OfferDetailsScreen(offerId: i.id!.toString(),)));
+                      }
                     )
                   ));
                 }
               }
-              return Stack(
+              return Column(
                 children: [
-                  GoogleMap(
-                      buildingsEnabled: true,
-                      indoorViewEnabled: true,
-                      mapType: MapType.normal,
-                      zoomControlsEnabled: true,
-                      myLocationButtonEnabled: false,
-                      compassEnabled: false,
-                      markers: markers.toSet(),
-                      onMapCreated: (controller){
-                        mapController = controller;
-                        double mid = dataList.length/2;
-                        double lat = double.parse(dataList[mid.floor()]!.latitude!);
-                        double long = double.parse(dataList[mid.floor()]!.longitude!);
-                        mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(lat,long),zoom: 12)));
-                      },
-                      initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
+                  Expanded(
+                    child: GoogleMap(
+                        buildingsEnabled: true,
+                        indoorViewEnabled: true,
+                        mapType: MapType.normal,
+                        zoomControlsEnabled: true,
+                        myLocationButtonEnabled: false,
+                        compassEnabled: false,
+                        markers: markers.toSet(),
+                        onMapCreated: (controller){
+                          mapController = controller;
+                          double mid = dataList.length/2;
+                          double lat = double.parse(dataList[mid.floor()]!.latitude!);
+                          double long = double.parse(dataList[mid.floor()]!.longitude!);
+                          mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentPosition.latitude,currentPosition.longitude),zoom: 15)));
+                        },
+                        initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
+                    ),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: SizedBox(
-                      height: 220,
+                      height: 170,
                       width: double.maxFinite,
                       child: ListView.separated(
                         padding: EdgeInsets.symmetric(horizontal: 12),
                         scrollDirection: Axis.horizontal,
                           itemBuilder: (context,i){
-                            return DealCard(
+                            return NearbyDealCard(
                                 width: 161,
-                                smallBox: true,
                                 modelData: dataList[i]!,
-                                type: StorageKeys.FEATURED_OFFERS
+                                type: StorageKeys.FEATURED_OFFERS,
+                              onTap: (String lat, String long){
+                                mapController!.animateCamera(CameraUpdate.newCameraPosition(
+                                    CameraPosition(target: LatLng(double.parse(lat),double.parse(long)),zoom: 15)));
+                              },
                             );
                           },
                           separatorBuilder: (context,i)=>SizedBox(width: 12,),

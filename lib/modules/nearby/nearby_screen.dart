@@ -16,6 +16,7 @@ import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 
 class NearbyScreen extends StatefulWidget {
   const NearbyScreen({Key? key}) : super(key: key);
@@ -40,9 +41,37 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
     });
   }
 
+  ScrollController? scrollController;
+  int start=0, end=9;
+  bool loading = false;
+  bool released = false;
+  _scrollListener() {
+    if (scrollController!.offset >= scrollController!.position.maxScrollExtent &&
+        !scrollController!.position.outOfRange) {
+      setState(() {
+        loading = true;
+      });
+      loadData();
+      // setState(() {
+      //   message = "reach the bottom";
+      // });
+    }
+    if (scrollController!.offset <= scrollController!.position.minScrollExtent &&
+        !scrollController!.position.outOfRange) {
+      // setState(() {
+      //   message = "reach the top";
+      // });
+    }
+  }
   loadData()async{
     await getCurrentLocation();
-    getNearbyOffers(currentPosition).then((value) {
+    getNearbyOffers(currentPosition,start,end).then((value) {
+      start = start +10;
+      end = end + 10;
+      setState(() {
+        loading = false;
+        released = true;
+      });
       if(value!=null){
         offerController!.add(value);
         return value;
@@ -65,7 +94,8 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
             customIcon = d;
           });
     });
-
+    scrollController = ScrollController();
+    scrollController!.addListener(_scrollListener);
     loadData();
     keepAlive = true;
     updateKeepAlive();
@@ -133,6 +163,61 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                 children: [
                   Expanded(
                     child: GoogleMap(
+                      onCameraIdle: ()async{
+                        if(released) {
+                          showLoader();
+                          LatLngBounds bounds = await mapController!
+                              .getVisibleRegion();
+                          double zoomLevel = await mapController!
+                              .getZoomLevel();
+                          LatLng center = LatLng(
+                              (bounds.northeast.latitude +
+                                  bounds.southwest.latitude) / 2,
+                              (bounds.northeast.longitude +
+                                  bounds.southwest.longitude) / 2
+                          );
+                          print("On idle $center");
+                          getMapNearbyOffers(context, center, zoomLevel).then((
+                              value) {
+                            Navigator.maybePop(context);
+                            if (value != null) {
+                              for (var data in value.data!) {
+                                if (data!.longitude != null &&
+                                    data.longitude != null) {
+                                  double lat = double.parse(
+                                      data.latitude ?? "0.0");
+                                  double long = double.parse(
+                                      data.longitude ?? "0.0");
+                                  markers.add(Marker(
+                                      markerId: MarkerId("${data.id}"),
+                                      icon: customIcon!,
+                                      position: LatLng(lat, long),
+                                      infoWindow: InfoWindow(
+                                          title: "${data.title}",
+                                          snippet: "${data.categoryName}",
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                CupertinoPageRoute(
+                                                    builder: (_) =>
+                                                        OfferDetailsScreen(
+                                                          offerId: data.id!
+                                                              .toString(),)));
+                                          }
+                                      )
+                                  ));
+                                }
+                              }
+                              setState(() {
+
+                              });
+                            }
+                          });
+                        }
+                      },
+                      // onCameraMove: (pos){
+                      //   print(pos.target.latitude);
+                      //   print(pos.target.longitude);
+                      // },
                         buildingsEnabled: true,
                         indoorViewEnabled: true,
                         mapType: MapType.normal,
@@ -152,26 +237,41 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      height: 170,
-                      width: double.maxFinite,
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        scrollDirection: Axis.horizontal,
-                          itemBuilder: (context,i){
-                            return NearbyDealCard(
-                                width: 161,
-                                modelData: dataList[i]!,
-                                type: StorageKeys.FEATURED_OFFERS,
-                              onTap: (String lat, String long){
-                                mapController!.animateCamera(CameraUpdate.newCameraPosition(
-                                    CameraPosition(target: LatLng(double.parse(lat),double.parse(long)),zoom: 15)));
-                              },
-                            );
-                          },
-                          separatorBuilder: (context,i)=>SizedBox(width: 12,),
-                          itemCount: dataList.length
-                      ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 170,
+                            width: double.maxFinite,
+                            child: ListView.separated(
+                              controller: scrollController,
+                              padding: EdgeInsets.symmetric(horizontal: 12),
+                              scrollDirection: Axis.horizontal,
+                                itemBuilder: (context,i){
+                                  return NearbyDealCard(
+                                      width: 161,
+                                      modelData: dataList[i]!,
+                                      type: StorageKeys.FEATURED_OFFERS,
+                                    onTap: (String lat, String long){
+                                        setState(() {
+                                          released = false;
+                                        });
+
+                                      mapController!.animateCamera(CameraUpdate.newCameraPosition(
+                                          CameraPosition(target: LatLng(double.parse(lat),double.parse(long)),zoom: 15)));
+                                      setState(() {
+                                        released = true;
+                                      });
+                                    },
+                                  );
+                                },
+                                separatorBuilder: (context,i)=>SizedBox(width: 12,),
+                                itemCount: dataList.length
+                            ),
+                          ),
+                        ),
+                        loading?getLoader():Text('')
+                      ],
                     ),
                   )
                 ],
@@ -183,6 +283,28 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
         ),
       ),
     );
+  }
+
+  showLoader(){
+    showDialog(context: context, builder: (context){
+      return  AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        content: Container(
+          height: 50,
+          width: 50,
+          child: Row(
+            children: [
+              getLoader(),
+              SizedBox(width: 18,),
+              Expanded(child: Text("Getting offers...")
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   noDataFound(){

@@ -1,4 +1,6 @@
 class APIS {
+  //https://hpcapi.softlinks.ae //test
+  //https://hpcapi.happinessclub.ae //live
   static const String BASE_URL = "https://hpcapi.happinessclub.ae/api/v1/";
   static const String SLIDER_IMAGED = BASE_URL + "offers/slider";
   static const String OFFER_CATEGORIES = BASE_URL + "offers/categories";
@@ -6,7 +8,9 @@ class APIS {
   static const String LATEST_OFFERS = BASE_URL + "offers/latest";
   static const String FEATURED_OFFERS = BASE_URL + "offers/featured";
   static const String NEARBY_OFFERS =
-      BASE_URL + "offers/nearby-limited"; // params lat lang
+      BASE_URL + "offers/nearby-all"; // params lat lang
+  static const String NEARBY_MAP_OFFERS =
+      BASE_URL + "offers/nearby-map";
   static const String OFFER_DETAILS =BASE_URL+"offers/detail"; //param in link
   static const String OFFER_LOCATION =BASE_URL+"offers/locations"; //param in link
   static const String OFFER_REVIEWS =BASE_URL+"offers/reviews"; //param in link

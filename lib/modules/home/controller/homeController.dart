@@ -10,11 +10,13 @@ import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/location_services.dart';
+import 'package:happiness_club/services/navigatorKey.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 var dio = Dio();
+
 var storage = StorageServices();
 
 Future getSliderImages(context) async {
@@ -58,7 +60,7 @@ Future getMostViewedOffers(context)async{
       });
       if(response.statusCode==200){
         OffersModel model = OffersModel.fromJson(response.data);
-        Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<MostViewedOffersProvider>(GlobalVariable.navState.currentContext!,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.MOST_VIEWED_OFFERS, model.toJson());
       }
     }
@@ -88,7 +90,7 @@ Future getLatestOffers(context)async{
       });
       if(response.statusCode==200){
         OffersModel model = OffersModel.fromJson(response.data);
-        Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<LatestOffersProvider>(GlobalVariable.navState.currentContext!,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.LATEST_OFFERS, model.toJson());
       }
     }

@@ -57,6 +57,7 @@ dependencies:
   chewie:
   video_player: ^2.2.10
   overlay_support: ^1.2.1
+  maps_curved_line: ^1.0.2
 
 dev_dependencies:
   flutter_test:

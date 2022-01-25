@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:happiness_club/modules/companies/Widget/companies_card_shimmer.dart';
 import 'package:happiness_club/modules/newsletter/Controller/newsletter_controller.dart';
 import 'package:happiness_club/modules/newsletter/Model/newsletter_model.dart';
 import 'package:happiness_club/modules/newsletter/widgets/newsCard.dart';
@@ -55,16 +56,13 @@ class _NewsletterScreenState extends State<NewsletterScreen> {
                     stream: newsStream!.stream,
                     builder: (context,snapshot){
                        if(!snapshot.hasData || snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
-                         return ListView(
-                           children: [
-                             NewsletterShimmer(),
-                             SizedBox(height: 12,),
-                             NewsletterShimmer(),
-                             SizedBox(height: 12,),
-                             NewsletterShimmer(),
-                             SizedBox(height: 12,),
-                             NewsletterShimmer(),
-                           ],
+                         return GridView.count(
+                             shrinkWrap: true,
+                             childAspectRatio: 1.2,
+                             crossAxisCount: 2,
+                             crossAxisSpacing: 15,
+                             mainAxisSpacing: 15,
+                             children:List.generate(4, (index) =>CompaniesCardShimmer())
                          );
                        }
                        if(snapshot.data == null){
@@ -72,14 +70,23 @@ class _NewsletterScreenState extends State<NewsletterScreen> {
                            child: Text("No Newsletters are found"),
                          );
                        }
-                      return  ListView.separated(
-                          itemBuilder: (context, i) {
-                            return NewsCard(modelData: snapshot.data!.data![i]!);
-                          },
-                          separatorBuilder: (context, i) => SizedBox(
-                            height: 12,
-                          ),
-                          itemCount: snapshot.data!.data!.length);
+                      return
+                        GridView.count(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                            crossAxisCount: 2,
+                          childAspectRatio: 1.2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                          children: List.generate(snapshot.data!.data!.length, (i) => NewsCard(modelData: snapshot.data!.data![i]!)),
+                        );
+                        // ListView.separated(
+                        //   itemBuilder: (context, i) {
+                        //     return NewsCard(modelData: snapshot.data!.data![i]!);
+                        //   },
+                        //   separatorBuilder: (context, i) => SizedBox(
+                        //     height: 12,
+                        //   ),
+                        //   itemCount: snapshot.data!.data!.length);
                     },
                   )
               )

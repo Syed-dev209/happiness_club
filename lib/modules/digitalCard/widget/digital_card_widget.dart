@@ -25,7 +25,7 @@ class DigitalCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           image: MemoryImage(imageBlob),
-          fit: BoxFit.cover
+          fit: BoxFit.fill
           )
       ),
     );

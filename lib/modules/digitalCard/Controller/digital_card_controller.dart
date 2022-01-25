@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/modules/digitalCard/Model/digital_card_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
@@ -14,19 +15,21 @@ import 'dart:typed_data';
 var dio = Dio();
 var storage = StorageServices();
 
-Future<dynamic> getDigitalCards(context)async{
+Future<DigitalCardModel?> getDigitalCards(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
       final user = Provider.of<UserModelProvider>(context,listen: false).customerId;
+      print(user);
       if(user!="") {
         var response = await dio.post(APIS.DIGITAL_CARD, queryParameters: {
           "customer_id": user
         });
         if (response.statusCode == 200) {
           var imageBlob = response.data["data"];
-          storage.writeDataToStorage(StorageKeys.DC_BLOB, imageBlob);
-          return imageBlob;
+          DigitalCardModel model = DigitalCardModel.fromJson(response.data);
+          storage.writeDataToStorage(StorageKeys.DC_BLOB, model);
+          return model;
         }
       }
       else{

@@ -41,8 +41,8 @@ class NewsCard extends StatelessWidget {
             ),
           ),
           Padding(
-        padding: EdgeInsets.only(top: 160,left: 10),
-         child: Text('${modelData.title}',style: FontStyle.PoppinsStyle(18, Colors.white),))
+        padding: EdgeInsets.only(top: 90,left: 10),
+         child: Text('${modelData.title}',style: FontStyle.PoppinsStyle(14, Colors.white),))
         ],
       ),
     );

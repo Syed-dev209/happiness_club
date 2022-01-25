@@ -44,6 +44,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
   ScrollController? scrollController;
   int start=0, end=9;
   bool loading = false;
+  double mapLoading = 0.0;
   bool released = false;
   _scrollListener() {
     if (scrollController!.offset >= scrollController!.position.maxScrollExtent &&
@@ -63,6 +64,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
       // });
     }
   }
+
   loadData()async{
     await getCurrentLocation();
     getNearbyOffers(currentPosition,start,end).then((value) {
@@ -141,98 +143,132 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
               }
               List<OffersModelData?> dataList= [];
               dataList.addAll(snapshot.data!.data!);
-              for(var i in dataList){
-                if(i!.longitude!=null && i.latitude!=null){
-                  double lat = double.parse(i.latitude??"0.0");
-                  double long = double.parse(i.longitude??"0.0");
-                  markers.add(Marker(
-                    markerId: MarkerId("${i.id}"),
-                    icon: customIcon!,
-                    position: LatLng(lat,long),
-                    infoWindow: InfoWindow(
-                      title: "${i.title}",
-                      snippet: "${i.categoryName}",
-                      onTap: (){
-                        Navigator.push(context, CupertinoPageRoute(builder: (_)=>OfferDetailsScreen(offerId: i.id!.toString(),)));
-                      }
-                    )
-                  ));
-                }
-              }
+              // for(var i in dataList){
+              //   if(i!.longitude!=null && i.latitude!=null){
+              //     double lat = double.parse(i.latitude??"0.0");
+              //     double long = double.parse(i.longitude??"0.0");
+              //     markers.add(Marker(
+              //       markerId: MarkerId("${i.id}"),
+              //       icon: customIcon!,
+              //       position: LatLng(lat,long),
+              //       infoWindow: InfoWindow(
+              //         title: "${i.title}",
+              //         snippet: "${i.categoryName}",
+              //         onTap: (){
+              //           Navigator.push(context, CupertinoPageRoute(builder: (_)=>OfferDetailsScreen(offerId: i.id!.toString(),)));
+              //         }
+              //       )
+              //     ));
+              //   }
+              // }
               return Column(
                 children: [
                   Expanded(
-                    child: GoogleMap(
-                      onCameraIdle: ()async{
-                        if(released) {
-                          showLoader();
-                          LatLngBounds bounds = await mapController!
-                              .getVisibleRegion();
-                          double zoomLevel = await mapController!
-                              .getZoomLevel();
-                          LatLng center = LatLng(
-                              (bounds.northeast.latitude +
-                                  bounds.southwest.latitude) / 2,
-                              (bounds.northeast.longitude +
-                                  bounds.southwest.longitude) / 2
-                          );
-                          print("On idle $center");
-                          getMapNearbyOffers(context, center, zoomLevel).then((
-                              value) {
-                            Navigator.maybePop(context);
-                            if (value != null) {
-                              for (var data in value.data!) {
-                                if (data!.longitude != null &&
-                                    data.longitude != null) {
-                                  double lat = double.parse(
-                                      data.latitude ?? "0.0");
-                                  double long = double.parse(
-                                      data.longitude ?? "0.0");
-                                  markers.add(Marker(
-                                      markerId: MarkerId("${data.id}"),
-                                      icon: customIcon!,
-                                      position: LatLng(lat, long),
-                                      infoWindow: InfoWindow(
-                                          title: "${data.title}",
-                                          snippet: "${data.categoryName}",
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                CupertinoPageRoute(
-                                                    builder: (_) =>
-                                                        OfferDetailsScreen(
-                                                          offerId: data.id!
-                                                              .toString(),)));
-                                          }
-                                      )
-                                  ));
-                                }
-                              }
+                    child: Stack(
+                      children: [
+                        GoogleMap(
+                          onCameraIdle: ()async{
+                            if(released) {
+                              //showLoader();
                               setState(() {
-
+                                mapLoading = 50;
+                              });
+                              LatLngBounds bounds = await mapController!
+                                  .getVisibleRegion();
+                              double zoomLevel = await mapController!
+                                  .getZoomLevel();
+                              LatLng center = LatLng(
+                                  (bounds.northeast.latitude +
+                                      bounds.southwest.latitude) / 2,
+                                  (bounds.northeast.longitude +
+                                      bounds.southwest.longitude) / 2
+                              );
+                              print("On idle $center");
+                              getMapNearbyOffers(context, center, zoomLevel).then((
+                                  value) {
+                                //Navigator.maybePop(context);
+                                if (value != null) {
+                                  for (var data in value.data!) {
+                                    if (data!.longitude != null &&
+                                        data.longitude != null) {
+                                      double lat = double.parse(
+                                          data.latitude ?? "0.0");
+                                      double long = double.parse(
+                                          data.longitude ?? "0.0");
+                                      markers.add(Marker(
+                                          markerId: MarkerId("${data.id}"),
+                                          icon: customIcon!,
+                                          position: LatLng(lat, long),
+                                          infoWindow: InfoWindow(
+                                              title: "${data.title}",
+                                              snippet: "${data.categoryName}",
+                                              onTap: () {
+                                                Navigator.push(context,
+                                                    CupertinoPageRoute(
+                                                        builder: (_) =>
+                                                            OfferDetailsScreen(
+                                                              offerId: data.id!
+                                                                  .toString(),)));
+                                              }
+                                          )
+                                      ));
+                                    }
+                                  }
+                                  setState(() {
+                                    mapLoading = 0.0;
+                                  });
+                                }
                               });
                             }
-                          });
-                        }
-                      },
-                      // onCameraMove: (pos){
-                      //   print(pos.target.latitude);
-                      //   print(pos.target.longitude);
-                      // },
-                        buildingsEnabled: true,
-                        indoorViewEnabled: true,
-                        mapType: MapType.normal,
-                        zoomControlsEnabled: true,
-                        myLocationButtonEnabled: false,
-                        compassEnabled: false,
-                        markers: markers.toSet(),
-                        onMapCreated: (controller){
-                          mapController = controller;
-                          double mid = dataList.length/2;
-                          double lat = double.parse(dataList[mid.floor()]!.latitude!);
-                          double long = double.parse(dataList[mid.floor()]!.longitude!);
-                          mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentPosition.latitude,currentPosition.longitude),zoom: 15)));
-                        },
-                        initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
+                          },
+                          // onCameraMove: (pos){
+                          //   print(pos.target.latitude);
+                          //   print(pos.target.longitude);
+                          // },
+                            buildingsEnabled: true,
+                            indoorViewEnabled: true,
+                            mapType: MapType.normal,
+                            zoomControlsEnabled: true,
+                            myLocationButtonEnabled: false,
+                            compassEnabled: false,
+                            markers: markers.toSet(),
+                            onMapCreated: (controller){
+                              mapController = controller;
+                              double mid = dataList.length/2;
+                              double lat = double.parse(dataList[mid.floor()]!.latitude!);
+                              double long = double.parse(dataList[mid.floor()]!.longitude!);
+                              mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentPosition.latitude,currentPosition.longitude),zoom: 15)));
+                            },
+                            initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
+                        ),
+                        Positioned(
+                       top: 50,
+                          right: 5,
+                          left: 5,
+                          child: AnimatedContainer(
+                            curve: Curves.bounceInOut,
+                            duration: Duration(milliseconds: 500),
+                            height: mapLoading,
+                            width: mapLoading,
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(0,1),
+                                  color: Colors.black26,
+                                  blurRadius: 1,
+                                  spreadRadius: 1
+                                )
+                              ]
+                            ),
+                            child: Center(
+                              child: getLoader(),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Align(
@@ -256,9 +292,30 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                         setState(() {
                                           released = false;
                                         });
-
+                                        final markerId = MarkerId("${dataList[i]!.id}");
+                                        markers.add(Marker(
+                                            markerId: markerId,
+                                            icon: customIcon!,
+                                            position: LatLng(double.parse(lat), double.parse(long)),
+                                            infoWindow: InfoWindow(
+                                                title: "${dataList[i]!.title}",
+                                                snippet: "${dataList[i]!.categoryName}",
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      CupertinoPageRoute(
+                                                          builder: (_) =>
+                                                              OfferDetailsScreen(
+                                                                offerId: dataList[i]!.id!
+                                                                    .toString(),)));
+                                                }
+                                            )
+                                        ));
                                       mapController!.animateCamera(CameraUpdate.newCameraPosition(
                                           CameraPosition(target: LatLng(double.parse(lat),double.parse(long)),zoom: 15)));
+                                      Future.delayed(Duration(seconds: 1)).then((value) {
+                                        mapController!.showMarkerInfoWindow(markerId);
+                                      });
+
                                       setState(() {
                                         released = true;
                                       });

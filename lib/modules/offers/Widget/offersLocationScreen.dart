@@ -7,6 +7,7 @@ import 'package:happiness_club/modules/nearby/nearby_controller.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/services/location_services.dart';
+import 'package:maps_curved_line/maps_curved_line.dart';
 
 
 class OfferLocation extends StatefulWidget {
@@ -23,9 +24,12 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
   BitmapDescriptor? customIcon;
   List<Marker> markers=[];
   StreamController<OfferLocationModel?>? streamController;
+  LatLng? currentPos;
+  LatLng? offerPos;
+  final Set<Polyline> _polylines = Set();
 
   loadData()async{
-    LatLng pos = await LocationService().getCurrentLocation();
+    currentPos = await LocationService().getCurrentLocation();
     getOffersLocation(offerId: widget.offerId.toString()).then((value) {
       if(value!=null){
         streamController!.add(value);
@@ -36,6 +40,11 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
         return null;
       }
     });
+    markers.add(Marker(
+        markerId: MarkerId("1"),
+        icon: BitmapDescriptor.defaultMarker,
+        position: currentPos!
+    ));
   }
   @override
   void initState() {
@@ -59,6 +68,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
 
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder<OfferLocationModel?>(
       stream: streamController!.stream,
         builder: (context,snapshot){
@@ -79,6 +89,17 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
               icon: customIcon!,
               position: LatLng(lat,long)
             ));
+            offerPos = LatLng(lat, long);
+            _polylines.add(
+                Polyline(
+                  polylineId: PolylineId("line$i"),
+                  visible: true,
+                  width: 2,
+                  patterns: [PatternItem.dash(2), PatternItem.gap(0)],
+                  points: MapsCurvedLines.getPointsOnCurve(currentPos!, offerPos!), // Invoke lib to get curved line points
+                  color: Colors.red,
+                )
+            );
           }
           double lat =0.0;
           double long = 0.0;
@@ -89,6 +110,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
 
           return Container(
             child: GoogleMap(
+              polylines: _polylines,
               zoomControlsEnabled: false,
               compassEnabled: false,
               myLocationButtonEnabled: false,
@@ -96,7 +118,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
               initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: LatLng(37.43296265331129, -122.08832357078792), zoom: 19.151926040649414),
               onMapCreated: (controller){
                 mapController = controller;
-                mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(lat, long), zoom: 15)));
+                mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(lat, long), zoom: 10)));
 
               },
             ),

@@ -8,6 +8,7 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/digitalCard/Controller/digital_card_controller.dart';
+import 'package:happiness_club/modules/digitalCard/Model/digital_card_model.dart';
 import 'package:happiness_club/modules/digitalCard/widget/digital_card_widget.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
@@ -22,14 +23,19 @@ class DigitalCardScreen extends StatefulWidget {
 class _DigitalCardScreenState extends State<DigitalCardScreen> {
 
   Uint8List? imageBlob;
+  List<Uint8List> blobList = [];
   bool loaded = false;
 
   loadData(){
-    getDigitalCards(context).then((value) {
+    getDigitalCards(context).then((DigitalCardModel? value) {
       print(value);
       if(value!=null){
         setState(() {
-          imageBlob = base64.decode(value.split(',').last);
+          for(int i=0;i< value.data!.fazaaCard!.length;i++){
+            blobList.add(base64.decode(value.data!.fazaaCard![i]!.split(',').last));
+            blobList.add(base64.decode(value.data!.happinessCard![i]!.split(',').last));
+          }
+         // imageBlob = base64.decode(value.split(',').last);
           loaded = true;
         });
       }
@@ -65,18 +71,18 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                 ),
               ),
              loaded?
-            imageBlob!=null?
+             blobList.isNotEmpty?
             Expanded(
                 child: Stack(
                   children: [
                     ListView.separated(
                         padding:
                             EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        itemBuilder: (context, i) => DigitalCardWidget(imageBlob: imageBlob!,),
+                        itemBuilder: (context, i) => DigitalCardWidget(imageBlob: blobList[i],),
                         separatorBuilder: (context, i) => SizedBox(
                               height: 15,
                             ),
-                        itemCount: 1),
+                        itemCount: blobList.length),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15,left: 15,right: 15),
                       child: Align(

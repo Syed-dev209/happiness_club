@@ -20,6 +20,7 @@ class CustomAppBar extends StatelessWidget {
             },
               child: SizedBox(
                 width: 20,
+                  height: 20,
                   child: SvgPicture.asset(Images.BACK_BUTTON))),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.3,

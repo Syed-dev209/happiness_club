@@ -33,10 +33,11 @@ class _SplashScreenState extends State<SplashScreen> {
       Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);
       Provider.of<UserModelProvider>(context,listen: false).addName(name);
     }
-    await getOfferCategories(context);
-    await getSliderImages(context);
-    getMostViewedOffers(context);
-    getLatestOffers(context);
+    // await getOfferCategories(context);
+    // await getSliderImages(context);
+    // getMostViewedOffers(context);
+    // getLatestOffers(context);
+    await getDashboardData(context);
 
     Navigator.pushReplacement(
         context, CupertinoPageRoute(builder: (_) => HomeBase()));

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/network_constants.dart';
@@ -13,6 +15,8 @@ var dio = Dio();
 var storage = StorageServices();
 
 Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) async {
+  print("Start==>$start");
+  print("End===>$end");
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
@@ -25,7 +29,7 @@ Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) 
         "end":end
       });
       if (response.statusCode == 200) {
-        print(response.data);
+        log(response.data.toString());
         OffersModel model = OffersModel.fromJson(response.data);
         storage.writeDataToStorage(StorageKeys.NEARBY_OFFERS, model.toJson());
         return model;
@@ -41,7 +45,13 @@ Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) 
       return null;
     }
   } on DioError catch (e) {
-    return null;
+    print(e);
+    var response = storage.readDataFromStorage(StorageKeys.NEARBY_OFFERS);
+    if (response != "") {
+      return OffersModel.fromJson(response);
+    } else {
+      return null;
+    }
   }
 }
 

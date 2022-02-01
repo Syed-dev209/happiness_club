@@ -74,7 +74,7 @@ class _DealCardState extends State<DealCard> {
                         "${widget.modelData.title}",
                         style: FontStyle.PoppinsStyle(14, Colors.black,
                             fontWeight: FontWeight.w500),
-                        minFontSize: 9,
+                        minFontSize: 5,
                       ),
                     ),
                     SizedBox(

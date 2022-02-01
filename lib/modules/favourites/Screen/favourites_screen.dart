@@ -26,6 +26,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   loadData(){
     if(Provider.of<UserModelProvider>(context,listen: false).loggedIn) {
       getFavoritesList(context).then((value) {
+        print("DATA==>$value");
         if (value != null) {
           controller!.add(value);
           return value;
@@ -37,9 +38,11 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       });
     }
     else {
-      controller!.add(null);
-      //showToast(context, "You must login to see favorites");
-      return null;
+      Future.delayed(Duration(seconds: 2)).then((value) {
+        controller!.add(null);
+        showToast(context, "You must login to see favorites");
+        return null;
+      });
     }
   }
 
@@ -49,13 +52,14 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     super.initState();
     controller = StreamController<FavoritesModel?>.broadcast();
     //loadData();
+    loadData();
   }
 
 
   @override
   Widget build(BuildContext context) {
-    loadData();
     final size = MediaQuery.of(context).size;
+    //loadData();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -70,17 +74,17 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                     stream: controller!.stream,
                     builder: (context,snapshot){
                       print(snapshot.data);
+
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(
+                          child: getLoader(),
+                        );
+                      }
                       if(snapshot.data == null){
                         return Center(
-                          child: getLoader(),
+                            child: noDataFound()
                         );
                       }
-                      if( snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
-                        return Center(
-                          child: getLoader(),
-                        );
-                      }
-
                       return snapshot.data!.data!.isNotEmpty?ListView.separated(
                           padding: EdgeInsets.symmetric(horizontal: 14,vertical: 10),
                           itemBuilder: (context,i){

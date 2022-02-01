@@ -37,7 +37,9 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        widget.onTap(widget.modelData.latitude,widget.modelData.longitude);
+        if(widget.modelData.latitude!=null&&widget.modelData.longitude!=null){
+          widget.onTap(widget.modelData.latitude,widget.modelData.longitude);
+        }
         //Navigator.push(context, CupertinoPageRoute(builder: (context)=>OfferDetailsScreen(offerId: widget.modelData.id.toString())));
       },
       child: Container(
@@ -56,11 +58,12 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Text(
+                      child: AutoSizeText(
                         "${widget.modelData.categoryName}",
                         style: FontStyle.PoppinsStyle(
                             11, Color(ColorCodes.BLUE_COLOR),
                             fontWeight: FontWeight.w600),
+                        minFontSize: 5,
                       ),
                     ),
                     // SizedBox(
@@ -71,7 +74,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                         "${widget.modelData.title}",
                         style: FontStyle.PoppinsStyle(14, Colors.black,
                             fontWeight: FontWeight.w500),
-                        minFontSize: 9,
+                        minFontSize: 2,
                       ),
                     ),
                     // SizedBox(
@@ -93,6 +96,8 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
   }
 
   Widget dealImage() {
+
+
     return Expanded(
       flex: 2,
       child: Container(
@@ -135,7 +140,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                 ],
               ),
             ),
-            Padding(
+            widget.modelData.distance! > 0.0?  Padding(
               padding: EdgeInsets.only(bottom: 8),
               child: Align(
                 alignment: Alignment.bottomRight,
@@ -155,14 +160,15 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Expanded(child: SvgPicture.asset(Images.DIRECTION_ICON)),
-                        Text(
-                          widget.modelData.distance!=null?'${widget.modelData.distance!.toStringAsFixed(0)} km':"0 Km",
+                         Text(
+                          widget.modelData.distance!=null?
+                          '${widget.modelData.distance!.toStringAsFixed(0)} km' : "1 Km",
                           style: FontStyle.PoppinsStyle(9, Colors.white),
                         )
                       ],
                     )),
               ),
-            )
+            ):Text("")
           ],
         ),
       ),

@@ -78,16 +78,22 @@ class OfferDetailsModel {
   String? responseStatus;
   String? message;
   OfferDetailsModelData? data;
+  List<OfferDetailsModelImage>? images=[];
 
   OfferDetailsModel({
     this.responseStatus,
     this.message,
     this.data,
+    this.images
   });
   OfferDetailsModel.fromJson(Map<String, dynamic> json) {
     responseStatus = json['responseStatus']?.toString();
     message = json['message']?.toString();
     data = (json['data'] != null) ? OfferDetailsModelData.fromJson(json['data']) : null;
+    final v = json["images"];
+    v.forEach((e){
+      images!.add(OfferDetailsModelImage.fromJson(e));
+    });
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -97,5 +103,16 @@ class OfferDetailsModel {
       data['data'] = this.data!.toJson();
     }
     return data;
+  }
+}
+
+class OfferDetailsModelImage{
+  String? imageUrl;
+  OfferDetailsModelImage({this.imageUrl});
+
+  OfferDetailsModelImage.fromJson(Map<String,dynamic> json){
+    if(json!=null){
+      imageUrl = json["image_url"];
+    }
   }
 }

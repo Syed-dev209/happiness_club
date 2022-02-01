@@ -72,7 +72,7 @@ class OffersModelData {
     stateName = json['state_name']?.toString();
     featuredImage = json['featured_image']?.toString();
     ratings = json['ratings']?.toString();
-    distance = json['distance']?.toDouble();
+    distance = json['distance']!=null? json['distance']?.toDouble():0.0;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

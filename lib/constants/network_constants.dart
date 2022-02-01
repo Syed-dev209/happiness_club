@@ -3,6 +3,7 @@ class APIS {
   //https://hpcapi.happinessclub.ae //live
   static const String BASE_URL = "https://hpcapi.happinessclub.ae/api/v1/";
   static const String SLIDER_IMAGED = BASE_URL + "offers/slider";
+  static const String DASHBOARD_DATA = BASE_URL + "dashboard";
   static const String OFFER_CATEGORIES = BASE_URL + "offers/categories";
   static const String MOST_VIEWED_OFFERS = BASE_URL + "offers/most-viewed";
   static const String LATEST_OFFERS = BASE_URL + "offers/latest";

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,16 +42,15 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
   ];
   TabController? controller;
   StreamController<OfferDetailsModel?>? offersDetailStream;
+  int currentIndex = 0;
 
-
-  loadOfferDetails()async{
+  loadOfferDetails() async {
     getOffersDetail(offerId: widget.offerId).then((value) {
       print(value);
-      if(value!=null){
-       offersDetailStream!.add(value);
-       return value;
-      }
-      else{
+      if (value != null) {
+        offersDetailStream!.add(value);
+        return value;
+      } else {
         offersDetailStream!.add(null);
         return null;
       }
@@ -63,7 +63,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     // TODO: implement initState
     super.initState();
     controller = TabController(length: tabs.length, vsync: this);
-    offersDetailStream= StreamController<OfferDetailsModel?>();
+    offersDetailStream = StreamController<OfferDetailsModel?>();
     loadOfferDetails();
   }
 
@@ -86,28 +86,36 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: StreamBuilder<OfferDetailsModel?>(
               stream: offersDetailStream!.stream,
-              builder: (context,snapshot){
-                if(snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
+              builder: (context, snapshot) {
+                if (snapshot.hasError ||
+                    snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: getLoader(),
                   );
                 }
-                if(snapshot.data==null){
+                if (snapshot.data == null) {
                   return Center(
                     child: noDataFound(),
                   );
                 }
                 return Column(
                   children: [
-                    imageCard(snapshot.data!.data!.featuredImage ?? Constants.NOT_FOUND_IMAGE_URL,snapshot.data!.data!.offerDiscount ?? "0"),
-                    SizedBox(height: 15,),
+                    imageCard(
+                        snapshot.data!.data!.featuredImage ??
+                            Constants.NOT_FOUND_IMAGE_URL,
+                        snapshot.data!.data!.offerDiscount ?? "0",
+                        snapshot.data!.images!),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.0),
                         height: 45.0,
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border: Border.all(color: Colors.black26,width: 1.5),
+                            border:
+                                Border.all(color: Colors.black26, width: 1.5),
                             borderRadius: BorderRadius.circular(20.0)),
                         child: TabBar(
                           tabs: tabs,
@@ -130,58 +138,106 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                             indicatorColor: ColorCodes.WHITE_COLOR,
                             // tabBarIndicatorSize: TabBarIndicatorSize.tab,
                           ),
-                        )
-                    ),
+                        )),
                     Expanded(
                       child: TabBarView(
                         physics: NeverScrollableScrollPhysics(),
                         controller: controller,
                         children: [
-                          OffersSummary(modelData: snapshot.data!.data!,),
+                          OffersSummary(
+                            modelData: snapshot.data!.data!,
+                          ),
                           OfferLocation(offerId: widget.offerId),
-                          OffersReview(offerId: widget.offerId,),
+                          OffersReview(
+                            offerId: widget.offerId,
+                          ),
                         ],
                       ),
                     )
                   ],
                 );
               },
-            )
-        ),
+            )),
       ),
     );
   }
-  noDataFound(){
+
+  noDataFound() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(Images.NO_DATA),
-        SizedBox(height: 15,),
+        SizedBox(
+          height: 15,
+        ),
         Text(
           "No offer details found",
           style: FontStyle.PoppinsStyle(
-              15,
-              Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
-              fontWeight: FontWeight.w600),)
+              15, Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
+              fontWeight: FontWeight.w600),
+        )
       ],
     );
   }
-  imageCard(String imageUrl, String offer) {
+
+  imageCard(
+      String imageUrl, String offer, List<OfferDetailsModelImage> images) {
     return Stack(
       children: [
-        Container(
-          height: 300,
-          width: double.maxFinite,
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(5, 7),
-                    color: Colors.black.withOpacity(0.8),
-                    blurRadius: 100)
-              ],
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                  image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.cover)),
+        Column(
+          children: [
+            Container(
+              height: 300,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(5, 7),
+                      color: Colors.black.withOpacity(0.8),
+                      blurRadius: 50)
+                ],
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: CarouselSlider.builder(
+                itemCount: images.length,
+                options: CarouselOptions(
+                    aspectRatio: 1,
+                    enlargeCenterPage: true,
+                    viewportFraction: 1,
+                    scrollDirection: Axis.horizontal,
+                    //autoPlay: true,
+                    onPageChanged: (index, val) {
+                      //print("Index $index");
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    }),
+                itemBuilder: (context, index, h) {
+                  return sliderImageContainer(
+                      images[index].imageUrl ?? Constants.ALT_IMAGE);
+                },
+              ),
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(images.length, (index) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: currentIndex == index
+                          ? Color(ColorCodes.GOLDEN_COLOR)
+                          : Color(ColorCodes.LITE_GOLDEN_COLOR),
+                    ),
+                  );
+                }))
+          ],
+        ),
+        Align(
+          alignment: Alignment.topLeft,
           child: GestureDetector(
             onTap: () {
               Navigator.pop(context);
@@ -198,7 +254,6 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
             ),
           ),
         ),
-
         Align(
           alignment: Alignment.topRight,
           child: Container(
@@ -227,6 +282,16 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           ),
         ),
       ],
+    );
+  }
+
+  sliderImageContainer(String imageUrl) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          image: DecorationImage(
+              image: CachedNetworkImageProvider(imageUrl), fit: BoxFit.fill)),
+      //child: ,
     );
   }
 }

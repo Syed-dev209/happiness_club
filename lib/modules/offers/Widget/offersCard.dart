@@ -191,7 +191,7 @@ class _OffersCardState extends State<OffersCard> {
                 ],
               ),
             ),
-          distance>=0.0?  Padding(
+          distance>0.0?  Padding(
               padding: EdgeInsets.only(bottom: 8),
               child: Align(
                 alignment: Alignment.bottomRight,

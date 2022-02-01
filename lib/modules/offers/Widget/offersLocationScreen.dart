@@ -94,7 +94,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
                 Polyline(
                   polylineId: PolylineId("line$i"),
                   visible: true,
-                  width: 2,
+                  width: 4,
                   patterns: [PatternItem.dash(2), PatternItem.gap(0)],
                   points: MapsCurvedLines.getPointsOnCurve(currentPos!, offerPos!), // Invoke lib to get curved line points
                   color: Colors.red,

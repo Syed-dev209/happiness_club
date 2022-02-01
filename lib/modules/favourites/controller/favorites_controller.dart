@@ -21,6 +21,7 @@ Future<FavoritesModel?> getFavoritesList(context)async{
       var response = await dio.post(APIS.FAVORITES_LIST,queryParameters: {
         "customer_id":user
       });
+      print(response.data);
       if(response.statusCode == 200){
         print(response.data);
         FavoritesModel model = FavoritesModel.fromJson(response.data);

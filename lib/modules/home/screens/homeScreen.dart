@@ -54,11 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<LatestOffersProvider>(context,listen: false).clearProvider();
     Provider.of<FeaturedOffersProvider>(context,listen: false).clearProvider();
 
-    await getOfferCategories(context);
-    await getSliderImages(context);
-    await getMostViewedOffers(context);
-    await getLatestOffers(context);
-    await getFeaturedOffers(context);
+    // await getOfferCategories(context);
+    // await getSliderImages(context);
+    // await getMostViewedOffers(context);
+    // await getLatestOffers(context);
+    // await getFeaturedOffers(context);
+    await getDashboardData(context);
     showToast(context, "Page refreshed");
 
   }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
   bool loading = false;
   double mapLoading = 0.0;
   bool released = false;
+  List<OffersModelData?> dataList= [];
   _scrollListener() {
     if (scrollController!.offset >= scrollController!.position.maxScrollExtent &&
         !scrollController!.position.outOfRange) {
@@ -74,16 +76,19 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
         loading = false;
         released = true;
       });
+      log(value.toString());
       if(value!=null){
         offerController!.add(value);
         return value;
       }
       else{
+        log("in else");
         offerController!.add(null);
         return null;
       }
     });
   }
+
  @override
   void initState() {
     // TODO: implement initState
@@ -121,7 +126,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
           child: StreamBuilder<OffersModel?>(
             stream: offerController!.stream,
             builder: (context,snapshot){
-              if(!snapshot.hasData || snapshot.hasError || snapshot.connectionState== ConnectionState.waiting){
+              if(snapshot.hasError || snapshot.connectionState== ConnectionState.waiting){
                 return  Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
@@ -138,11 +143,14 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                   ),
                 );
               }
-              if(snapshot.data == null || snapshot.data!.data!.isEmpty){
+              if(snapshot.data == null ){
                 return Center(child: noDataFound());
               }
-              List<OffersModelData?> dataList= [];
-              dataList.addAll(snapshot.data!.data!);
+              for(var data in snapshot.data!.data!){
+                dataList.add(data);
+              }
+              log(dataList.length.toString());
+
               // for(var i in dataList){
               //   if(i!.longitude!=null && i.latitude!=null){
               //     double lat = double.parse(i.latitude??"0.0");
@@ -201,7 +209,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                           position: LatLng(lat, long),
                                           infoWindow: InfoWindow(
                                               title: "${data.title}",
-                                              snippet: "${data.categoryName}",
+                                              snippet: "${data.categoryName}, ${data.stateName}",
                                               onTap: () {
                                                 Navigator.push(context,
                                                     CupertinoPageRoute(
@@ -214,10 +222,11 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                       ));
                                     }
                                   }
-                                  setState(() {
-                                    mapLoading = 0.0;
-                                  });
+
                                 }
+                                setState(() {
+                                  mapLoading = 0.0;
+                                });
                               });
                             }
                           },
@@ -234,9 +243,9 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                             markers: markers.toSet(),
                             onMapCreated: (controller){
                               mapController = controller;
-                              double mid = dataList.length/2;
-                              double lat = double.parse(dataList[mid.floor()]!.latitude!);
-                              double long = double.parse(dataList[mid.floor()]!.longitude!);
+                              //double mid = dataList.length/2;
+                              // double lat = double.parse(dataList[mid.floor()]!.latitude??"0.0");
+                              // double long = double.parse(dataList[mid.floor()]!.longitude??"0.0");
                               mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentPosition.latitude,currentPosition.longitude),zoom: 15)));
                             },
                             initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
@@ -279,7 +288,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                           child: SizedBox(
                             height: 170,
                             width: double.maxFinite,
-                            child: ListView.separated(
+                            child: dataList.isNotEmpty?ListView.separated(
                               controller: scrollController,
                               padding: EdgeInsets.symmetric(horizontal: 12),
                               scrollDirection: Axis.horizontal,
@@ -298,8 +307,9 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                             icon: customIcon!,
                                             position: LatLng(double.parse(lat), double.parse(long)),
                                             infoWindow: InfoWindow(
+                                              anchor: Offset(1,8),
                                                 title: "${dataList[i]!.title}",
-                                                snippet: "${dataList[i]!.categoryName}",
+                                                snippet: "${dataList[i]!.categoryName}, ${dataList[i]!.stateName}",
                                                 onTap: () {
                                                   Navigator.push(context,
                                                       CupertinoPageRoute(
@@ -324,10 +334,10 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                 },
                                 separatorBuilder: (context,i)=>SizedBox(width: 12,),
                                 itemCount: dataList.length
-                            ),
+                            ):Center(child: Text("No nearby offers found")),
                           ),
                         ),
-                        loading?getLoader():Text('')
+                        loading? getLoader() : Text('')
                       ],
                     ),
                   )

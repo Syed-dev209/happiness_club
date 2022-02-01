@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/network_constants.dart';
@@ -45,11 +47,16 @@ Future getAllOffers(context,int start, int end)async{
     }
   }
   on DioError catch(e){
-
+   // print(e);
+    var response = storage.readDataFromStorage("offers$start $end");
+    if(response!=""){
+      Provider.of<AllOffersProvider>(context,listen: false).addModel(OffersModel.fromJson(response));
+    }
   }
 }
 
 Future<OfferDetailsModel?> getOffersDetail({required String offerId})async{
+  log(offerId);
 
   try {
     bool check = await InternetService.checkConnectivity();

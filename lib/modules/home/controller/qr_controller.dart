@@ -51,7 +51,7 @@ validateCustomer(context, String qrResult)async{
      final user = Provider
          .of<UserModelProvider>(context, listen: false)
          .customerId;
-     var latLng = await LocationService().getCurrentLocation();
+     var latLng = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
      var response = await dio.post(APIS.VALIDATE_QR,queryParameters: {
        "customer_id":user,
        "token":fcm,

@@ -45,7 +45,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
   int currentIndex = 0;
 
   loadOfferDetails() async {
-    getOffersDetail(offerId: widget.offerId).then((value) {
+    getOffersDetail(context,offerId: widget.offerId).then((value) {
       print(value);
       if (value != null) {
         offersDetailStream!.add(value);

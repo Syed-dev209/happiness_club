@@ -60,7 +60,7 @@ Future addCustomer(context,String qrResult,String name, String email, String num
     bool check = await InternetService.checkConnectivity();
     if(check){
       var fcm = await FirebaseMessaging.instance.getToken();
-      var location = await LocationService().getCurrentLocation();
+      var location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
       var response = await dio.post(APIS.ADD_CUSTOMER,queryParameters: {
         "full_name":name,
         " company_name":company,

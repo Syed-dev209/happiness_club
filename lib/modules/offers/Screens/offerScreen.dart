@@ -10,7 +10,8 @@ import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 class OffersScreen extends StatefulWidget {
-  const   OffersScreen({Key? key}) : super(key: key);
+  String heading="Offers";
+   OffersScreen({this.heading="Offers"});
 
   @override
   _OffersScreenState createState() => _OffersScreenState();
@@ -67,7 +68,7 @@ class _OffersScreenState extends State<OffersScreen> {
           SizedBox(
             height: 30,
           ),
-          appBar(),
+          appBar(widget.heading),
           Expanded(
               child: Consumer<AllOffersProvider>(
                 builder: (context,data,_){
@@ -99,7 +100,7 @@ class _OffersScreenState extends State<OffersScreen> {
     );
   }
 
-  appBar() {
+  appBar(String heading) {
     return GestureDetector(
       onTap: (){
         Navigator.maybePop(context);
@@ -115,7 +116,7 @@ class _OffersScreenState extends State<OffersScreen> {
             //   width: MediaQuery.of(context).size.width * 0.3,
             // ),
             Text(
-              "Offers",
+              heading,
               style: FontStyle.PoppinsStyle(17, Colors.black,
                   fontWeight: FontWeight.w600),
             ),

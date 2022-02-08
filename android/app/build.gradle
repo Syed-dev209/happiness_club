@@ -42,8 +42,8 @@ android {
         minSdkVersion 20
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 8
-        versionName "8.0.0"
+        versionCode 10
+        versionName "10.0.0"
     }
 //    signingConfigs {
 //        release {
@@ -56,19 +56,19 @@ android {
 
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
 //        release {
-//            signingConfig null
-//            applicationVariants.all { variant ->
-//                variant.outputs.all { output ->
-//                    output.outputFileName = "app-release.apk"
-//                }
-//            }
+//            // TODO: Add your own signing config for the release build.
+//            // Signing with the debug keys for now, so `flutter run --release` works.
+//            signingConfig signingConfigs.debug
 //        }
+        release {
+            signingConfig null
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    output.outputFileName = "app-release.apk"
+                }
+            }
+        }
     }
 }
 

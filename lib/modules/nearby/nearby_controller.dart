@@ -20,16 +20,22 @@ Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) 
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
-      LatLng location = await LocationService().getCurrentLocation();
-
-      var response = await dio.get(APIS.NEARBY_OFFERS,queryParameters: {
-        "lat":location.latitude,
-        "long":location.longitude,
+      //LatLng location = await LocationService().getCurrentLocation();
+      log(APIS.NEARBY_OFFERS);
+      var response = await dio.get(
+          APIS.NEARBY_OFFERS,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          ),
+          queryParameters: {
+        "lat":currentPosition.latitude,
+        "long":currentPosition.longitude,
         "start":start,
         "end":end
       });
       if (response.statusCode == 200) {
-        log(response.data.toString());
         OffersModel model = OffersModel.fromJson(response.data);
         storage.writeDataToStorage(StorageKeys.NEARBY_OFFERS, model.toJson());
         return model;

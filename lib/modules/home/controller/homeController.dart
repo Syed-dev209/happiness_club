@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
 import 'package:happiness_club/modules/home/Model/dashboard_model.dart';
 import 'package:happiness_club/modules/home/Model/featured_offers_model.dart';
@@ -181,7 +182,7 @@ Future getMostViewedOffers(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      LatLng location = await LocationService().getCurrentLocation();
+      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
       print(APIS.MOST_VIEWED_OFFERS);
       var response = await dio.get(APIS.MOST_VIEWED_OFFERS,queryParameters: {
         "lat":location.latitude,
@@ -211,7 +212,7 @@ Future getLatestOffers(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      LatLng location = await LocationService().getCurrentLocation();
+      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
       print(APIS.LATEST_OFFERS);
       var response = await dio.get(APIS.LATEST_OFFERS,queryParameters: {
       "lat":location.latitude,
@@ -241,7 +242,7 @@ Future getFeaturedOffers(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
-      LatLng location = await LocationService().getCurrentLocation();
+      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
       var response = await dio.get(APIS.FEATURED_OFFERS,queryParameters: {
         "lat":location.latitude,
         "long":location.longitude

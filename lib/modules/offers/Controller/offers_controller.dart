@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/network_constants.dart';
@@ -55,13 +54,13 @@ Future getAllOffers(context,int start, int end)async{
   }
 }
 
-Future<OfferDetailsModel?> getOffersDetail({required String offerId})async{
+Future<OfferDetailsModel?> getOffersDetail(context,{required String offerId})async{
   log(offerId);
 
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
-      LatLng location = await LocationService().getCurrentLocation();
+      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
       var response = await dio.get("${APIS.OFFER_DETAILS}/$offerId",queryParameters: {
         "lat":location.latitude,
         "long":location.longitude

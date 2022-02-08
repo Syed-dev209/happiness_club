@@ -145,7 +145,9 @@ class CustomDrawer extends StatelessWidget {
                   //   leading: Image.asset(Images.PRIZE_ICON, height: 20),
                   //   title: Text("Prize History", style: style),
                   // ),
-                  ListTile(
+                  Provider
+                      .of<UserModelProvider>(context, listen: false)
+                      .loggedIn?  ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
@@ -154,8 +156,10 @@ class CustomDrawer extends StatelessWidget {
                     },
                     leading: Image.asset(Images.CHAMPION_ICON, height: 20),
                     title: Text("Champions", style: style),
-                  ),
-                  ListTile(
+                  ):SizedBox.shrink(),
+                  Provider
+                      .of<UserModelProvider>(context, listen: false)
+                      .loggedIn?  ListTile(
                     leading: Image.asset(Images.COMPANIES, height: 20),
                     onTap: () {
                       Navigator.push(
@@ -164,8 +168,10 @@ class CustomDrawer extends StatelessWidget {
                               builder: (_) => CompaniesScreen()));
                     },
                     title: Text("Companies", style: style),
-                  ),
-                  ListTile(
+                  ):SizedBox.shrink(),
+                  Provider
+                      .of<UserModelProvider>(context, listen: false)
+                      .loggedIn? ListTile(
                     leading: Image.asset(Images.NEWSLETTER, height: 20),
                     onTap: () {
                       Navigator.push(
@@ -174,19 +180,21 @@ class CustomDrawer extends StatelessWidget {
                               builder: (_) => NewsletterScreen()));
                     },
                     title: Text("Newsletters", style: style),
-                  ),
+                  ):SizedBox.shrink(),
                   // ListTile(
                   //   leading: Image.asset(Images.ARTICLE, height: 20),
                   //   title: Text("Articles & News", style: style),
                   // ),
-                  ListTile(
+                  Provider
+                      .of<UserModelProvider>(context, listen: false)
+                      .loggedIn?  ListTile(
                     onTap: (){
                       Navigator.push(context,
                           CupertinoPageRoute(builder: (_) => AnnouncementsScreen()));
                     },
                     leading: Image.asset(Images.ARTICLE, height: 20),
                     title: Text("Announcements", style: style),
-                  ),
+                  ):SizedBox.shrink(),
                   ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
                     onTap: () {

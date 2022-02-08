@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/widgets/dealCard.dart';
 import 'package:happiness_club/modules/home/widgets/deal_shimmer_card.dart';
@@ -18,6 +21,9 @@ import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
+import 'dart:ui' as ui;
+
+import 'package:provider/provider.dart';
 
 class NearbyScreen extends StatefulWidget {
   const NearbyScreen({Key? key}) : super(key: key);
@@ -31,16 +37,14 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
   GoogleMapController? mapController;
   List<Marker> markers =[];
   BitmapDescriptor? customIcon;
-  LatLng currentPosition=LatLng(37.43296265331129, -122.08832357078792);
+  //LatLng currentPosition=LatLng(37.43296265331129, -122.08832357078792);
   StreamController<OffersModel?>? offerController;
-  getCurrentLocation()async{
-    LatLng pos = await LocationService().getCurrentLocation();
-    print(pos.latitude);
-    print(pos.longitude);
-    setState(() {
-      currentPosition = pos;
-    });
-  }
+  // getCurrentLocation()async{
+  //   LatLng pos = await LocationService().getCurrentLocation();
+  //   print(pos.latitude);
+  //   print(pos.longitude);
+  //     currentPosition = pos;
+  // }
 
   ScrollController? scrollController;
   int start=0, end=9;
@@ -68,14 +72,14 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
   }
 
   loadData()async{
-    await getCurrentLocation();
-    getNearbyOffers(currentPosition,start,end).then((value) {
+    //await getCurrentLocation();
+    getNearbyOffers(Provider.of<UserModelProvider>(context,listen: false).currentLocation!,start,end).then((value) {
       start = start +10;
       end = end + 10;
-      setState(() {
+      //setState(() {
         loading = false;
         released = true;
-      });
+      //});
       log(value.toString());
       if(value!=null){
         offerController!.add(value);
@@ -88,18 +92,34 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
       }
     });
   }
+  late  Uint8List? markerIcon;
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  }
+
+  Future getMarker()async {
+    markerIcon = await getBytesFromAsset(Images.NEARBY_MARKER, 90);
+    customIcon = BitmapDescriptor.fromBytes(markerIcon!);
+  }
 
  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     offerController = StreamController<OffersModel?>();
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(8, 8)),
-        Images.NEARBY_MARKER)
-        .then((d) {
-          setState(() {
-            customIcon = d;
-          });
+    // BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(8, 8)),
+    //     Images.NEARBY_MARKER)
+    //     .then((d) {
+    //       setState(() {
+    //         customIcon = d;
+    //       });
+    // });
+    getMarker().then((value) {
+      setState(() {
+      });
     });
     scrollController = ScrollController();
     scrollController!.addListener(_scrollListener);
@@ -113,7 +133,7 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
     markers.add(Marker(
         markerId: MarkerId("1"),
         icon: BitmapDescriptor.defaultMarker,
-        position: currentPosition
+        position: Provider.of<UserModelProvider>(context,listen: false).currentLocation!
     ));
     return RefreshIndicator(
       onRefresh: ()async{
@@ -208,8 +228,8 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                           icon: customIcon!,
                                           position: LatLng(lat, long),
                                           infoWindow: InfoWindow(
-                                              title: "${data.title}",
-                                              snippet: "${data.categoryName}, ${data.stateName}",
+                                              title: "${data.title??""}",
+                                              snippet: "${data.categoryName??""}, ${data.stateName??""}",
                                               onTap: () {
                                                 Navigator.push(context,
                                                     CupertinoPageRoute(
@@ -234,21 +254,16 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                           //   print(pos.target.latitude);
                           //   print(pos.target.longitude);
                           // },
-                            buildingsEnabled: true,
-                            indoorViewEnabled: true,
-                            mapType: MapType.normal,
                             zoomControlsEnabled: true,
-                            myLocationButtonEnabled: false,
-                            compassEnabled: false,
                             markers: markers.toSet(),
                             onMapCreated: (controller){
                               mapController = controller;
                               //double mid = dataList.length/2;
                               // double lat = double.parse(dataList[mid.floor()]!.latitude??"0.0");
                               // double long = double.parse(dataList[mid.floor()]!.longitude??"0.0");
-                              mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(currentPosition.latitude,currentPosition.longitude),zoom: 15)));
+                              mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(Provider.of<UserModelProvider>(context,listen: false).currentLocation!.latitude,Provider.of<UserModelProvider>(context,listen: false).currentLocation!.longitude),zoom: 15)));
                             },
-                            initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: currentPosition, zoom: 12,tilt: 4)
+                            initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: Provider.of<UserModelProvider>(context,listen: false).currentLocation!, zoom: 12,tilt: 4)
                         ),
                         Positioned(
                        top: 50,
@@ -308,8 +323,8 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                             position: LatLng(double.parse(lat), double.parse(long)),
                                             infoWindow: InfoWindow(
                                               anchor: Offset(1,8),
-                                                title: "${dataList[i]!.title}",
-                                                snippet: "${dataList[i]!.categoryName}, ${dataList[i]!.stateName}",
+                                                title: "${dataList[i]!.title??""}",
+                                                snippet: "${dataList[i]!.categoryName??""}, ${dataList[i]!.stateName??""}",
                                                 onTap: () {
                                                   Navigator.push(context,
                                                       CupertinoPageRoute(
@@ -325,7 +340,6 @@ class _NearbyScreenState extends State<NearbyScreen> with AutomaticKeepAliveClie
                                       Future.delayed(Duration(seconds: 1)).then((value) {
                                         mapController!.showMarkerInfoWindow(markerId);
                                       });
-
                                       setState(() {
                                         released = true;
                                       });

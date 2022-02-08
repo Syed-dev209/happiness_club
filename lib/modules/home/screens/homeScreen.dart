@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen())));
+                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen(heading: "New Deals",))));
                           },
                           child: Text(
                             "View All",
@@ -271,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen(),)));
+                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen(heading: "Featured Deals",),)));
                           },
                           child: Text(
                             "View All",

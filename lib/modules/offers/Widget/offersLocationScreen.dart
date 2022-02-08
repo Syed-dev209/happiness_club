@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/nearby/nearby_controller.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:maps_curved_line/maps_curved_line.dart';
+import 'package:provider/provider.dart';
 
 
 class OfferLocation extends StatefulWidget {
@@ -29,7 +31,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
   final Set<Polyline> _polylines = Set();
 
   loadData()async{
-    currentPos = await LocationService().getCurrentLocation();
+    currentPos = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
     getOffersLocation(offerId: widget.offerId.toString()).then((value) {
       if(value!=null){
         streamController!.add(value);
@@ -112,14 +114,11 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
             child: GoogleMap(
               polylines: _polylines,
               zoomControlsEnabled: false,
-              compassEnabled: false,
-              myLocationButtonEnabled: false,
               markers: markers.toSet(),
               initialCameraPosition: CameraPosition(bearing: 192.8334901395799, target: LatLng(37.43296265331129, -122.08832357078792), zoom: 19.151926040649414),
               onMapCreated: (controller){
                 mapController = controller;
                 mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(lat, long), zoom: 10)));
-
               },
             ),
           );

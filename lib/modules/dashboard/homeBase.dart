@@ -25,7 +25,7 @@ class _HomeBaseState extends State<HomeBase> {
 
 
   loadData()async{
-    await getFeaturedOffers(context);
+    //await getFeaturedOffers(context);
     PushNotificationServices().registerUserToken();
   }
   @override

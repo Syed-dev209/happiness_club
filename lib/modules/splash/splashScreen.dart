@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
@@ -9,6 +10,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
 import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/modules/home/controller/homeController.dart';
+import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/services/notification_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // await getSliderImages(context);
     // getMostViewedOffers(context);
     // getLatestOffers(context);
+     LocationService().getCurrentLocation(context);
     await getDashboardData(context);
 
     Navigator.pushReplacement(
@@ -68,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Stack(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(Images.SPLASH_BG),
+              SvgPicture.asset(Images.SPLASH_BG,fit: BoxFit.cover,),
               Align(
                   alignment: Alignment.center,
                   child: Column(
@@ -80,6 +83,8 @@ class _SplashScreenState extends State<SplashScreen> {
                           Images.LOGO,
                           // height: 250,
                           // width: 200,
+                          cacheHeight: 500,
+                          cacheWidth: 600,
                         ),
                       ),
                       Expanded(

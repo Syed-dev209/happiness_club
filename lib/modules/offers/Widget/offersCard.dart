@@ -96,7 +96,7 @@ class _OffersCardState extends State<OffersCard> {
                                   });
                                   markAsFavorite(
                                       context, widget.modelData.id.toString()).then((value) {
-                                        print(value);
+                                       // print(value);
                                         if(value != "success"){
                                           setState(() {
                                             like =!like;

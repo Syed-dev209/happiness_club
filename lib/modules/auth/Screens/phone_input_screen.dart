@@ -86,7 +86,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                   loading = true;
                 });
                 loginWithPhoneNumber(context: context, phoneNumber: maskFormatter.getUnmaskedText());
-                print(maskFormatter.getUnmaskedText());
+                //print(maskFormatter.getUnmaskedText());
               }
             }):Center(child: loader()),
             SizedBox(

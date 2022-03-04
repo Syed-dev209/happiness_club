@@ -1,11 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
+
+import '../Model/comapnies_details_model.dart';
 
 
 class ChampionCard extends StatelessWidget {
-  const ChampionCard({ Key? key }) : super(key: key);
+  CompanyDetailsModelDataChampions model;
+  ChampionCard({  required this.model}) ;
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +30,28 @@ class ChampionCard extends StatelessWidget {
               width: 63,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(Images.DEAL_BG),
-                  fit: BoxFit.cover
-                )
+                // image: DecorationImage(
+                //   image: CachedNetworkImageProvider(model.photo??Constants.NOT_FOUND_IMAGE_URL),
+                //   fit: BoxFit.cover
+                // )
+              ),
+              child: ClipOval(
+                child: Center(
+                  child: CachedNetworkImage(
+                    imageUrl: model.photo??Constants.NOT_FOUND_IMAGE_URL,
+                    errorWidget: (a,d,f){
+                      return CachedNetworkImage(
+                        imageUrl: Constants.NOT_FOUND_IMAGE_URL,
+                        fit: BoxFit.cover,
+                      );
+                    },
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 10,),
-            Text("John Smith",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),)
+            Text("${model.fullName}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),)
           ],
         ),
       ),

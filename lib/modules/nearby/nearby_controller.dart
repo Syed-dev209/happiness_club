@@ -15,8 +15,8 @@ var dio = Dio();
 var storage = StorageServices();
 
 Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) async {
-  print("Start==>$start");
-  print("End===>$end");
+ // print("Start==>$start");
+  //print("End===>$end");
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
@@ -51,7 +51,7 @@ Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) 
       return null;
     }
   } on DioError catch (e) {
-    print(e);
+    //print(e);
     var response = storage.readDataFromStorage(StorageKeys.NEARBY_OFFERS);
     if (response != "") {
       return OffersModel.fromJson(response);
@@ -72,7 +72,7 @@ Future<OffersModel?> getMapNearbyOffers(context,LatLng currentPosition,double zo
         "zoom":zoom
       });
       if(response.statusCode == 200){
-        print(response.data);
+        //print(response.data);
         OffersModel model = OffersModel.fromJson(response.data);
         return model;
       }

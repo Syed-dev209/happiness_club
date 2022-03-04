@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
@@ -46,7 +44,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
 
   loadOfferDetails() async {
     getOffersDetail(context,offerId: widget.offerId).then((value) {
-      print(value);
+      //print(value);
       if (value != null) {
         offersDetailStream!.add(value);
         return value;
@@ -121,12 +119,14 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                           tabs: tabs,
                           controller: controller,
                           unselectedLabelColor: Colors.black,
-                          unselectedLabelStyle: GoogleFonts.poppins(
-                            fontSize: 12,
+                          unselectedLabelStyle: FontStyle.PoppinsStyle(
+                             12,
+                            Colors.black,
                             fontWeight: FontWeight.w500,
                           ),
-                          labelStyle: GoogleFonts.poppins(
-                            fontSize: 14,
+                          labelStyle: FontStyle.PoppinsStyle(
+                             14,
+                            Colors.black,
                             fontWeight: FontWeight.w500,
                           ),
                           labelColor: Color(ColorCodes.GOLDEN_COLOR),

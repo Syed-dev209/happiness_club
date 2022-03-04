@@ -15,7 +15,7 @@ Future<ChampionsModel?> getChampions(context)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       var response = await dio.get(APIS.CHAMPIONS);
-      print(response.data);
+      //print(response.data);
       if(response.statusCode == 200){
         ChampionsModel model = ChampionsModel.fromJson(response.data);
         storage.writeDataToStorage(StorageKeys.CHAMPIONS, model.toJson());

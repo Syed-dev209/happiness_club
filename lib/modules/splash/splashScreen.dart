@@ -30,16 +30,19 @@ class _SplashScreenState extends State<SplashScreen> {
     var response = storage.readDataFromStorage(StorageKeys.LOGGED_IN);
     var uid = storage.readDataFromStorage(StorageKeys.USER_ID);
     var name = storage.readDataFromStorage(StorageKeys.USER_NAME);
+    var memb = storage.readDataFromStorage(StorageKeys.USER_MEMBERSHIP);
+    var exp = storage.readDataFromStorage(StorageKeys.USER_EXP_DATE);
     if(response!="" && uid!="" && name!=""){
       Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
       Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);
       Provider.of<UserModelProvider>(context,listen: false).addName(name);
+      Provider.of<UserModelProvider>(context,listen: false).setMembershipDetails(memb, exp);
     }
     // await getOfferCategories(context);
     // await getSliderImages(context);
     // getMostViewedOffers(context);
     // getLatestOffers(context);
-     LocationService().getCurrentLocation(context);
+     await LocationService().getCurrentLocation(context);
     await getDashboardData(context);
 
     Navigator.pushReplacement(
@@ -59,6 +62,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -71,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Stack(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(Images.SPLASH_BG,fit: BoxFit.cover,),
+              Center(child: SvgPicture.asset(Images.SPLASH_BG,fit: BoxFit.cover,height: size.height,width: size.width,)),
               Align(
                   alignment: Alignment.center,
                   child: Column(
@@ -83,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           Images.LOGO,
                           // height: 250,
                           // width: 200,
-                          cacheHeight: 500,
+                          cacheHeight: 450,
                           cacheWidth: 600,
                         ),
                       ),

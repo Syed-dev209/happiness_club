@@ -22,6 +22,7 @@ class APIS {
   static const String CONTACT = BASE_URL+"contact";
   static const String ALL_OFFERS = BASE_URL+"offers/all";
   static const String COMPANIES = BASE_URL+"companies";
+  static const String COMPANIES_DETAIL = BASE_URL+"company-details";
   static const String CHAMPIONS = BASE_URL+"champions";
   static const String LOGIN = BASE_URL+"login";
   static const String NEWSLETTER = BASE_URL+"newsletters";

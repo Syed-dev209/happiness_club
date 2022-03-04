@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,20 +21,29 @@ var storage = StorageServices();
 
 
 loginWithPhoneNumber({required context,required String phoneNumber})async{
-  print('in spi');
+  //print('in spi');
   try{
+    final userProvider =  Provider.of<UserModelProvider>(context,listen: false);
     bool check = await InternetService.checkConnectivity();
     if(check){
       var response = await dio.post(APIS.LOGIN,data: {
         "mobile":phoneNumber
       });
-      print(response.data);
+      //print(response.data);
       if(response.data['responseStatus']=="success"){
-        print(response.data["data"]["otp"]);
-        Provider.of<UserModelProvider>(context,listen: false).addCustomerId(response.data["data"]["id"].toString());
-        Provider.of<UserModelProvider>(context,listen: false).addName(response.data["data"]["full_name"]);
+        //print(response.data);
+        log(response.data["data"]["otp"].toString());
+
+        userProvider.addCustomerId(response.data["data"]["id"].toString());
+        userProvider.addName(response.data["data"]["full_name"]);
+        userProvider.setMembershipDetails(response.data["data"]["membership_no"], response.data["data"]["expiry_date"]);
+
         storage.writeDataToStorage(StorageKeys.USER_ID, response.data["data"]["id"].toString());
         storage.writeDataToStorage(StorageKeys.USER_NAME, response.data["data"]["full_name"].toString());
+        storage.writeDataToStorage(StorageKeys.USER_MEMBERSHIP, response.data["data"]["membership_no"].toString());
+        storage.writeDataToStorage(StorageKeys.USER_EXP_DATE, response.data["data"]["expiry_date"].toString());
+
+
         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));
       }
       else{
@@ -49,7 +60,7 @@ loginWithPhoneNumber({required context,required String phoneNumber})async{
     }
   }
   on DioError catch(e){
-    print("Failed to log in");
+    //print("Failed to log in");
     showToast(context, "Failed to login. Please check mobile number.");
   }
 }
@@ -83,7 +94,7 @@ Future addCustomer(context,String qrResult,String name, String email, String num
   }
   on DioError catch(e){
     showToast(context, "Unable to complete your request. Please try again later.");
-    print(e.response!.data);
+    //print(e.response!.data);
     return null;
   }
 }

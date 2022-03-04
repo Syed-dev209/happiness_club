@@ -14,8 +14,8 @@ class PdfViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Uri url = Uri.parse(pdfUrl);
-    print(url.hasAbsolutePath);
-    print(url.origin+url.path);
+    //print(url.hasAbsolutePath);
+   // print(url.origin+url.path);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

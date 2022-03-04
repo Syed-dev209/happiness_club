@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
@@ -10,6 +12,7 @@ import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:maps_curved_line/maps_curved_line.dart';
 import 'package:provider/provider.dart';
+import 'dart:ui' as ui;
 
 
 class OfferLocation extends StatefulWidget {
@@ -42,22 +45,33 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
         return null;
       }
     });
-    markers.add(Marker(
+    markers.add(
+        Marker(
         markerId: MarkerId("1"),
         icon: BitmapDescriptor.defaultMarker,
         position: currentPos!
     ));
+  }
+
+  late  Uint8List? markerIcon;
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  }
+
+  Future getMarker()async {
+    markerIcon = await getBytesFromAsset(Images.NEARBY_MARKER, 60);
+    customIcon = BitmapDescriptor.fromBytes(markerIcon!);
   }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     streamController = StreamController<OfferLocationModel?>();
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(8, 8)),
-        Images.OFFER_MARKER)
-        .then((d) {
+    getMarker().then((value) {
       setState(() {
-        customIcon = d;
       });
     });
 

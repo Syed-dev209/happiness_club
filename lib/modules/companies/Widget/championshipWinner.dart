@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
+
+import '../Model/comapnies_details_model.dart';
 
 class ChampionshipWinnerCard extends StatelessWidget {
-  const ChampionshipWinnerCard({Key? key}) : super(key: key);
+  CompanyDetailsModelDataChampionshipWinners model;
+  ChampionshipWinnerCard({required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +30,16 @@ class ChampionshipWinnerCard extends StatelessWidget {
             Row(
                mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 Text("Chris Evans",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
+                 Text("${model.fullName}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
                  SizedBox(width: 8,),
-                 SvgPicture.asset(Images.FIRST_POSITION,height: 20,width: 20,)
+                 SvgPicture.asset(
+                   model.position==1?
+                   Images.FIRST_POSITION:
+                   model.position==2?
+                   Images.SECOND_POSITION:
+                   Images.THIRD_POSITION,
+
+                   height: 20,width: 20,)
               ],
             ),
             SizedBox(height: 8,),
@@ -59,9 +71,18 @@ class ChampionshipWinnerCard extends StatelessWidget {
             width: 73,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: AssetImage(Images.CATEGORIES_BG),
-                    fit: BoxFit.cover)),
+               ),
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: model.photo??Constants.ALT_IMAGE,
+                errorWidget: (a,s,f){
+                  return Center(
+                    child: CachedNetworkImage(imageUrl: Constants.ALT_IMAGE,fit: BoxFit.cover,),
+                  );
+                },
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.bottomRight,
@@ -78,7 +99,7 @@ class ChampionshipWinnerCard extends StatelessWidget {
                       color: Colors.white, shape: BoxShape.circle),
                   child: Center(
                     child: Text(
-                      "1",
+                      "${model.position}",
                       style: FontStyle.PoppinsStyle(
                           16, Color(ColorCodes.GOLDEN_COLOR),
                           fontWeight: FontWeight.w700),

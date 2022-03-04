@@ -66,7 +66,7 @@ Future<OfferDetailsModel?> getOffersDetail(context,{required String offerId})asy
         "long":location.longitude
       });
       if (response.statusCode == 200) {
-        print(response.data);
+        //print(response.data);
         OfferDetailsModel model = OfferDetailsModel.fromJson(response.data);
         storage.writeDataToStorage(offerId, model.toJson());
         return model;
@@ -191,8 +191,8 @@ Future postAReview(context, String offerId,String review,double rating)async{
   try{
     bool check = await InternetService.checkConnectivity();
     String userId = Provider.of<UserModelProvider>(context,listen: false).customerId;
-    print(userId);
-    print(offerId);
+    //print(userId);
+    //print(offerId);
     if(check){
       var response = await dio.post(APIS.ADD_REVIEW,data: {
         "stars" :rating,
@@ -201,7 +201,7 @@ Future postAReview(context, String offerId,String review,double rating)async{
         "customer_id": userId
       });
       if(response.statusCode == 200){
-        print(response.data);
+       // print(response.data);
         showToast(context, "Thank you for rating us.");
       }
     }
@@ -210,7 +210,7 @@ Future postAReview(context, String offerId,String review,double rating)async{
     }
   }
   on DioError catch(w){
-    print(w);
+   // print(w);
     showToast(context, "Unable to post review");
   }
 }
@@ -223,7 +223,7 @@ addViewToOffer(String offerId)async {
       var response = await dio.post(APIS.ADD_VIEW,queryParameters: {
         "offer_id":offerId
       });
-      print("view added to offer");
+      //print("view added to offer");
     }
   }
   catch(e){

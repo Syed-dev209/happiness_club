@@ -16,7 +16,7 @@ class CompanyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-      //  Navigator.push(context, CupertinoPageRoute(builder: (_)=>CompanyDetailsScreen()));
+        Navigator.push(context, CupertinoPageRoute(builder: (_)=>CompanyDetailsScreen(companyId: modelData.id.toString(),)));
       },
       child: Container(
         height: 50,

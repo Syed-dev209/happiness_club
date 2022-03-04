@@ -338,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<OffersSliderProvider>(
       builder: (context,data,_){
         if(data.modelData == null){
-          print("null data");
+         // print("null data");
           return sliderImageShimmer();
         }
         return Container(
@@ -464,15 +464,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        Expanded(
-          child: GestureDetector(
-            onTap: (){
-              Navigator.push(context, CupertinoPageRoute(builder: (context)=>PhoneInputScreen()));
-            },
-            child: !Provider.of<UserModelProvider>(context,listen: false).loggedIn? Text("Sign Up/Login",
-                style: FontStyle.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
-                    fontWeight: FontWeight.bold)):Text(""),
-          ),
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, CupertinoPageRoute(builder: (context)=>PhoneInputScreen()));
+          },
+          child: !Provider.of<UserModelProvider>(context,listen: false).loggedIn? Text("Sign Up/Login",
+              style: FontStyle.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
+                  fontWeight: FontWeight.bold)):Text(""),
         )
       ],
     );

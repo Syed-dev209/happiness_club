@@ -98,7 +98,7 @@ class _HomeBaseState extends State<HomeBase> {
                   label: 'Search'),
             ],
             onTap: (index) {
-              print(index);
+             // print(index);
               setState(() {
                 if (index == 0) {
                   body = HomeScreen();

@@ -1,11 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/constants/storage_keys.dart';
+
+import '../Model/comapnies_details_model.dart';
 
 
 class LuckyDrawWinnerCard extends StatelessWidget {
-  const LuckyDrawWinnerCard({ Key? key }) : super(key: key);
+  CompanyDetailsModelDataLuckyWinners model;
+  LuckyDrawWinnerCard({required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +30,33 @@ class LuckyDrawWinnerCard extends StatelessWidget {
               width: 63,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(Images.CATEGORIES_BG),
-                  fit: BoxFit.cover
-                  )
+                // image: DecorationImage(
+                //   image: CachedNetworkImageProvider(
+                //       model.photo==null||model.photo==""? Constants.ALT_IMAGE:model.photo!,
+                //     errorListener: (){
+                //
+                //     }
+                //   ),
+                //   fit: BoxFit.cover
+                //   )
+              ),
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: model.photo==null||model.photo==""? Constants.ALT_IMAGE:model.photo!,
+                  errorWidget: (s,a,c){
+                    return Center(
+                      child: CachedNetworkImage(imageUrl: Constants.ALT_IMAGE,),
+                    );
+                  },
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
 
             SizedBox(height: 8,),
-            Text("Tom Holland",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
+            Text("${model.fullName}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
               SizedBox(height: 8,),
-              Text('T-Shirt',style: FontStyle.PoppinsStyle(14, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w500),)
+              Text('${model.giftTitle}',style: FontStyle.PoppinsStyle(14, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w500),)
           ]
         ),
       ),

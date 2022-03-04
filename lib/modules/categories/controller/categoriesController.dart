@@ -33,6 +33,6 @@ Future getOfferCategories(context) async {
     }
   } on DioError catch (e) {
     //print(e);
-    print("Fail to load categories from API");
+    //print("Fail to load categories from API");
   }
 }

@@ -242,10 +242,10 @@ class _OffersSummaryState extends State<OffersSummary> {
   }
 
   ratingAndTime() {
-    print(widget.modelData.endDate);
+    //print(widget.modelData.endDate);
     DateTime endDate = DateTime.parse(widget.modelData.endDate??DateTime.now().toString());
     int daysLeft = endDate.difference(DateTime.now()).inDays;
-    print(daysLeft);
+    //print(daysLeft);
     return Expanded(
       child: Row(
         children: [

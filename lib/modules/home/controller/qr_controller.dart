@@ -25,7 +25,7 @@ Future scanQrResult(context,String qrResult)async{
         }
         else{
           showToast(context, "Successfully scanned.");
-          print(response.data);
+          //print(response.data);
           return "success";
         }
 

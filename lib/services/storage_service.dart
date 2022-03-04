@@ -21,4 +21,8 @@ class StorageServices {
   deleteDataFromStorage(String key) {
     box.remove(key);
   }
+
+  clearAllData(){
+    box.erase();
+  }
 }

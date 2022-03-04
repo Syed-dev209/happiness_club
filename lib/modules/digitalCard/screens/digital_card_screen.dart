@@ -28,7 +28,7 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
 
   loadData(){
     getDigitalCards(context).then((DigitalCardModel? value) {
-      print(value);
+      //print(value);
       if(value!=null){
         setState(() {
           for(int i=0;i< value.data!.fazaaCard!.length;i++){

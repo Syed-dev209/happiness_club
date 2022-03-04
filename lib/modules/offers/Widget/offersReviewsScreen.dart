@@ -27,7 +27,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
   StreamController<OfferReviesModel?>? offersReviewStream;
 
   loadOfferReviews()async{
-    print(widget.offerId);
+    //print(widget.offerId);
     getOfferReviews(offerId: widget.offerId).then((value) {
       if(value!=null){
         offersReviewStream!.add(value);

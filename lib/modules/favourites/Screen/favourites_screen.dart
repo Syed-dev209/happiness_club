@@ -26,7 +26,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   loadData(){
     if(Provider.of<UserModelProvider>(context,listen: false).loggedIn) {
       getFavoritesList(context).then((value) {
-        print("DATA==>$value");
+        //print("DATA==>$value");
         if (value != null) {
           controller!.add(value);
           return value;
@@ -73,7 +73,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                   child: StreamBuilder<FavoritesModel?>(
                     stream: controller!.stream,
                     builder: (context,snapshot){
-                      print(snapshot.data);
+                      //print(snapshot.data);
 
                       if(snapshot.connectionState == ConnectionState.waiting){
                         return Center(

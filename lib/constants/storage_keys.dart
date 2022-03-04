@@ -9,6 +9,7 @@ class StorageKeys {
   static const TERMS ="terms";
   static const PRIVACY ="privacy";
   static const COMPANIES ="companies";
+  static const COMPANIES_DETAIL ="companyDetail";
   static const CHAMPIONS ="champions";
   static const NEWSLETTERS ="newsletters";
 
@@ -21,6 +22,8 @@ class StorageKeys {
   static const FAVORITES ="favorites";
   static const USER_ID ="uid";
   static const USER_NAME ="username";
+  static const USER_MEMBERSHIP ="membership";
+  static const USER_EXP_DATE ="expiryDate";
 
   static const DC_BLOB ="digitalcardblob";
   static const ANNOUNCEMENTS ="announcements";

@@ -15,7 +15,7 @@ Future<AboutUsModel?> getAbout()async{
     if(check){
       var response = await dio.get(APIS.ABOUT);
       if(response.statusCode==200){
-        print(response.data['data']);
+        //print(response.data['data']);
         AboutUsModel model = AboutUsModel.fromJson(response.data);
         storage.writeDataToStorage(StorageKeys.ABOUT, model.toJson());
         return model;

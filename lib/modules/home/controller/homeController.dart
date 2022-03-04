@@ -172,8 +172,8 @@ Future getSliderImages(context) async {
       showNoInternetSnackBar(context);
     }
   } on DioError catch (e) {
-    print(e);
-    print("Sliders failed to load from API");
+    //print(e);
+   // print("Sliders failed to load from API");
   }
 }
 
@@ -183,7 +183,7 @@ Future getMostViewedOffers(context)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
-      print(APIS.MOST_VIEWED_OFFERS);
+     // print(APIS.MOST_VIEWED_OFFERS);
       var response = await dio.get(APIS.MOST_VIEWED_OFFERS,queryParameters: {
         "lat":location.latitude,
         "long":location.longitude
@@ -204,7 +204,7 @@ Future getMostViewedOffers(context)async{
     }
   }
   on DioError catch (e) {
-    print("Most viewed failed to load from API");
+    //print("Most viewed failed to load from API");
   }
 }
 
@@ -213,7 +213,7 @@ Future getLatestOffers(context)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
-      print(APIS.LATEST_OFFERS);
+     // print(APIS.LATEST_OFFERS);
       var response = await dio.get(APIS.LATEST_OFFERS,queryParameters: {
       "lat":location.latitude,
       "long":location.longitude
@@ -234,7 +234,7 @@ Future getLatestOffers(context)async{
     }
   }
   on DioError catch (e) {
-    print("latest offers failed to load from API");
+  //  print("latest offers failed to load from API");
   }
 }
 
@@ -248,7 +248,7 @@ Future getFeaturedOffers(context)async{
         "long":location.longitude
       });
       if(response.statusCode==200){
-        print(response.data);
+       // print(response.data);
         OffersModel model = OffersModel.fromJson(response.data);
         Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
         storage.writeDataToStorage(StorageKeys.FEATURED_OFFERS, model.toJson());
@@ -265,7 +265,7 @@ Future getFeaturedOffers(context)async{
 
   }
   on DioError catch (e) {
-    print("Featured offers failed to load from API");
+    //print("Featured offers failed to load from API");
   }
 }
 

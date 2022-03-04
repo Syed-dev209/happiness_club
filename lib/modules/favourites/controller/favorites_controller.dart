@@ -21,9 +21,9 @@ Future<FavoritesModel?> getFavoritesList(context)async{
       var response = await dio.post(APIS.FAVORITES_LIST,queryParameters: {
         "customer_id":user
       });
-      print(response.data);
+     // print(response.data);
       if(response.statusCode == 200){
-        print(response.data);
+       // print(response.data);
         FavoritesModel model = FavoritesModel.fromJson(response.data);
         storage.writeDataToStorage(StorageKeys.FAVORITES, model.toJson());
         return model;
@@ -52,7 +52,7 @@ Future markAsFavorite(context, String offerId)async{
           "customer_id":user.customerId,
           "offer_id":offerId
         });
-        print(response.data);
+        //print(response.data);
         if(response.statusCode == 200){
           showToast(context, response.data["message"]);
           return response.data["responseStatus"];
@@ -64,7 +64,7 @@ Future markAsFavorite(context, String offerId)async{
     }
   }
   on DioError catch(e){
-    print(e.response!.data);
+   // print(e.response!.data);
     return " ";
   }
 }

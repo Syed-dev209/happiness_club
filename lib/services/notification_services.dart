@@ -27,7 +27,7 @@ class PushNotificationServices {
   var storage = StorageServices();
   Future<String> getDeviceToken() async {
     String? token = await _fcm.getToken();
-    print("Device Token:- $token");
+    //print("Device Token:- $token");
     return token ?? "";
   }
 
@@ -39,7 +39,7 @@ class PushNotificationServices {
     // bool isLoggedIn = Provider.of<LoginChecker>(context,listen: false).getUserStatus;
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       ///jab app open hu
-      print(message.data);
+     // print(message.data);
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
@@ -98,8 +98,8 @@ class PushNotificationServices {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       ///jab app background me hu kill nhi hui hu
-      print('A new onMessageOpenedApp event was published!');
-      print(message.data);
+      //print('A new onMessageOpenedApp event was published!');
+      //print(message.data);
       SchedulerBinding.instance!.addPostFrameCallback((_) {
         if(message.data["type"]=="announcement") {
           ///announcement when
@@ -166,7 +166,7 @@ class PushNotificationServices {
           });
           if(response.statusCode == 200){
             storage.writeDataToStorage(StorageKeys.REGISTERED, true);
-            print("Device registered");
+           // print("Device registered");
           }
           }
       }

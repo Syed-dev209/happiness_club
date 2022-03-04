@@ -21,13 +21,29 @@ import 'package:happiness_club/modules/home/controller/qr_controller.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
 import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
+import 'package:happiness_club/services/navigatorKey.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   final style =
       FontStyle.PoppinsStyle(14, Colors.black26, fontWeight: FontWeight.w500);
+
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
+    final user = Provider.of<UserModelProvider>(context, listen: false);
+    //print(DateTime.now().toString());
+    var formatter = DateFormat("MM/yy", "en");
+    var date;
+    if (user.loggedIn) {
+      date = formatter.format(
+        DateTime.parse("${user.expDate} 00:00:00.000"),
+      );
+    }
+
     return Drawer(
       child: Container(
         color: Color(0xfffefefe),
@@ -37,7 +53,8 @@ class CustomDrawer extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: Center(
                   child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 2),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 2, vertical: 50),
                     leading: Container(
                       height: 80,
                       width: 80,
@@ -54,20 +71,35 @@ class CustomDrawer extends StatelessWidget {
                                   color: Colors.black,
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    fit: BoxFit.fitWidth,
-                                      image:
-                                          CachedNetworkImageProvider(Constants.NOT_FOUND_IMAGE_URL))))),
+                                      fit: BoxFit.fitWidth,
+                                      image: CachedNetworkImageProvider(
+                                          Constants.ALT_IMAGE))))),
                     ),
                     title: Text(
-                      Provider.of<UserModelProvider>(context,listen: false).name,
+                      Provider.of<UserModelProvider>(context, listen: false)
+                          .name,
                       style: FontStyle.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
-                    subtitle: Text(
-                      "",
-                      style: FontStyle.PoppinsStyle(12, Colors.black26,
-                          fontWeight: FontWeight.w400),
-                    ),
+                    subtitle: user.loggedIn
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${user.memberShip}",
+                                style: FontStyle.PoppinsStyle(
+                                    12, Color(ColorCodes.GOLDEN_COLOR),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Expiry : $date",
+                                style: FontStyle.PoppinsStyle(
+                                    11, Color(ColorCodes.GREY_COLOR),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
+                        : SizedBox.shrink(),
                   ),
                 )),
             Expanded(
@@ -75,58 +107,72 @@ class CustomDrawer extends StatelessWidget {
                 children: [
                   ListTile(
                     onTap: () {
-                      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>HomeBase()));
+                      Navigator.pushReplacement(context,
+                          CupertinoPageRoute(builder: (context) => HomeBase()));
                     },
-                    leading: Icon(Icons.home,color: Color(ColorCodes.GOLDEN_COLOR),size: 28,),
+                    leading: Icon(
+                      Icons.home,
+                      color: Color(ColorCodes.GOLDEN_COLOR),
+                      size: 28,
+                    ),
                     title: Text(
                       "Dashboard",
                       style: style,
                     ),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context)=>DigitalCardScreen()));
-                    },
-                    leading: Image.asset(
-                      Images.CARD_ICON,
-                      height: 20,
-                    ),
-                    title: Text(
-                      "Digital card",
-                      style: style,
-                    ),
-                  ),
-                  ListTile(
-                    onTap: ()async{
-                      var result = await BarcodeScanner.scan();
-                      scanQrResult(context, result.rawContent).then((value) {
-                        print("==>$value");
-                        if(value=="success") {
-                          if (Provider
-                              .of<UserModelProvider>(context, listen: false)
-                              .loggedIn) {
-                            validateCustomer(context, result.rawContent);
-                          }
-                          else {
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          onTap: () {
                             Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                    builder: (context) =>
-                                        InputCustomerInfo(
-                                          qrResult: result.rawContent,)));
-                          }
-                        }
-                        else{
-                          //Navigator.pop(context);
-                        }
-                      });
-                      print(result.rawContent); // The barcode content
-                    },
-                    leading: Image.asset(Images.SCAN_ICON, height: 20),
-                    title: Text("Scan QR Code", style: style),
-                  ),
+                                    builder: (context) => DigitalCardScreen()));
+                          },
+                          leading: Image.asset(
+                            Images.CARD_ICON,
+                            height: 20,
+                          ),
+                          title: Text(
+                            "Digital card",
+                            style: style,
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          onTap: () async {
+                            var result = await BarcodeScanner.scan();
+                            scanQrResult(context, result.rawContent)
+                                .then((value) {
+                              //print("==>$value");
+                              if (value == "success") {
+                                if (Provider.of<UserModelProvider>(context,
+                                        listen: false)
+                                    .loggedIn) {
+                                  validateCustomer(context, result.rawContent);
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) =>
+                                              InputCustomerInfo(
+                                                qrResult: result.rawContent,
+                                              )));
+                                }
+                              } else {
+                                //Navigator.pop(context);
+                              }
+                            });
+                           // print(result.rawContent); // The barcode content
+                          },
+                          leading: Image.asset(Images.SCAN_ICON, height: 20),
+                          title: Text("Scan QR Code", style: style),
+                        )
+                      : SizedBox.shrink(),
                   ListTile(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
@@ -145,56 +191,63 @@ class CustomDrawer extends StatelessWidget {
                   //   leading: Image.asset(Images.PRIZE_ICON, height: 20),
                   //   title: Text("Prize History", style: style),
                   // ),
-                  Provider
-                      .of<UserModelProvider>(context, listen: false)
-                      .loggedIn?  ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => ChampionsScreen()));
-                    },
-                    leading: Image.asset(Images.CHAMPION_ICON, height: 20),
-                    title: Text("Champions", style: style),
-                  ):SizedBox.shrink(),
-                  Provider
-                      .of<UserModelProvider>(context, listen: false)
-                      .loggedIn?  ListTile(
-                    leading: Image.asset(Images.COMPANIES, height: 20),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (_) => CompaniesScreen()));
-                    },
-                    title: Text("Companies", style: style),
-                  ):SizedBox.shrink(),
-                  Provider
-                      .of<UserModelProvider>(context, listen: false)
-                      .loggedIn? ListTile(
-                    leading: Image.asset(Images.NEWSLETTER, height: 20),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (_) => NewsletterScreen()));
-                    },
-                    title: Text("Newsletters", style: style),
-                  ):SizedBox.shrink(),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => ChampionsScreen()));
+                          },
+                          leading:
+                              Image.asset(Images.CHAMPION_ICON, height: 20),
+                          title: Text("Champions", style: style),
+                        )
+                      : SizedBox.shrink(),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          leading: Image.asset(Images.COMPANIES, height: 20),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => CompaniesScreen()));
+                          },
+                          title: Text("Companies", style: style),
+                        )
+                      : SizedBox.shrink(),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          leading: Image.asset(Images.NEWSLETTER, height: 20),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => NewsletterScreen()));
+                          },
+                          title: Text("Newsletters", style: style),
+                        )
+                      : SizedBox.shrink(),
                   // ListTile(
                   //   leading: Image.asset(Images.ARTICLE, height: 20),
                   //   title: Text("Articles & News", style: style),
                   // ),
-                  Provider
-                      .of<UserModelProvider>(context, listen: false)
-                      .loggedIn?  ListTile(
-                    onTap: (){
-                      Navigator.push(context,
-                          CupertinoPageRoute(builder: (_) => AnnouncementsScreen()));
-                    },
-                    leading: Image.asset(Images.ARTICLE, height: 20),
-                    title: Text("Announcements", style: style),
-                  ):SizedBox.shrink(),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => AnnouncementsScreen()));
+                          },
+                          leading: Image.asset(Images.ARTICLE, height: 20),
+                          title: Text("Announcements", style: style),
+                        )
+                      : SizedBox.shrink(),
                   ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
                     onTap: () {
@@ -204,37 +257,65 @@ class CustomDrawer extends StatelessWidget {
                     title: Text("About Us", style: style),
                   ),
                   ListTile(
-                    onTap: (){
-                      Navigator.push(context,
-                          CupertinoPageRoute(builder: (_) => ContactUsScreen()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => ContactUsScreen()));
                     },
                     leading: Image.asset(Images.CONATCT, height: 20),
                     title: Text("Contact Us", style: style),
                   ),
                   ListTile(
-                    onTap: (){
-                      Navigator.push(context,
-                          CupertinoPageRoute(builder: (_) => HelpCustomerScreen()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => HelpCustomerScreen()));
                     },
                     leading: Image.asset(Images.SUGGESTIONS, height: 20),
                     title: Text("Suggestions", style: style),
                   ),
                   ListTile(
-                    onTap: (){
-                      Navigator.push(context,
-                          CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.TERMS)));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => TermsAndPrivacyScreen(
+                                  type: Constants.TERMS)));
                     },
                     leading: Image.asset(Images.TERMS, height: 20),
                     title: Text("Terms & Conditions", style: style),
                   ),
                   ListTile(
-                    onTap: (){
-                      Navigator.push(context,
-                          CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.PRIVACY)));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => TermsAndPrivacyScreen(
+                                  type: Constants.PRIVACY)));
                     },
                     leading: Image.asset(Images.PRIVACY, height: 20),
                     title: Text("Privacy Policy", style: style),
                   ),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                          .loggedIn
+                      ? ListTile(
+                          onTap: () {
+                            Provider.of<UserModelProvider>(context,
+                                    listen: false)
+                                .logOutUser();
+                            showToast(context, "User logged out");
+                            // Navigator.push(context,
+                            //     CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.PRIVACY)));
+                          },
+                          leading: Icon(
+                            Icons.logout,
+                            color: Color(ColorCodes.GOLDEN_COLOR),
+                          ),
+                          title: Text("Logout", style: style),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             ),

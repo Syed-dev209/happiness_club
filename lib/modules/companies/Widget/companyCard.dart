@@ -59,7 +59,7 @@ class CompanyCard extends StatelessWidget {
             Expanded(
               child: AutoSizeText(
                 '${modelData.title}',
-                style: FontStyle.PoppinsStyle(18, Colors.black,
+                style: FontStyles.PoppinsStyle(18, Colors.black,
                     fontWeight: FontWeight.w600),
                 minFontSize: 8,
 

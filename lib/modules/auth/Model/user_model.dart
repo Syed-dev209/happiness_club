@@ -8,6 +8,8 @@ class UserModelProvider extends ChangeNotifier{
   String name="Not logged in";
   String memberShip="";
   String expDate="";
+  String company="";
+  String accessType="";
   LatLng? currentLocation;
   addCustomerId(String id){
     customerId = id;
@@ -27,7 +29,12 @@ class UserModelProvider extends ChangeNotifier{
     memberShip = memNum;
     expDate = date;
   }
-
+  setCompanyName(String comp){
+    company = comp;
+  }
+  setAccessType(String type){
+    accessType = type;
+  }
 
   logOutUser(){
     StorageServices()..clearAllData();

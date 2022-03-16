@@ -60,7 +60,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                     Expanded(
                       child: AutoSizeText(
                         "${widget.modelData.categoryName}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             11, Color(ColorCodes.BLUE_COLOR),
                             fontWeight: FontWeight.w600),
                         minFontSize: 5,
@@ -72,7 +72,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                     Expanded(
                       child: AutoSizeText(
                         "${widget.modelData.title}",
-                        style: FontStyle.PoppinsStyle(14, Colors.black,
+                        style: FontStyles.PoppinsStyle(14, Colors.black,
                             fontWeight: FontWeight.w500),
                         minFontSize: 2,
                       ),
@@ -130,7 +130,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                     child: Center(
                       child: AutoSizeText(
                         "${widget.modelData.offerDiscount} off",
-                        style: FontStyle.PoppinsStyle(10, Colors.white,
+                        style: FontStyles.PoppinsStyle(10, Colors.white,
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                         minFontSize: 5,
@@ -163,7 +163,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                          Text(
                           widget.modelData.distance!=null?
                           '${widget.modelData.distance!.toStringAsFixed(0)} km' : "1 Km",
-                          style: FontStyle.PoppinsStyle(9, Colors.white),
+                          style: FontStyles.PoppinsStyle(9, Colors.white),
                         )
                       ],
                     )),
@@ -185,7 +185,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
           ),
           Expanded(
             child: AutoSizeText('${widget.modelData.location}',
-              style: FontStyle.PoppinsStyle(
+              style: FontStyles.PoppinsStyle(
                 11.5,
                 Colors.black26,
               ),minFontSize: 8,maxLines: 2,),
@@ -209,7 +209,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
             child: Center(
               child: AutoSizeText(
                 daysLeft<=0?"1 day left" :"$daysLeft days left",
-                style: FontStyle.PoppinsStyle(
+                style: FontStyles.PoppinsStyle(
                     10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
                 minFontSize: 6,
@@ -235,7 +235,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                 ),
                 Text(
                   "${widget.modelData.ratings}",
-                  style: FontStyle.PoppinsStyle(10, Colors.black),
+                  style: FontStyles.PoppinsStyle(10, Colors.black),
                 )
               ],
             ),

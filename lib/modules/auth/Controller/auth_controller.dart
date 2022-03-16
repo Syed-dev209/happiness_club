@@ -11,11 +11,15 @@ import 'package:happiness_club/modules/auth/Screens/otp_screen.dart';
 import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/location_services.dart';
+import 'package:happiness_club/services/navigatorKey.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
-var dio = Dio();
+var dio = Dio(
+    BaseOptions(
+  headers: APIS.HEADER
+));
 var storage = StorageServices();
 
 
@@ -28,8 +32,8 @@ loginWithPhoneNumber({required context,required String phoneNumber})async{
     if(check){
       var response = await dio.post(APIS.LOGIN,data: {
         "mobile":phoneNumber
-      });
-      //print(response.data);
+      },);
+      print(response.data);
       if(response.data['responseStatus']=="success"){
         //print(response.data);
         log(response.data["data"]["otp"].toString());
@@ -37,12 +41,15 @@ loginWithPhoneNumber({required context,required String phoneNumber})async{
         userProvider.addCustomerId(response.data["data"]["id"].toString());
         userProvider.addName(response.data["data"]["full_name"]);
         userProvider.setMembershipDetails(response.data["data"]["membership_no"], response.data["data"]["expiry_date"]);
+        userProvider.setCompanyName(response.data["data"]["company_name"]);
+        userProvider.setAccessType(response.data["data"]["access_type"]);
 
         storage.writeDataToStorage(StorageKeys.USER_ID, response.data["data"]["id"].toString());
         storage.writeDataToStorage(StorageKeys.USER_NAME, response.data["data"]["full_name"].toString());
         storage.writeDataToStorage(StorageKeys.USER_MEMBERSHIP, response.data["data"]["membership_no"].toString());
         storage.writeDataToStorage(StorageKeys.USER_EXP_DATE, response.data["data"]["expiry_date"].toString());
-
+        storage.writeDataToStorage(StorageKeys.USER_COMPANY, response.data["data"]["company_name"].toString());
+        storage.writeDataToStorage(StorageKeys.USER_ACCESS, response.data["data"]["access_type"].toString());
 
         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));
       }
@@ -125,4 +132,46 @@ Future postCustomerHelp(context,String message,String name, String email, String
   on DioError catch(e){
     showToast(context, "Unable to send your request. Please try again later");
   }
+}
+
+Future loginWithUaePass(context, String userData)async{
+
+try{
+  bool check = await InternetService.checkConnectivity();
+  if(check){
+    final userProvider =  Provider.of<UserModelProvider>(context,listen: false);
+    var response = await dio.post(APIS.UAE_PASS_LOGIN,queryParameters: {
+      "uaepass_data":userData
+    });
+    print(response.data);
+    if(response.data['responseStatus']=="success"){
+
+      log(response.data["data"]["otp"].toString());
+      userProvider.updateLoginStatus(true);
+      userProvider.addCustomerId(response.data["data"]["id"].toString());
+      userProvider.addName(response.data["data"]["full_name"]);
+      userProvider.setMembershipDetails(response.data["data"]["membership_no"], response.data["data"]["expiry_date"]);
+      userProvider.setCompanyName(response.data["data"]["company_name"]);
+      userProvider.setAccessType(response.data["data"]["access_type"]);
+
+      storage.writeDataToStorage(StorageKeys.USER_ID, response.data["data"]["id"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_NAME, response.data["data"]["full_name"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_MEMBERSHIP, response.data["data"]["membership_no"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_EXP_DATE, response.data["data"]["expiry_date"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_COMPANY, response.data["data"]["company_name"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_ACCESS, response.data["data"]["access_type"].toString());
+      Navigator.pushReplacement(GlobalVariable.navState.currentContext!, CupertinoPageRoute(builder: (_)=>HomeBase()));
+      showToast(context, "Welcome to Happiness Club");
+      //Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));
+    }
+    else{
+      showToast(context, response.data["message"]);
+    }
+  }
+}
+on DioError catch(e){
+  print(e);
+  showToast(context, "Failed to login.");
+}
+
 }

@@ -115,7 +115,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         SizedBox(height: 15,),
         Text(
           "No favourites marked",
-          style: FontStyle.PoppinsStyle(
+          style: FontStyles.PoppinsStyle(
               15,
               Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
               fontWeight: FontWeight.w600),)

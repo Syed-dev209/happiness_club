@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           radioButton(),
-          Text("Forget Password?",style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
+          Text("Forget Password?",style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
         ],
       );
     }
@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               });
             }),
-            Text("Remember me",style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
+            Text("Remember me",style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
           ],
         ),
       );

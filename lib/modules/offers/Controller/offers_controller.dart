@@ -15,7 +15,9 @@ import 'package:provider/provider.dart';
 
 
 
-var dio = Dio();
+var dio = Dio(BaseOptions(
+    headers: APIS.HEADER
+));
 var storage = StorageServices();
 
 Future getAllOffers(context,int start, int end)async{

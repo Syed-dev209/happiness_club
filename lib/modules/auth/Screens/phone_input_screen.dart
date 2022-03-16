@@ -1,9 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
+import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/auth/Controller/auth_controller.dart';
 import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
+import 'package:happiness_club/modules/auth/Screens/uae_pass_login_screen.dart';
 import 'package:happiness_club/modules/auth/widgets/header_login_signup.dart';
 import 'package:happiness_club/modules/auth/widgets/social_login_footer.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
@@ -31,6 +34,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
           height: size.height,
@@ -89,6 +93,16 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                 //print(maskFormatter.getUnmaskedText());
               }
             }):Center(child: loader()),
+            SizedBox(height: 18,),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  loading = true;
+                });
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>UaePassLoginScreen()));
+              },
+                child: SvgPicture.asset(Images.UAE_LOGIN_ICON)
+            ),
             SizedBox(
               height: 20,
             ),
@@ -110,7 +124,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         radioButton(),
-        Text("Forget Password?",style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
+        Text("Forget Password?",style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
       ],
     );
   }
@@ -133,7 +147,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                   }
                 });
               }),
-          Text("Remember me",style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
+          Text("Remember me",style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
         ],
       ),
     );

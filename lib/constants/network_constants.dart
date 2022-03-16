@@ -1,7 +1,7 @@
 class APIS {
   //https://hpcapi.softlinks.ae //test
   //https://hpcapi.happinessclub.ae //live
-  static const String BASE_URL = "https://hpcapi.happinessclub.ae/api/v1/";
+  static const String BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
   static const String SLIDER_IMAGED = BASE_URL + "offers/slider";
   static const String DASHBOARD_DATA = BASE_URL + "dashboard";
   static const String OFFER_CATEGORIES = BASE_URL + "offers/categories";
@@ -40,4 +40,11 @@ class APIS {
   static const String ANNOUNCEMENT = BASE_URL+"announcement";
   static const String SEARCH = BASE_URL+"offers/search";
   static const String REGISTER_TOKEN = BASE_URL+"get-token";
+  static const String UAE_PASS_LOGIN =BASE_URL+"uaepass-login";
+
+
+  static const String UAE_PASS_URL ="https://happinessclub.ae/m/uaepass";
+  static const Map<String,dynamic> HEADER={
+    "api-key":"KZ85YttM4ZYMD4avjgTWr3QtXnAhk7aF"
+  };
 }

@@ -32,11 +32,15 @@ class _SplashScreenState extends State<SplashScreen> {
     var name = storage.readDataFromStorage(StorageKeys.USER_NAME);
     var memb = storage.readDataFromStorage(StorageKeys.USER_MEMBERSHIP);
     var exp = storage.readDataFromStorage(StorageKeys.USER_EXP_DATE);
+    var company = storage.readDataFromStorage(StorageKeys.USER_COMPANY);
+    var access = storage.readDataFromStorage(StorageKeys.USER_ACCESS);
     if(response!="" && uid!="" && name!=""){
       Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
       Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);
       Provider.of<UserModelProvider>(context,listen: false).addName(name);
       Provider.of<UserModelProvider>(context,listen: false).setMembershipDetails(memb, exp);
+      Provider.of<UserModelProvider>(context,listen: false).setCompanyName(company);
+      Provider.of<UserModelProvider>(context,listen: false).setAccessType(access);
     }
     // await getOfferCategories(context);
     // await getSliderImages(context);
@@ -98,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           children: [
                             Text(
                               "Loading...",
-                              style: FontStyle.PoppinsStyle(14, Colors.black,
+                              style: FontStyles.PoppinsStyle(14, Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(

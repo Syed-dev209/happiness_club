@@ -11,7 +11,9 @@ import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
-var dio = Dio();
+var dio = Dio(BaseOptions(
+    headers: APIS.HEADER
+));
 var storage = StorageServices();
 
 Future<OffersModel?> getNearbyOffers(LatLng currentPosition,int start, int end) async {

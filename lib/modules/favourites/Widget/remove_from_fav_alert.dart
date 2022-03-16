@@ -22,7 +22,7 @@ showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
                 SizedBox(height: 15,),
                 Text(
                   "Are you sure you want to remove this from favourites?",
-                  style: FontStyle.PoppinsStyle(16, Colors.black,
+                  style: FontStyles.PoppinsStyle(16, Colors.black,
                       fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
@@ -40,7 +40,7 @@ showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
                         },
                         child: Text(
                           "Cancel",
-                          style: FontStyle.PoppinsStyle(14, Colors.white,
+                          style: FontStyles.PoppinsStyle(14, Colors.white,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -62,7 +62,7 @@ showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
                         },
                         child: Text(
                           "YES",
-                          style: FontStyle.PoppinsStyle(14, Colors.white,
+                          style: FontStyles.PoppinsStyle(14, Colors.white,
                               fontWeight: FontWeight.w600),
                         ),
                       ),

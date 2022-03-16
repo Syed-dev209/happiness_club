@@ -23,7 +23,7 @@ class CustomFullWidthButton extends StatelessWidget {
         onPressed: (){
           onTap();
         },
-        child: Text(title,style: FontStyle.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
+        child: Text(title,style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
       ),
     );
   }

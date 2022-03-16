@@ -101,7 +101,7 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                               Navigator.push(context, CupertinoPageRoute(builder: (context)=>HelpCustomerScreen()));
                             },
                             child: Text("Report a card",
-                            style: FontStyle.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),
+                            style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),
                            )
                           ),
                         )

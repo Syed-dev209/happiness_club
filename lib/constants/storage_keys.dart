@@ -24,6 +24,8 @@ class StorageKeys {
   static const USER_NAME ="username";
   static const USER_MEMBERSHIP ="membership";
   static const USER_EXP_DATE ="expiryDate";
+  static const USER_COMPANY ="user_company";
+  static const USER_ACCESS ="user_access";
 
   static const DC_BLOB ="digitalcardblob";
   static const ANNOUNCEMENTS ="announcements";

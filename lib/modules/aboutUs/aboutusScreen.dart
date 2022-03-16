@@ -114,7 +114,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                               "and was established in January 2017. This initiative was started with three goals in mind, Enjoyment,"
                               "Inspiration, and Work Smart. With over 61,000+ members and 3000+ partners, the Happiness Club aims to"
                               "bring our members and partners together into a beneficial relationship.",
-                          style: FontStyle.PoppinsStyle(14, Color(0xff7C86A2),
+                          style: FontStyles.PoppinsStyle(14, Color(0xff7C86A2),
                               fontWeight: FontWeight.w500),
                           textAlign: TextAlign.center,
                         );
@@ -124,7 +124,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                         children: [
                           Text(
                             "${snapshot.data!.data!.content}",
-                            style: FontStyle.PoppinsStyle(14, Color(0xff7C86A2),
+                            style: FontStyles.PoppinsStyle(14, Color(0xff7C86A2),
                                 fontWeight: FontWeight.w500),
                             textAlign: TextAlign.center,
                           ),
@@ -135,7 +135,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                           ),
                           Text(
                             "Videos",
-                            style: FontStyle.PoppinsStyle(16, Colors.black,
+                            style: FontStyles.PoppinsStyle(16, Colors.black,
                                 fontWeight: FontWeight.w600),
                           ),
                           SizedBox(height: 15,),
@@ -222,14 +222,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 Expanded(
                     child: Text(
                       "Total\nMembers",
-                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                      style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: AutoSizeText("${data.totalMembers}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700),minFontSize: 15,))
               ],
@@ -243,14 +243,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 Expanded(
                     child: Text(
                       "Total\nPartners",
-                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                      style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: AutoSizeText("${data.totalPartners}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700),minFontSize: 15,))
               ],
@@ -264,14 +264,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 Expanded(
                     child: Text(
                       "Total Staff\nChampions",
-                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                      style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: AutoSizeText("${data.totalChampions}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700),minFontSize: 15,))
               ],
@@ -285,14 +285,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 Expanded(
                     child: Text(
                       "Total Staff\nCompanies",
-                      style: FontStyle.PoppinsStyle(12, Colors.black,
+                      style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: AutoSizeText("${data.totalCompanies}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700),
                       minFontSize: 15,

@@ -7,7 +7,8 @@ import 'package:happiness_club/constants/images.dart';
 
 class AuthHeaderWidget extends StatelessWidget {
   String title;
-  AuthHeaderWidget({required this.title}) ;
+  bool showText= true;
+  AuthHeaderWidget({required this.title,this.showText=true}) ;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,9 @@ class AuthHeaderWidget extends StatelessWidget {
                 children: [
                   Expanded(child: Image.asset(Images.LOGO,height: 130,)),
                   //SizedBox(height: 18,),
-                  Text("$title",style: FontStyle.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),),
+                  showText? Text("$title",style: FontStyles.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),):Text(""),
                   SizedBox(height: 10,),
-                  Text("Welcome! $title to continue!",style: FontStyle.PoppinsStyle(12, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w300),)
+                  showText? Text("Welcome! $title to continue!",style: FontStyles.PoppinsStyle(12, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w300),):Text("")
                 ],
               ),
             ),

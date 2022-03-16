@@ -51,7 +51,7 @@ class ChampionCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10,),
-            Text("${model.fullName}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),)
+            Text("${model.fullName}",style: FontStyles.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),)
           ],
         ),
       ),

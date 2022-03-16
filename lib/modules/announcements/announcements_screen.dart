@@ -140,14 +140,14 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           //SizedBox(height: 5,),
           Expanded(
             child: AutoSizeText("${data.title}",
-              style: FontStyle.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
+              style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
               minFontSize: 10,
             ),
           ),
           Expanded(
               child: AutoSizeText(
                 "${data.description}....",
-                style: FontStyle.PoppinsStyle(12, Colors.black),
+                style: FontStyles.PoppinsStyle(12, Colors.black),
                 minFontSize: 8,
               )),
           GestureDetector(
@@ -156,7 +156,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
             },
               child: Text(
                 "Read More...",
-                style: FontStyle.PoppinsStyle(
+                style: FontStyles.PoppinsStyle(
                     14, Color(ColorCodes.BLUE_COLOR),
                     fontWeight: FontWeight.w500),
               )

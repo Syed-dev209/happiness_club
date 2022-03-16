@@ -119,12 +119,12 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                           tabs: tabs,
                           controller: controller,
                           unselectedLabelColor: Colors.black,
-                          unselectedLabelStyle: FontStyle.PoppinsStyle(
+                          unselectedLabelStyle: FontStyles.PoppinsStyle(
                              12,
                             Colors.black,
                             fontWeight: FontWeight.w500,
                           ),
-                          labelStyle: FontStyle.PoppinsStyle(
+                          labelStyle: FontStyles.PoppinsStyle(
                              14,
                             Colors.black,
                             fontWeight: FontWeight.w500,
@@ -172,7 +172,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
         ),
         Text(
           "No offer details found",
-          style: FontStyle.PoppinsStyle(
+          style: FontStyles.PoppinsStyle(
               15, Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
               fontWeight: FontWeight.w600),
         )
@@ -272,7 +272,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                   child: Center(
                     child: Text(
                       "$offer off",
-                      style: FontStyle.PoppinsStyle(10, Colors.white,
+                      style: FontStyles.PoppinsStyle(10, Colors.white,
                           fontWeight: FontWeight.w500),
                     ),
                   ),

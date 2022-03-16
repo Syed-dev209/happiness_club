@@ -5,7 +5,9 @@ import 'package:happiness_club/modules/aboutUs/model/about_us_model.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
 
-var dio = Dio();
+var dio = Dio(BaseOptions(
+    headers: APIS.HEADER
+));
 var storage = StorageServices();
 
 

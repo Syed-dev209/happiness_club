@@ -62,7 +62,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                         children: [
                           Text(
                             "${widget.modelData.categoryName}",
-                            style: FontStyle.PoppinsStyle(
+                            style: FontStyles.PoppinsStyle(
                                 14, Color(ColorCodes.BLUE_COLOR),
                                 fontWeight: FontWeight.w600),
                           ),
@@ -76,7 +76,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                             ),
                             child: AutoSizeText(
                               "${widget.modelData.title}",
-                              style: FontStyle.PoppinsStyle(
+                              style: FontStyles.PoppinsStyle(
                                   16, Colors.black,
                                   fontWeight: FontWeight.w500),
                               maxLines: 2,
@@ -124,7 +124,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                                 flex: 3,
                                 child: AutoSizeText(
                                   '${widget.modelData.distance==null?"0":widget.modelData.distance!.toStringAsFixed(0)}km',
-                                  style: FontStyle.PoppinsStyle(
+                                  style: FontStyles.PoppinsStyle(
                                       11, Color(ColorCodes.GOLDEN_COLOR)),
                                   minFontSize: 8,
                                   maxLines: 1,
@@ -142,7 +142,7 @@ class _OffersSummaryState extends State<OffersSummary> {
             ),
             Text(
               "Details",
-              style: FontStyle.PoppinsStyle(20, Colors.black,
+              style: FontStyles.PoppinsStyle(20, Colors.black,
                   fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 10,),
@@ -208,7 +208,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                             CupertinoPageRoute(builder: (_) => HelpCustomerScreen()));
 
                     },
-                    child: Text("Report a problem",style: FontStyle.PoppinsStyle(17, Colors.white),),
+                    child: Text("Report a problem",style: FontStyles.PoppinsStyle(17, Colors.white),),
                   ),
                 )
               ],
@@ -229,7 +229,7 @@ class _OffersSummaryState extends State<OffersSummary> {
           ),
           Expanded(
             child: AutoSizeText('${widget.modelData.location}',
-                style: FontStyle.PoppinsStyle(
+                style: FontStyles.PoppinsStyle(
                   14,
                   Colors.black26,
                 ),
@@ -262,7 +262,7 @@ class _OffersSummaryState extends State<OffersSummary> {
             child: Center(
               child: AutoSizeText(
                 daysLeft<=0?"1 day left" :"$daysLeft days left",
-                style: FontStyle.PoppinsStyle(
+                style: FontStyles.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
                 minFontSize: 5,
@@ -291,7 +291,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                 ),
                 AutoSizeText(
                   "${widget.modelData.ratings}",
-                  style: FontStyle.PoppinsStyle(11, Colors.black),
+                  style: FontStyles.PoppinsStyle(11, Colors.black),
                   minFontSize: 5,
                 )
               ],

@@ -54,9 +54,9 @@ class LuckyDrawWinnerCard extends StatelessWidget {
             ),
 
             SizedBox(height: 8,),
-            Text("${model.fullName}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
+            Text("${model.fullName}",style: FontStyles.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
               SizedBox(height: 8,),
-              Text('${model.giftTitle}',style: FontStyle.PoppinsStyle(14, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w500),)
+              Text('${model.giftTitle}',style: FontStyles.PoppinsStyle(14, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w500),)
           ]
         ),
       ),

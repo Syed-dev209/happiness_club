@@ -172,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
           child: RichText(
               text: TextSpan(
                   text: "I agree to ",
-                  style: FontStyle.PoppinsStyle(14, Colors.black26,
+                  style: FontStyles.PoppinsStyle(14, Colors.black26,
                       fontWeight: FontWeight.w400),
                   children: [
                 TextSpan(

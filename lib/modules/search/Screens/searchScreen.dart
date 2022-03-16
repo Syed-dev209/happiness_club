@@ -88,7 +88,7 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: 10,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text("Recent Searches",style: FontStyle.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
+              child: Text("Recent Searches",style: FontStyles.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
             ),
             Expanded(
               //height: size.height*04,
@@ -117,7 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
             borderRadius: BorderRadius.circular(12)),
         child: Text(
           tag,
-          style: FontStyle.PoppinsStyle(15, Colors.black),
+          style: FontStyles.PoppinsStyle(15, Colors.black),
         ),
       ),
     );
@@ -132,7 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
               readOnly: true,
               decoration: InputDecoration(
                 hintText: "Lorem",
-                hintStyle: FontStyle.PoppinsStyle(16, Colors.black.withOpacity(0.6),fontWeight: FontWeight.w600),
+                hintStyle: FontStyles.PoppinsStyle(16, Colors.black.withOpacity(0.6),fontWeight: FontWeight.w600),
                 prefixIcon: Image.asset(Images.SEARCH_ICON),
                 suffixIcon: Icon(Icons.close)
               ),

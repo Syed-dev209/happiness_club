@@ -117,7 +117,7 @@ class _OffersScreenState extends State<OffersScreen> {
             // ),
             Text(
               heading,
-              style: FontStyle.PoppinsStyle(17, Colors.black,
+              style: FontStyles.PoppinsStyle(17, Colors.black,
                   fontWeight: FontWeight.w600),
             ),
             PopupMenuButton(
@@ -134,15 +134,15 @@ class _OffersScreenState extends State<OffersScreen> {
                   ),
                   itemBuilder: (context) => [
                      PopupMenuItem(
-                      child: Text("Most viewed",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
+                      child: Text("Most viewed",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
                       value: 1,
                     ),
                     PopupMenuItem(
-                      child: Text("Best rated",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                      child: Text("Best rated",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
                       value: 2,
                     ),
                      PopupMenuItem(
-                      child: Text("Featured",style: FontStyle.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                      child: Text("Featured",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
                       value: 3,
                     ),
                   ]

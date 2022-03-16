@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         decoration: InputDecoration(
             hintText: "$labelText",
-            hintStyle: FontStyle.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
+            hintStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
     );

@@ -80,7 +80,7 @@ class FavouritesCard extends StatelessWidget {
                   SvgPicture.asset(Images.DISCOUNT_FLAG),
                   Align(
                     alignment: Alignment.center,
-                      child: Text("${modelData.offerDiscount}",style: FontStyle.PoppinsStyle(10, Colors.white,fontWeight: FontWeight.w500),))
+                      child: Text("${modelData.offerDiscount}",style: FontStyles.PoppinsStyle(10, Colors.white,fontWeight: FontWeight.w500),))
                 ],
               ),
             ),
@@ -98,7 +98,7 @@ class FavouritesCard extends StatelessWidget {
         children: [
           Text(
             "${modelData.categoryName}",
-            style: FontStyle.PoppinsStyle(
+            style: FontStyles.PoppinsStyle(
                 11, Color(ColorCodes.GREEN_COLOR),
                 fontWeight: FontWeight.w600),
           ),
@@ -108,7 +108,7 @@ class FavouritesCard extends StatelessWidget {
           Expanded(
             child: Text(
               "${modelData.title}",
-              style: FontStyle.PoppinsStyle(14, Colors.black,
+              style: FontStyles.PoppinsStyle(14, Colors.black,
                   fontWeight: FontWeight.w500),
             ),
           ),
@@ -129,7 +129,7 @@ class FavouritesCard extends StatelessWidget {
           ),
           Expanded(
             child: AutoSizeText('${modelData.stateName}',
-              style: FontStyle.PoppinsStyle(
+              style: FontStyles.PoppinsStyle(
                 11.5,
                 Colors.black26,
               ),minFontSize: 8,maxLines: 2,),
@@ -152,7 +152,7 @@ class FavouritesCard extends StatelessWidget {
             child: Center(
               child: Text(
                 "9 days left",
-                style: FontStyle.PoppinsStyle(
+                style: FontStyles.PoppinsStyle(
                     10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
               ),
@@ -176,7 +176,7 @@ class FavouritesCard extends StatelessWidget {
                 ),
                 Text(
                   "${modelData.ratings}",
-                  style: FontStyle.PoppinsStyle(10, Colors.black),
+                  style: FontStyles.PoppinsStyle(10, Colors.black),
                 )
               ],
             ),

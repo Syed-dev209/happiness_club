@@ -19,29 +19,39 @@ import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.d
 import 'package:happiness_club/modules/favourites/Screen/favourites_screen.dart';
 import 'package:happiness_club/modules/home/controller/qr_controller.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
-import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
-import 'package:happiness_club/services/navigatorKey.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' show Platform;
 
 class CustomDrawer extends StatelessWidget {
   final style =
-      FontStyle.PoppinsStyle(14, Colors.black26, fontWeight: FontWeight.w500);
+  FontStyles.PoppinsStyle(14.5, Color(0xff7C86A2),
+      fontWeight: FontWeight.w500);
 
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting();
+    bool fullAccess = false;
     final user = Provider.of<UserModelProvider>(context, listen: false);
+    print(user.company);
+    print(user.expDate);
     //print(DateTime.now().toString());
     var formatter = DateFormat("MM/yy", "en");
     var date;
-    if (user.loggedIn) {
+    if (user.loggedIn && user.expDate!="-") {
       date = formatter.format(
         DateTime.parse("${user.expDate} 00:00:00.000"),
       );
+    }
+    else{
+      date="-";
+    }
+
+    if(user.accessType=="full"){
+      fullAccess = true;
     }
 
     return Drawer(
@@ -78,7 +88,7 @@ class CustomDrawer extends StatelessWidget {
                     title: Text(
                       Provider.of<UserModelProvider>(context, listen: false)
                           .name,
-                      style: FontStyle.PoppinsStyle(16, Colors.black,
+                      style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
                     subtitle: user.loggedIn
@@ -87,13 +97,19 @@ class CustomDrawer extends StatelessWidget {
                             children: [
                               Text(
                                 "${user.memberShip}",
-                                style: FontStyle.PoppinsStyle(
+                                style: FontStyles.PoppinsStyle(
                                     12, Color(ColorCodes.GOLDEN_COLOR),
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "Expiry : $date",
-                                style: FontStyle.PoppinsStyle(
+                                style: FontStyles.PoppinsStyle(
+                                    11, Color(ColorCodes.GREY_COLOR),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Company : ${user.company}",
+                                style: FontStyles.PoppinsStyle(
                                     11, Color(ColorCodes.GREY_COLOR),
                                     fontWeight: FontWeight.bold),
                               ),
@@ -121,7 +137,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn
+                          .loggedIn && user.accessType!="guest"
                       ? ListTile(
                           onTap: () {
                             Navigator.push(
@@ -139,8 +155,10 @@ class CustomDrawer extends StatelessWidget {
                           ),
                         )
                       : SizedBox.shrink(),
+
+
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn
+                          .loggedIn && fullAccess
                       ? ListTile(
                           onTap: () async {
                             var result = await BarcodeScanner.scan();
@@ -171,6 +189,7 @@ class CustomDrawer extends StatelessWidget {
                           title: Text("Scan QR Code", style: style),
                         )
                       : SizedBox.shrink(),
+
                   ListTile(
                     onTap: () {
                       Navigator.push(
@@ -192,7 +211,7 @@ class CustomDrawer extends StatelessWidget {
                   //   title: Text("Prize History", style: style),
                   // ),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn
+                          .loggedIn && fullAccess
                       ? ListTile(
                           onTap: () {
                             Navigator.push(
@@ -206,7 +225,7 @@ class CustomDrawer extends StatelessWidget {
                         )
                       : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn
+                          .loggedIn && fullAccess
                       ? ListTile(
                           leading: Image.asset(Images.COMPANIES, height: 20),
                           onTap: () {
@@ -218,8 +237,9 @@ class CustomDrawer extends StatelessWidget {
                           title: Text("Companies", style: style),
                         )
                       : SizedBox.shrink(),
+
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn
+                          .loggedIn && fullAccess
                       ? ListTile(
                           leading: Image.asset(Images.NEWSLETTER, height: 20),
                           onTap: () {
@@ -236,7 +256,7 @@ class CustomDrawer extends StatelessWidget {
                   //   title: Text("Articles & News", style: style),
                   // ),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn
+                          .loggedIn && fullAccess
                       ? ListTile(
                           onTap: () {
                             Navigator.push(
@@ -248,6 +268,7 @@ class CustomDrawer extends StatelessWidget {
                           title: Text("Announcements", style: style),
                         )
                       : SizedBox.shrink(),
+
                   ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
                     onTap: () {
@@ -305,6 +326,7 @@ class CustomDrawer extends StatelessWidget {
                             Provider.of<UserModelProvider>(context,
                                     listen: false)
                                 .logOutUser();
+                            Navigator.pop(context);
                             showToast(context, "User logged out");
                             // Navigator.push(context,
                             //     CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.PRIVACY)));
@@ -319,6 +341,24 @@ class CustomDrawer extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.only(left: 25),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(Platform.isAndroid? "Version 16.1.0(1)":"3.3.0(1)",style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Poppins",
+                  fontSize: 15,
+                  color: Color(0xff7C86A2)
+
+                ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
           ],
         ),
       ),

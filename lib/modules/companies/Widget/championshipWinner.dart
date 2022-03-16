@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../Model/comapnies_details_model.dart';
 
 class ChampionshipWinnerCard extends StatelessWidget {
   CompanyDetailsModelDataChampionshipWinners model;
+
   ChampionshipWinnerCard({required this.model});
 
   @override
@@ -26,34 +28,65 @@ class ChampionshipWinnerCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             imageCircle(),
-            SizedBox(height: 8,),
+            SizedBox(
+              height: 8,
+            ),
             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 Text("${model.fullName}",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w600),),
-                 SizedBox(width: 8,),
-                 SvgPicture.asset(
-                   model.position==1?
-                   Images.FIRST_POSITION:
-                   model.position==2?
-                   Images.SECOND_POSITION:
-                   Images.THIRD_POSITION,
-
-                   height: 20,width: 20,)
+                Text(
+                  "${model.fullName}",
+                  style: FontStyles.PoppinsStyle(14, Colors.black,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                SvgPicture.asset(
+                  model.position == 1
+                      ? Images.FIRST_POSITION
+                      : model.position == 2
+                          ? Images.SECOND_POSITION
+                          : Images.THIRD_POSITION,
+                  height: 20,
+                  width: 20,
+                )
               ],
             ),
-            SizedBox(height: 8,),
-            Text("Laser Tag",style: FontStyle.PoppinsStyle(14, Color(ColorCodes.BLUE_COLOR),fontWeight: FontWeight.w500,)),
-          SizedBox(height: 8,),
-          Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(Images.CALENDER_ICON,height: 19,),
-               SizedBox(width: 8,),
-              Text("26 July, 2021",style: FontStyle.PoppinsStyle(14,Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600 ),)
-            ],
-          )
+            SizedBox(
+              height: 8,
+            ),
+            AutoSizeText(
+              "${model.eventTitle}",
+              style: FontStyles.PoppinsStyle(
+                14,
+                Color(ColorCodes.BLUE_COLOR),
+                fontWeight: FontWeight.w500,
+              ),
+              minFontSize: 6,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Images.CALENDER_ICON,
+                  height: 19,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  "${model.date}",
+                  style: FontStyles.PoppinsStyle(
+                      14, Color(ColorCodes.GOLDEN_COLOR),
+                      fontWeight: FontWeight.w600),
+                )
+              ],
+            )
           ],
         ),
       ),
@@ -70,14 +103,17 @@ class ChampionshipWinnerCard extends StatelessWidget {
             height: 73,
             width: 73,
             decoration: BoxDecoration(
-                shape: BoxShape.circle,
-               ),
+              shape: BoxShape.circle,
+            ),
             child: ClipOval(
               child: CachedNetworkImage(
-                imageUrl: model.photo??Constants.ALT_IMAGE,
-                errorWidget: (a,s,f){
+                imageUrl: model.photo ?? Constants.ALT_IMAGE,
+                errorWidget: (a, s, f) {
                   return Center(
-                    child: CachedNetworkImage(imageUrl: Constants.ALT_IMAGE,fit: BoxFit.cover,),
+                    child: CachedNetworkImage(
+                      imageUrl: Constants.ALT_IMAGE,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
                 fit: BoxFit.cover,
@@ -100,7 +136,7 @@ class ChampionshipWinnerCard extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "${model.position}",
-                      style: FontStyle.PoppinsStyle(
+                      style: FontStyles.PoppinsStyle(
                           16, Color(ColorCodes.GOLDEN_COLOR),
                           fontWeight: FontWeight.w700),
                     ),

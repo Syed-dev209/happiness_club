@@ -29,6 +29,8 @@ import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../digitalCard/screens/digital_card_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -93,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           "Categories",
-                          style: FontStyle.PoppinsStyle(14, Colors.black,
+                          style: FontStyles.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
@@ -102,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: Text(
                             "View All",
-                            style: FontStyle.PoppinsStyle(
+                            style: FontStyles.PoppinsStyle(
                                 12, Color(ColorCodes.GOLDEN_COLOR),
                                 fontWeight: FontWeight.w600),
                           ),
@@ -198,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           "New Deals",
-                          style: FontStyle.PoppinsStyle(14, Colors.black,
+                          style: FontStyles.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
@@ -207,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: Text(
                             "View All",
-                            style: FontStyle.PoppinsStyle(
+                            style: FontStyles.PoppinsStyle(
                                 12, Color(ColorCodes.GOLDEN_COLOR),
                                 fontWeight: FontWeight.w600),
                           ),
@@ -266,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           "Featured Deals",
-                          style: FontStyle.PoppinsStyle(14, Colors.black,
+                          style: FontStyles.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
@@ -275,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: Text(
                             "View All",
-                            style: FontStyle.PoppinsStyle(
+                            style: FontStyles.PoppinsStyle(
                                 12, Color(ColorCodes.GOLDEN_COLOR),
                                 fontWeight: FontWeight.w600),
                           ),
@@ -439,41 +441,98 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          height: 30,
-          width: 20,
-          child: GestureDetector(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              child: SvgPicture.asset(Images.DRAWER_ICON)),
-        ),
-        SizedBox(
-          width: 30,
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            height: 45,
-            width: 45,
+    return
+      AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: GestureDetector(
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
+            child: Container(
+              height: 30,
+                width: 20,
+                //color: Colors.red,
+                child: Center(child: SvgPicture.asset(Images.DRAWER_ICON,height: 30,width: 20,)))),
+        leadingWidth: 26,
+        title: Container(
+            height: 59,
+            width: 59,
             child: Image.asset(
               Images.LOGO,
             ),
           ),
+        centerTitle: true,
+        actions: [
+     ! Provider.of<UserModelProvider>(context,listen: false).loggedIn?
+
+     Provider.of<UserModelProvider>(context,listen: false).accessType!="guest"?
+     IconButton(
+        padding: EdgeInsets.zero,
+        alignment: Alignment.centerRight,
+        tooltip: "Sign Up/Login",
+          icon: Column(
+            children: [
+              ImageIcon(AssetImage(Images.LOGIN_ICON),color:Color( ColorCodes.GOLDEN_COLOR),size: 22,),
+              Text("Login",style: TextStyle(
+                  color: Color(ColorCodes.GOLDEN_COLOR),
+                  fontSize: 10
+              ),)
+            ],
+          ),
+        onPressed: (){
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>PhoneInputScreen()));
+        },
+      ):Text("")
+
+      // ListTile(
+      //   onTap: () {
+      //     Navigator.push(
+      //         context,
+      //         CupertinoPageRoute(
+      //             builder: (context) => DigitalCardScreen()));
+      //   },
+      //   leading: Image.asset(
+      //     Images.CARD_ICON,
+      //     height: 20,
+      //   ),
+      //   title: Text(
+      //     "Digital card",
+      //     style: style,
+      //   ),
+      // )
+      // GestureDetector(
+      //           onTap: (){
+      //
+      //           },
+      //           child:  Text("Sign Up/Login",
+      //               style: FontStyles.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
+      //                   fontWeight: FontWeight.bold)),
+      //         )
+
+          :
+      IconButton(
+        padding: EdgeInsets.zero,
+        alignment: Alignment.centerRight,
+        tooltip: "Digital Card",
+        icon: Column(
+          children: [
+            ImageIcon(AssetImage( Images.CARD_ICON,),color:Color( ColorCodes.GOLDEN_COLOR),size: 22,),
+            Text("Card",style: TextStyle(
+              color: Color(ColorCodes.GOLDEN_COLOR),
+              fontSize: 10
+            ),)
+          ],
         ),
-        GestureDetector(
-          onTap: (){
-            Navigator.push(context, CupertinoPageRoute(builder: (context)=>PhoneInputScreen()));
-          },
-          child: !Provider.of<UserModelProvider>(context,listen: false).loggedIn? Text("Sign Up/Login",
-              style: FontStyle.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
-                  fontWeight: FontWeight.bold)):Text(""),
-        )
-      ],
-    );
+        onPressed: (){
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => DigitalCardScreen()));
+        },
+      )
+        ],
+      );
   }
 
   creditCard() {

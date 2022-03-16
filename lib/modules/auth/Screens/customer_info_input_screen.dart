@@ -63,7 +63,7 @@ class _InputCustomerInfoState extends State<InputCustomerInfo> {
           width: size.width,
           child: SingleChildScrollView(
             child: Column(
-              children: [AuthHeaderWidget(title: "Customer Information is required"), signupForm()],
+              children: [AuthHeaderWidget(title: "Customer Information is required",showText: false,), signupForm()],
             ),
           ),
         ),

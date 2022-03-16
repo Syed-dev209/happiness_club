@@ -79,4 +79,7 @@ class Images {
    static const String NO_IMAGE ="assets/PNG/defaultImage.jpeg";
    static const String NO_DATA ="assets/PNG/noDataFound.png";
    static const String NO_REVIEW ="assets/PNG/noReviewe.png";
+
+   static const String LOGIN_ICON = "assets/PNG/loginIcon.png";
+   static const String UAE_LOGIN_ICON = "assets/SVG/uaePass.svg";
 }

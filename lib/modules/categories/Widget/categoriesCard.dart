@@ -79,7 +79,7 @@ class CategoriesCard extends StatelessWidget {
                    // style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR)),
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(ColorCodes.GOLDEN_COLOR),
+                      color: ColorCodes.WHITE_COLOR,
                       shadows: [
                         Shadow(
                           offset: Offset(0,2),

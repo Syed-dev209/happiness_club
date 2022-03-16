@@ -20,10 +20,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 20,
                     height: 20,
                     child: SvgPicture.asset(Images.BACK_BUTTON,height: 20,width: 20,))),
-      leadingWidth: 23,
+      leadingWidth: 25,
       title:  Text(
               title,
-              style: FontStyle.PoppinsStyle(17, Colors.black,
+              style: FontStyles.PoppinsStyle(17, Colors.black,
                   fontWeight: FontWeight.w600),
             ),
       centerTitle: true,

@@ -50,7 +50,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   children: [
                     Text(
                       "${data.modelData!.data!.length} Categories",
-                      style: FontStyle.PoppinsStyle(15, Colors.black,
+                      style: FontStyles.PoppinsStyle(15, Colors.black,
                           fontWeight: FontWeight.w400),
                     ),
                     Expanded(

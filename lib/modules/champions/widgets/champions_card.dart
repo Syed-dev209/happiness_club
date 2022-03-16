@@ -66,11 +66,11 @@ class ChampionsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${modelData.fullName}',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
+                Text('${modelData.fullName}',style: FontStyles.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
                 SizedBox(height: 10,),
                 Expanded(
                   child: AutoSizeText('${modelData.companyDesignation}',
-                    style: FontStyle.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),
+                    style: FontStyles.PoppinsStyle(12, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),
                     minFontSize: 8,
                     softWrap: true,
                   ),

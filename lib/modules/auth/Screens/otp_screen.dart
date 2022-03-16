@@ -43,11 +43,11 @@ class _OtpScreenState extends State<OtpScreen> {
               children: [
                 appBar(),
                 SizedBox(height: size.height*0.08,),
-                Center(child: Text("Sign Up",style: FontStyle.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),)),
+                Center(child: Text("Sign Up",style: FontStyles.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),)),
                 SizedBox(height: 10,),
                 Center(
                   child: Text("We have sent an OTP code to the phone number you have given. "
-                      "Please enter that code below.",style: FontStyle.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w400),
+                      "Please enter that code below.",style: FontStyles.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w400),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -110,7 +110,7 @@ class _OtpScreenState extends State<OtpScreen> {
         inactiveColor: Color(ColorCodes.GREY_COLOR),
         shape: PinCodeFieldShape.box
       ),
-        textStyle: FontStyle.PoppinsStyle(32, Colors.black,fontWeight: FontWeight.w700),
+        textStyle: FontStyles.PoppinsStyle(32, Colors.black,fontWeight: FontWeight.w700),
         appContext: context,
         controller: otpText,
         keyboardType: TextInputType.number,
@@ -123,7 +123,7 @@ class _OtpScreenState extends State<OtpScreen> {
   resendCode(){
     return RichText(text: TextSpan(
       text: "Haven't receive a code. ",
-      style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),
+      style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),
       children: [
         TextSpan(
           text: "Resend",

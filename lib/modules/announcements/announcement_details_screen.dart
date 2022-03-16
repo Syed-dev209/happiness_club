@@ -62,7 +62,7 @@ class _AnnouncementDetailsScreenState extends State<AnnouncementDetailsScreen> {
             child: SvgPicture.asset(Images.BACK_BUTTON,height: 15,),
           ),
         ),
-        title: Text("Announcements Detail",style: FontStyle.PoppinsStyle(17, Colors.black,
+        title: Text("Announcements Detail",style: FontStyles.PoppinsStyle(17, Colors.black,
             fontWeight: FontWeight.w600),),
       ),
       body: Container(
@@ -91,7 +91,7 @@ class _AnnouncementDetailsScreenState extends State<AnnouncementDetailsScreen> {
                height: 15,
              ),
              Center(
-               child: Text("${modelData!.title}",style: FontStyle.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),),
+               child: Text("${modelData!.title}",style: FontStyles.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),),
              ),
               htmlData!=null? Html(
                 data: htmlData,

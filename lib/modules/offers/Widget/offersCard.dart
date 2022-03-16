@@ -56,7 +56,7 @@ class _OffersCardState extends State<OffersCard> {
                     Expanded(
                       child: Text(
                         "${widget.modelData.categoryName}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             11, Color(ColorCodes.BLUE_COLOR),
                             fontWeight: FontWeight.w500),
                       ),
@@ -75,7 +75,7 @@ class _OffersCardState extends State<OffersCard> {
                                   BoxConstraints(minHeight: 0, maxHeight: 20),
                               child: AutoSizeText(
                                 "${widget.modelData.title}",
-                                style: FontStyle.PoppinsStyle(14, Colors.black,
+                                style: FontStyles.PoppinsStyle(14, Colors.black,
                                     fontWeight: FontWeight.w500),
                                 minFontSize: 6,
                                // softWrap: true,
@@ -183,7 +183,7 @@ class _OffersCardState extends State<OffersCard> {
                     child: Center(
                       child: Text(
                         "${widget.modelData.offerDiscount} off",
-                        style: FontStyle.PoppinsStyle(10, Colors.white,
+                        style: FontStyles.PoppinsStyle(10, Colors.white,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -213,7 +213,7 @@ class _OffersCardState extends State<OffersCard> {
                         SvgPicture.asset(Images.DIRECTION_ICON),
                         Text(
                           '${ widget.modelData.distance==null?"0":widget.modelData.distance!.toStringAsFixed(0)}km',
-                          style: FontStyle.PoppinsStyle(9, Colors.white),
+                          style: FontStyles.PoppinsStyle(9, Colors.white),
                         )
                       ],
                     )),
@@ -236,7 +236,7 @@ class _OffersCardState extends State<OffersCard> {
           Expanded(
             child: AutoSizeText(
               '${widget.modelData.location}',
-              style: FontStyle.PoppinsStyle(
+              style: FontStyles.PoppinsStyle(
                 11,
                 Colors.black26,
               ),
@@ -264,7 +264,7 @@ class _OffersCardState extends State<OffersCard> {
             child: Center(
               child: AutoSizeText(
                 "$daysLeft days left",
-                style: FontStyle.PoppinsStyle(
+                style: FontStyles.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),
                 minFontSize: 5,
@@ -290,7 +290,7 @@ class _OffersCardState extends State<OffersCard> {
                 ),
                Text(
                   "${widget.modelData.ratings}",
-                  style: FontStyle.PoppinsStyle(11, Colors.black),
+                  style: FontStyles.PoppinsStyle(11, Colors.black),
                 )
               ],
             ),

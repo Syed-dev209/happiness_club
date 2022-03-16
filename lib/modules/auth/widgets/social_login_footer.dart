@@ -81,7 +81,7 @@ class SocialLoginFooter extends StatelessWidget {
             )
         ),
         SizedBox(width: 8,),
-        Text("Or ${signup!?"Sign Up":"Login"} with",style: FontStyle.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w400),),
+        Text("Or ${signup!?"Sign Up":"Login"} with",style: FontStyles.PoppinsStyle(14, Colors.black,fontWeight: FontWeight.w400),),
         SizedBox(width: 8,),
         Expanded(
             child: RotatedBox(

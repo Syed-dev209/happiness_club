@@ -79,7 +79,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                   ),
                   Text(
                     "${offerCard.length} Reviews",
-                    style: FontStyle.PoppinsStyle(17, Colors.black,
+                    style: FontStyles.PoppinsStyle(17, Colors.black,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -121,7 +121,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     },
                     child: Text(
                       "Add a review",
-                      style: FontStyle.PoppinsStyle(16, Colors.white,
+                      style: FontStyles.PoppinsStyle(16, Colors.white,
                           fontWeight: FontWeight.w600),
                     ))),
           ),
@@ -149,7 +149,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
             ),
             title: Text(
               "${data.fullName}",
-              style: FontStyle.PoppinsStyle(14, Colors.black,
+              style: FontStyles.PoppinsStyle(14, Colors.black,
                   fontWeight: FontWeight.w500),
             ),
             subtitle: RatingBar.builder(
@@ -170,7 +170,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
             ),
             trailing: Text(
               "$days days ago",
-              style: FontStyle.PoppinsStyle(12, Colors.black.withOpacity(0.5),
+              style: FontStyles.PoppinsStyle(12, Colors.black.withOpacity(0.5),
                   fontWeight: FontWeight.w600),
             ),
           ),
@@ -178,7 +178,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
             padding: EdgeInsets.only(left: 82),
             child: Text(
               "${data.feedbacks}",
-              style: FontStyle.PoppinsStyle(12, Colors.black.withOpacity(0.5)),
+              style: FontStyles.PoppinsStyle(12, Colors.black.withOpacity(0.5)),
             ),
           )
         ],
@@ -204,7 +204,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                       children: [
                         Text(
                           'Add a review',
-                          style: FontStyle.PoppinsStyle(17, Colors.black,
+                          style: FontStyles.PoppinsStyle(17, Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                         GestureDetector(
@@ -222,7 +222,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     SizedBox(height: 10,),
                     Text(
                       "Rate",
-                      style: FontStyle.PoppinsStyle(
+                      style: FontStyles.PoppinsStyle(
                           14, Colors.black.withOpacity(0.5)),
                     ),
                     SizedBox(height: 5,),
@@ -246,7 +246,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                      SizedBox(height: 5,),
                     Text(
                       "Your review",
-                      style: FontStyle.PoppinsStyle(
+                      style: FontStyles.PoppinsStyle(
                           14, Colors.black.withOpacity(0.5)),
                     ),
                      SizedBox(height: 5,),

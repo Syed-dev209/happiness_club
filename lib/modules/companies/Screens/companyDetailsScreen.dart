@@ -115,7 +115,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                     Center(
                         child: Text(
                           "${companyInfo.title!}",
-                          style: FontStyle.PoppinsStyle(20, Colors.black,
+                          style: FontStyles.PoppinsStyle(20, Colors.black,
                               fontWeight: FontWeight.w600),
                         )),
                     SizedBox(
@@ -142,7 +142,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                     ),
                     champions.isNotEmpty? Text(
                       "Champions(${champions.length})",
-                      style: FontStyle.PoppinsStyle(16, Colors.black,
+                      style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ):Text(""),
                     SizedBox(
@@ -154,7 +154,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                     ),
                     champWinners.isNotEmpty? Text(
                       "Championship Winner(${champWinners.length})",
-                      style: FontStyle.PoppinsStyle(16, Colors.black,
+                      style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ):Text(""),
                     SizedBox(
@@ -166,7 +166,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                     ),
                     luckyWinners.isNotEmpty? Text(
                       "Winners of Lucky Draw(${luckyWinners.length})",
-                      style: FontStyle.PoppinsStyle(16, Colors.black,
+                      style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ):Text(""),
                     SizedBox(
@@ -245,14 +245,14 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                 Expanded(
                     child: Text(
                   "Total\nChampions",
-                  style: FontStyle.PoppinsStyle(12, Colors.black,
+                  style: FontStyles.PoppinsStyle(12, Colors.black,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: Text("${model.totalChampionships}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700)))
               ],
@@ -266,14 +266,14 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                 Expanded(
                     child: Text(
                   "Total\nWinners",
-                  style: FontStyle.PoppinsStyle(12, Colors.black,
+                  style: FontStyles.PoppinsStyle(12, Colors.black,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: Text("${model.totalWinners}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700)))
               ],
@@ -287,14 +287,14 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                 Expanded(
                     child: Text(
                   "Total Staff\nMemebers",
-                  style: FontStyle.PoppinsStyle(12, Colors.black,
+                  style: FontStyles.PoppinsStyle(12, Colors.black,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 )),
                 //SizedBox(height: 8,),
                 Expanded(
                     child: Text("${model.totalStaff}",
-                        style: FontStyle.PoppinsStyle(
+                        style: FontStyles.PoppinsStyle(
                             22, Color(ColorCodes.GOLDEN_COLOR),
                             fontWeight: FontWeight.w700)))
               ],
@@ -356,7 +356,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
               Expanded(
                   child: Text(
                 title,
-                style: FontStyle.PoppinsStyle(14, Colors.black,
+                style: FontStyles.PoppinsStyle(14, Colors.black,
                     fontWeight: FontWeight.w400),
               )),
               Expanded(child: SvgPicture.asset(imagePath))
@@ -367,7 +367,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
           ),
           Text(
             num,
-            style: FontStyle.PoppinsStyle(22, Color(ColorCodes.GOLDEN_COLOR),
+            style: FontStyles.PoppinsStyle(22, Color(ColorCodes.GOLDEN_COLOR),
                 fontWeight: FontWeight.w700),
           )
         ],

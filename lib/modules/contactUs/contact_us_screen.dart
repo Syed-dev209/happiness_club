@@ -73,7 +73,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             });
           }
         },
-        child: Text("Submit Message",style: FontStyle.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
+        child: Text("Submit Message",style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
       ),
     );
   }
@@ -90,7 +90,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           labelText: "Full Name",
-            labelStyle: FontStyle.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
+            labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
     );
@@ -109,7 +109,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: "Email",
-            labelStyle: FontStyle.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
+            labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
     );
@@ -128,7 +128,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
             labelText: "Phone Number",
-          labelStyle: FontStyle.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
+          labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
     );
@@ -144,7 +144,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
           labelText: "Message Here",
-          labelStyle: FontStyle.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
+          labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
       ),
     );
   }

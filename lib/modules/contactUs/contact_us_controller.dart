@@ -5,7 +5,9 @@ import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
 
-var dio = Dio();
+var dio = Dio(BaseOptions(
+    headers: APIS.HEADER
+));
 
 
 Future postMessage(context,String name, String email, String message)async{

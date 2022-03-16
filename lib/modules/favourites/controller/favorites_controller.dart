@@ -9,7 +9,9 @@ import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 
-var dio = Dio();
+var dio = Dio(BaseOptions(
+    headers: APIS.HEADER
+));
 var storage = StorageServices();
 
 

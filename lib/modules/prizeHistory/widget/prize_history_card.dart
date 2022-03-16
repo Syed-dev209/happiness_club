@@ -46,14 +46,14 @@ class PrizeHistoryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Money',style: FontStyle.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
+                Text('Money',style: FontStyles.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
                 SizedBox(height: 5,),
-                Text("Tom Holland",style: FontStyle.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w600),)
+                Text("Tom Holland",style: FontStyles.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w600),)
               ],
             ),
           ),
 
-          Expanded(child: Text("26 July",style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),))
+          Expanded(child: Text("26 July",style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),))
         ],
       ),
     );

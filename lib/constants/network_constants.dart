@@ -41,6 +41,9 @@ class APIS {
   static const String SEARCH = BASE_URL+"offers/search";
   static const String REGISTER_TOKEN = BASE_URL+"get-token";
   static const String UAE_PASS_LOGIN =BASE_URL+"uaepass-login";
+  static const String LUCKY_DRAW_EVENTS =BASE_URL+"event/luckydraw-event-listing";
+  static const String SUBSCRIBE_EVENTS =BASE_URL+"event/luckydraw-event-registration";
+  static const String PRIZE_HISTORY =BASE_URL+"customer/prize-history";
 
 
   static const String UAE_PASS_URL ="https://happinessclub.ae/m/uaepass";

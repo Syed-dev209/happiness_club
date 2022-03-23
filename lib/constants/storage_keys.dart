@@ -26,6 +26,10 @@ class StorageKeys {
   static const USER_EXP_DATE ="expiryDate";
   static const USER_COMPANY ="user_company";
   static const USER_ACCESS ="user_access";
+  static const USER_HC_ID="user_hc_id";
+  static const USER_HC_COMPANY_ID ="user_hc_comp_id";
+  static const LUCK_DRAW_EVENTS ="lucky_draw_events";
+  static const PRIZE_HISTORY ="prize_history";
 
   static const DC_BLOB ="digitalcardblob";
   static const ANNOUNCEMENTS ="announcements";

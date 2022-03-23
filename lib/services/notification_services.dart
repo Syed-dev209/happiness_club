@@ -9,6 +9,7 @@ import 'package:happiness_club/constants/network_constants.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/announcements/announcement_details_screen.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
+import 'package:happiness_club/modules/prizeHistory/screens/prize_history_screen.dart';
 import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -63,6 +64,16 @@ class PushNotificationServices {
                       MaterialPageRoute(
                           builder: (_) =>
                               OfferDetailsScreen(offerId: message.data["offer_id"])
+                      )
+                  );
+                });
+              }
+              else if(message.data["type"]=="prize"){
+                SchedulerBinding.instance!.addPostFrameCallback((_) {
+                  Navigator.of(GlobalVariable.navState.currentContext!).push(
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              PrizeHistoryScreen()
                       )
                   );
                 });
@@ -122,6 +133,16 @@ class PushNotificationServices {
             );
           });
         }
+        else if(message.data["type"]=="prize"){
+          SchedulerBinding.instance!.addPostFrameCallback((_) {
+            Navigator.of(GlobalVariable.navState.currentContext!).push(
+                MaterialPageRoute(
+                    builder: (_) =>
+                        PrizeHistoryScreen()
+                )
+            );
+          });
+        }
       });
     });
 
@@ -146,6 +167,16 @@ class PushNotificationServices {
                 MaterialPageRoute(
                     builder: (_) =>
                         OfferDetailsScreen(offerId: terminatedMessage.data["offer_id"])
+                )
+            );
+          });
+        }
+        else if(terminatedMessage.data["type"]=="prize"){
+          SchedulerBinding.instance!.addPostFrameCallback((_) {
+            Navigator.of(GlobalVariable.navState.currentContext!).push(
+                MaterialPageRoute(
+                    builder: (_) =>
+                        PrizeHistoryScreen()
                 )
             );
           });

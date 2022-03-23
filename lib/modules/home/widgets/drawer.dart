@@ -6,6 +6,7 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/LuckyDraw/Screens/lucky_draw_screen.dart';
 import 'package:happiness_club/modules/aboutUs/aboutusScreen.dart';
 import 'package:happiness_club/modules/announcements/announcements_screen.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
@@ -25,6 +26,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
+
+import '../../prizeHistory/screens/prize_history_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final style =
@@ -189,7 +192,20 @@ class CustomDrawer extends StatelessWidget {
                           title: Text("Scan QR Code", style: style),
                         )
                       : SizedBox.shrink(),
-
+                  Provider.of<UserModelProvider>(context, listen: false)
+                      .loggedIn && fullAccess
+                      ? ListTile(
+                    onTap: ()  {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => LuckyDrawScreen()));
+                      // print(result.rawContent); // The barcode content
+                    },
+                    leading: Image.asset(Images.SCAN_ICON, height: 20),
+                    title: Text("Lucky Draw Events", style: style),
+                  )
+                      : SizedBox.shrink(),
                   ListTile(
                     onTap: () {
                       Navigator.push(
@@ -200,16 +216,17 @@ class CustomDrawer extends StatelessWidget {
                     leading: Image.asset(Images.FAVOURITES_ICON, height: 20),
                     title: Text("Favourites", style: style),
                   ),
-                  // ListTile(
-                  //   onTap: () {
-                  //     Navigator.push(
-                  //         context,
-                  //         CupertinoPageRoute(
-                  //             builder: (context) => PrizeHistoryScreen()));
-                  //   },
-                  //   leading: Image.asset(Images.PRIZE_ICON, height: 20),
-                  //   title: Text("Prize History", style: style),
-                  // ),
+                  Provider.of<UserModelProvider>(context, listen: false)
+                      .loggedIn && fullAccess ?ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => PrizeHistoryScreen()));
+                    },
+                    leading: Image.asset(Images.PRIZE_ICON, height: 20),
+                    title: Text("Prize History", style: style),
+                  ):SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
                           .loggedIn && fullAccess
                       ? ListTile(
@@ -346,7 +363,7 @@ class CustomDrawer extends StatelessWidget {
               padding: const EdgeInsets.only(left: 25),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(Platform.isAndroid? "Version 16.1.0(1)":"3.3.0(1)",style: TextStyle(
+                child: Text(Platform.isAndroid? "Version 16.1.0(4)":"3.3.0(1)",style: TextStyle(
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w500,
                   fontFamily: "Poppins",

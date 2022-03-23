@@ -43,6 +43,9 @@ loginWithPhoneNumber({required context,required String phoneNumber})async{
         userProvider.setMembershipDetails(response.data["data"]["membership_no"], response.data["data"]["expiry_date"]);
         userProvider.setCompanyName(response.data["data"]["company_name"]);
         userProvider.setAccessType(response.data["data"]["access_type"]);
+        userProvider.setHcId(response.data["data"]["hc_id"].toString());
+        userProvider.setHcCompanyId(response.data["data"]["hc_company_id"].toString());
+
 
         storage.writeDataToStorage(StorageKeys.USER_ID, response.data["data"]["id"].toString());
         storage.writeDataToStorage(StorageKeys.USER_NAME, response.data["data"]["full_name"].toString());
@@ -50,6 +53,9 @@ loginWithPhoneNumber({required context,required String phoneNumber})async{
         storage.writeDataToStorage(StorageKeys.USER_EXP_DATE, response.data["data"]["expiry_date"].toString());
         storage.writeDataToStorage(StorageKeys.USER_COMPANY, response.data["data"]["company_name"].toString());
         storage.writeDataToStorage(StorageKeys.USER_ACCESS, response.data["data"]["access_type"].toString());
+        storage.writeDataToStorage(StorageKeys.USER_HC_ID, response.data["data"]["hc_id"].toString());
+        storage.writeDataToStorage(StorageKeys.USER_HC_COMPANY_ID, response.data["data"]["hc_company_id"].toString());
+
 
         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));
       }
@@ -153,13 +159,19 @@ try{
       userProvider.setMembershipDetails(response.data["data"]["membership_no"], response.data["data"]["expiry_date"]);
       userProvider.setCompanyName(response.data["data"]["company_name"]);
       userProvider.setAccessType(response.data["data"]["access_type"]);
+      userProvider.setHcId(response.data["data"]["hc_id"].toString());
+      userProvider.setHcCompanyId(response.data["data"]["hc_company_id"].toString());
 
+      storage.writeDataToStorage(StorageKeys.LOGGED_IN, "true");
       storage.writeDataToStorage(StorageKeys.USER_ID, response.data["data"]["id"].toString());
       storage.writeDataToStorage(StorageKeys.USER_NAME, response.data["data"]["full_name"].toString());
       storage.writeDataToStorage(StorageKeys.USER_MEMBERSHIP, response.data["data"]["membership_no"].toString());
       storage.writeDataToStorage(StorageKeys.USER_EXP_DATE, response.data["data"]["expiry_date"].toString());
       storage.writeDataToStorage(StorageKeys.USER_COMPANY, response.data["data"]["company_name"].toString());
       storage.writeDataToStorage(StorageKeys.USER_ACCESS, response.data["data"]["access_type"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_HC_ID, response.data["data"]["hc_id"].toString());
+      storage.writeDataToStorage(StorageKeys.USER_HC_COMPANY_ID, response.data["data"]["hc_company_id"].toString());
+
       Navigator.pushReplacement(GlobalVariable.navState.currentContext!, CupertinoPageRoute(builder: (_)=>HomeBase()));
       showToast(context, "Welcome to Happiness Club");
       //Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_)=>OtpScreen(otp: response.data["data"]["otp"].toString())));

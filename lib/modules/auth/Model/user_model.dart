@@ -10,6 +10,8 @@ class UserModelProvider extends ChangeNotifier{
   String expDate="";
   String company="";
   String accessType="";
+  String hcId="";
+  String hcCompanyId="";
   LatLng? currentLocation;
   addCustomerId(String id){
     customerId = id;
@@ -34,6 +36,12 @@ class UserModelProvider extends ChangeNotifier{
   }
   setAccessType(String type){
     accessType = type;
+  }
+  setHcId(String id){
+    hcId = id;
+  }
+  setHcCompanyId(String id){
+    hcCompanyId = id;
   }
 
   logOutUser(){

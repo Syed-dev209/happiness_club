@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:happiness_club/constants/network_constants.dart';
@@ -22,6 +24,10 @@ class _UaePassLoginScreenState extends State<UaePassLoginScreen> {
       crossPlatform: InAppWebViewOptions(
         useShouldOverrideUrlLoading: true,
         mediaPlaybackRequiresUserGesture: false,
+        supportZoom: false,
+        disableHorizontalScroll: true,
+        verticalScrollBarEnabled: false
+        // disableVerticalScroll: true,
       ),
       android: AndroidInAppWebViewOptions(
         useHybridComposition: true,
@@ -31,6 +37,7 @@ class _UaePassLoginScreenState extends State<UaePassLoginScreen> {
       ));
 
   double progress = 0;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -52,7 +59,6 @@ class _UaePassLoginScreenState extends State<UaePassLoginScreen> {
                   webViewController = controller;
                 },
                 onLoadStart: (controller, url) {
-
                 },
                 androidOnPermissionRequest: (controller, origin, resources) async {
                   return PermissionRequestResponse(

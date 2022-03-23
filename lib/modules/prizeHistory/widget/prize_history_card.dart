@@ -3,9 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/modules/prizeHistory/model/prize_history_model.dart';
 
 class PrizeHistoryCard extends StatelessWidget {
-  const PrizeHistoryCard({ Key? key }) : super(key: key);
+  PrizeHistoryModelData model;
+  PrizeHistoryCard({required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +48,14 @@ class PrizeHistoryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Money',style: FontStyles.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
+                Text('${model.giftTitle}',style: FontStyles.PoppinsStyle(16, Colors.black,fontWeight: FontWeight.w600),),
                 SizedBox(height: 5,),
-                Text("Tom Holland",style: FontStyles.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w600),)
+                Text("${model.fullName}",style: FontStyles.PoppinsStyle(14, Colors.black26,fontWeight: FontWeight.w600),)
               ],
             ),
           ),
 
-          Expanded(child: Text("26 July",style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),))
+          //Expanded(child: Text("26 July",style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),))
         ],
       ),
     );

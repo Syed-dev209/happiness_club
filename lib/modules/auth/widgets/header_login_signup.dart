@@ -1,8 +1,10 @@
+  import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 
 class AuthHeaderWidget extends StatelessWidget {
@@ -34,10 +36,9 @@ class AuthHeaderWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(child: Image.asset(Images.LOGO,height: 130,)),
-                  //SizedBox(height: 18,),
                   showText? Text("$title",style: FontStyles.PoppinsStyle(20, Colors.black,fontWeight: FontWeight.w600),):Text(""),
                   SizedBox(height: 10,),
-                  showText? Text("Welcome! $title to continue!",style: FontStyles.PoppinsStyle(12, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w300),):Text("")
+                  showText? Text("${LocaleKeys.welcome.tr()} $title ${LocaleKeys.to_continue.tr()}",style: FontStyles.PoppinsStyle(12, ColorCodes.DARK_GREY_COLOR,fontWeight: FontWeight.w300),):Text("")
                 ],
               ),
             ),

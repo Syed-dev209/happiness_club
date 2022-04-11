@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,6 +14,7 @@ import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_slider_model.dart';
 import 'package:happiness_club/modules/splash/splashScreen.dart';
 import 'package:happiness_club/services/navigatorKey.dart';
+import 'package:happiness_club/translations/codegen_loader.g.dart';
 import 'package:provider/provider.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -20,8 +22,19 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  await EasyLocalization.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp());
+  runApp(
+      EasyLocalization(
+        supportedLocales: [
+          Locale('en'), Locale('ar')
+        ],
+          path: 'assets/Translation',
+          fallbackLocale: Locale('en'),
+          assetLoader: CodegenLoader(),
+          child: MyApp()
+      )
+  );
 }
 
 const MaterialColor myColor =
@@ -54,6 +67,9 @@ class MyApp extends StatelessWidget {
       ],
       child: OverlaySupport(
         child: MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           builder: (context, child) {
             return MediaQuery(
               child: child!,

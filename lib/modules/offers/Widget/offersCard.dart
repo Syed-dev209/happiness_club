@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +12,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +107,7 @@ class _OffersCardState extends State<OffersCard> {
                                   });
                                 }
                                 else{
-                                  showToast(context, "You must login to mark favorite.");
+                                  showToast(context, LocaleKeys.no_fav_marked.tr());
                                 }
                               },
                               child: Container(
@@ -182,7 +184,7 @@ class _OffersCardState extends State<OffersCard> {
                     padding: EdgeInsets.only(bottom: 8),
                     child: Center(
                       child: Text(
-                        "${widget.modelData.offerDiscount} off",
+                        "${widget.modelData.offerDiscount} ${LocaleKeys.off.tr()}",
                         style: FontStyles.PoppinsStyle(10, Colors.white,
                             fontWeight: FontWeight.w500),
                       ),
@@ -263,7 +265,7 @@ class _OffersCardState extends State<OffersCard> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: AutoSizeText(
-                "$daysLeft days left",
+                "$daysLeft ${LocaleKeys.days_left.tr()}",
                 style: FontStyles.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),

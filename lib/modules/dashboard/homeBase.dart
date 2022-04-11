@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -11,6 +12,7 @@ import 'package:happiness_club/modules/nearby/nearby_screen.dart';
 import 'package:happiness_club/modules/offers/Screens/offerScreen.dart';
 import 'package:happiness_club/modules/search/Screens/searchScreen.dart';
 import 'package:happiness_club/services/notification_services.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({Key? key}) : super(key: key);
@@ -63,7 +65,7 @@ class _HomeBaseState extends State<HomeBase> {
                         : Images.HOME_INACTIVE,
                     height: 20,
                   ),
-                  label: 'Home'),
+                  label: LocaleKeys.home.tr()),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     selectedIndex == 1
@@ -71,7 +73,7 @@ class _HomeBaseState extends State<HomeBase> {
                         : Images.CATEGORIES_INACTIVE,
                     height: 20.0,
                   ),
-                  label: 'Categories'),
+                  label: LocaleKeys.categories.tr()),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     selectedIndex == 2
@@ -79,7 +81,7 @@ class _HomeBaseState extends State<HomeBase> {
                         : Images.OFFERS_INACTIVE,
                     height: 20.0,
                   ),
-                  label: 'Offers'),
+                  label: LocaleKeys.offers.tr()),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     selectedIndex == 3
@@ -87,7 +89,7 @@ class _HomeBaseState extends State<HomeBase> {
                         : Images.NEARBY_INACTIVE,
                     height: 20.0,
                   ),
-                  label: 'Near By'),
+                  label: LocaleKeys.nearby.tr()),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     selectedIndex == 4
@@ -95,7 +97,7 @@ class _HomeBaseState extends State<HomeBase> {
                         : Images.SEARCH_INACTIVE,
                     height: 18.0,
                   ),
-                  label: 'Search'),
+                  label: LocaleKeys.search.tr()),
             ],
             onTap: (index) {
              // print(index);

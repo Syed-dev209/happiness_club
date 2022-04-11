@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +9,7 @@ import 'package:happiness_club/modules/categories/model/offers_category_model.da
 import 'package:happiness_club/modules/offers/Screens/offers_by_category_screen.dart';
 import 'package:happiness_club/modules/search/Screens/search_controller.dart';
 import 'package:happiness_club/modules/search/Screens/search_result_screen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: CustomAppBar(title: "Search"),
+              child: CustomAppBar(title: LocaleKeys.search.tr()),
             ),
             SizedBox(
               height: 10,
@@ -88,7 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: 10,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text("Recent Searches",style: FontStyles.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
+              child: Text(LocaleKeys.recent_searches.tr(),style: FontStyles.PoppinsStyle(19, Colors.black,fontWeight: FontWeight.bold),),
             ),
             Expanded(
               //height: size.height*04,

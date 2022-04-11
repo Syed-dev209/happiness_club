@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/contactUs/contact_us_controller.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
 
@@ -32,7 +34,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               key: formKey,
               child: Column(
                 children: [
-                  CustomAppBar(title: "Contact Us"),
+                  CustomAppBar(title: LocaleKeys.contact_us.tr()),
                   SizedBox(height: 20,),
                   fullNameTextField(),
                   SizedBox(height: 20,),
@@ -73,7 +75,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             });
           }
         },
-        child: Text("Submit Message",style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
+        child: Text(LocaleKeys.submit_msg.tr(),style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),),
       ),
     );
   }
@@ -85,11 +87,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       child: TextFormField(
         controller: fullName,
         validator: MultiValidator([
-          RequiredValidator(errorText: "Name is required*")
+          RequiredValidator(errorText: LocaleKeys.name_required.tr())
         ]),
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
-          labelText: "Full Name",
+          labelText: LocaleKeys.full_name.tr(),
             labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
@@ -103,12 +105,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       child: TextFormField(
         controller: email,
         validator: MultiValidator([
-          RequiredValidator(errorText: "Email is required*"),
+          RequiredValidator(errorText: LocaleKeys.email_required.tr()),
           EmailValidator(errorText: "Enter a valid email")
         ]),
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          labelText: "Email",
+          labelText: LocaleKeys.email.tr(),
             labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
@@ -122,12 +124,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       child: TextFormField(
         controller: phoneNumber,
         validator: MultiValidator([
-          RequiredValidator(errorText: "Phone number is required*"),
+          RequiredValidator(errorText: LocaleKeys.phone_num_required.tr()),
           PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: "Please enter a valid mobile number")
         ]),
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
-            labelText: "Phone Number",
+            labelText: LocaleKeys.phone_num.tr(),
           labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
         ),
       ),
@@ -139,11 +141,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       maxLines: 5,
       controller: message,
       validator: MultiValidator([
-        RequiredValidator(errorText: "Message is required*")
+        RequiredValidator(errorText: LocaleKeys.message_required.tr())
       ]),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-          labelText: "Message Here",
+          labelText: LocaleKeys.message.tr(),
           labelStyle: FontStyles.PoppinsStyle(13, Colors.black26,fontWeight: FontWeight.w300)
       ),
     );

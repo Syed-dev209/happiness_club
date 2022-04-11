@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
   return showDialog(
@@ -21,7 +23,7 @@ showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
                 ),
                 SizedBox(height: 15,),
                 Text(
-                  "Are you sure you want to remove this from favourites?",
+                  LocaleKeys.are_you_sure_you_want_to_remove_this_from_favourites.tr(),
                   style: FontStyles.PoppinsStyle(16, Colors.black,
                       fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
@@ -39,7 +41,7 @@ showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          "Cancel",
+                          LocaleKeys.cancel.tr(),
                           style: FontStyles.PoppinsStyle(14, Colors.white,
                               fontWeight: FontWeight.w600),
                         ),
@@ -61,7 +63,7 @@ showRemoveFromFavoritesAlert(context,String offerId,Function reload) {
                           });
                         },
                         child: Text(
-                          "YES",
+                          LocaleKeys.yes.tr(),
                           style: FontStyles.PoppinsStyle(14, Colors.white,
                               fontWeight: FontWeight.w600),
                         ),

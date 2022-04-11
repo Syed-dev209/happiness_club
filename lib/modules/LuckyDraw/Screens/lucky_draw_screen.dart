@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/LuckyDraw/Controller/luck_draw_controller.dart';
 import 'package:happiness_club/modules/LuckyDraw/Model/lucky_draw_model.dart';
 import 'package:happiness_club/modules/LuckyDraw/Widget/lucky_draw_event_card.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
@@ -51,7 +53,7 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
         preferredSize: Size.fromHeight(56),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CustomAppBar(title: 'Lucky Draw Events',),
+          child: CustomAppBar(title: LocaleKeys.lucky_draw_event.tr(),),
         ),
       ),
       body: SafeArea(
@@ -74,7 +76,7 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
 
               if(snapshot.data ==null){
                 return Center(
-                  child: Text("Not Events were found",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.5),fontWeight: FontWeight.bold),),
+                  child: Text(LocaleKeys.no_events_found.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.5),fontWeight: FontWeight.bold),),
                 );
               }
 

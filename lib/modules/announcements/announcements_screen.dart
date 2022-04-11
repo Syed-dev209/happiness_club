@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -10,6 +11,7 @@ import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/announcements/Model/announcement_model.dart';
 import 'package:happiness_club/modules/announcements/announcement_details_screen.dart';
 import 'package:happiness_club/modules/announcements/controller/announcement_controller.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
@@ -57,7 +59,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           padding: EdgeInsets.symmetric(horizontal: 12,vertical: 12),
           child: Column(
             children: [
-              CustomAppBar(title: "Announcement"),
+              CustomAppBar(title: LocaleKeys.announcement.tr()),
               Expanded(
                   child: StreamBuilder<AnnouncementModel?>(
                     stream: streamController!.stream,
@@ -70,7 +72,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                       }
                       if(snapshot.data == null){
                         return Center(
-                          child: Text("No announcements"),
+                          child: Text(LocaleKeys.no_announcement.tr()),
                         );
                       }
 
@@ -100,14 +102,6 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        // boxShadow: [
-        //   BoxShadow(
-        //     offset: Offset(0,0.5),
-        //     color: Colors.black26,
-        //     spreadRadius: 0.1,
-        //     blurRadius: 0.1
-        //   )
-        // ]
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,9 +117,6 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                 imageUrl:  data.imageUrl??Constants.NOT_FOUND_IMAGE_URL,
                 height: 174,
                 width: double.maxFinite,
-                //fit: BoxFit.cover,
-                //fit: BoxFit.fill,
-               // fit: BoxFit.,
                 placeholder: (context,s){
                   return Center(
                     child: getLoader(),
@@ -155,7 +146,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
               Navigator.push(context, CupertinoPageRoute(builder: (_)=>AnnouncementDetailsScreen(id: data.id!.toString())));
             },
               child: Text(
-                "Read More...",
+                "${LocaleKeys.read_more.tr()}",
                 style: FontStyles.PoppinsStyle(
                     14, Color(ColorCodes.BLUE_COLOR),
                     fontWeight: FontWeight.w500),

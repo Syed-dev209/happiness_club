@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +14,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -112,7 +114,7 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                             });
                           });
                         },
-                        child: Text("Subscribe to Lucky Draw",style: FontStyles.PoppinsStyle(12, Colors.white),)
+                        child: Text(LocaleKeys.subscribe_to_lucky_draw.tr(),style: FontStyles.PoppinsStyle(12, Colors.white),)
                     ):SizedBox(
                       height: 20,
                         width: 15,
@@ -172,56 +174,4 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
       ),
     );
   }
-
-  // ratingAndTime() {
-  //   DateTime endDate = DateTime.parse(widget.modelData.endDate??DateTime.now().toString());
-  //   int daysLeft = endDate.difference(DateTime.now()).inDays;
-  //   return Expanded(
-  //     child: Row(
-  //       children: [
-  //         Container(
-  //           padding: EdgeInsets.symmetric(horizontal: 5),
-  //           height: 25,
-  //           width: 60,
-  //           decoration: BoxDecoration(
-  //               color: Color(ColorCodes.LIGHT_PINK_COLOR),
-  //               borderRadius: BorderRadius.circular(20)),
-  //           child: Center(
-  //             child: AutoSizeText(
-  //               "$daysLeft days left",
-  //               style: FontStyles.PoppinsStyle(
-  //                   11, Color(ColorCodes.DARK_PINK_COLOR),
-  //                   fontWeight: FontWeight.w600),
-  //               minFontSize: 5,
-  //               maxLines: 1,
-  //             ),
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           width: 5,
-  //         ),
-  //         widget.modelData.ratings!="0.0"?   Container(
-  //           // height: 20,
-  //           width: 38,
-  //           decoration: BoxDecoration(
-  //               color: Color(ColorCodes.LITE_YELLOW_COLOR),
-  //               borderRadius: BorderRadius.circular(20)),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: [
-  //               SvgPicture.asset(Images.STAR_ICON),
-  //               SizedBox(
-  //                 width: 2,
-  //               ),
-  //               Text(
-  //                 "${widget.modelData.ratings}",
-  //                 style: FontStyles.PoppinsStyle(11, Colors.black),
-  //               )
-  //             ],
-  //           ),
-  //         ):Text('')
-  //       ],
-  //     ),
-  //   );
-  // }
 }

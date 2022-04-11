@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +8,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/favourites/Widget/remove_from_fav_alert.dart';
 import 'package:happiness_club/modules/favourites/model/favorites_model.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 
 
@@ -151,7 +153,7 @@ class FavouritesCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: Text(
-                "9 days left",
+                "9 ${LocaleKeys.days_left.tr()}",
                 style: FontStyles.PoppinsStyle(
                     10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),

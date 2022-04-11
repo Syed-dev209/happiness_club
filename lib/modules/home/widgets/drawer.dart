@@ -1,5 +1,6 @@
 import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -21,6 +22,7 @@ import 'package:happiness_club/modules/favourites/Screen/favourites_screen.dart'
 import 'package:happiness_club/modules/home/controller/qr_controller.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -105,13 +107,13 @@ class CustomDrawer extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "Expiry : $date",
+                                "${LocaleKeys.expiry.tr()} : $date",
                                 style: FontStyles.PoppinsStyle(
                                     11, Color(ColorCodes.GREY_COLOR),
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "Company : ${user.company}",
+                                "${LocaleKeys.company.tr()} : ${user.company}",
                                 style: FontStyles.PoppinsStyle(
                                     11, Color(ColorCodes.GREY_COLOR),
                                     fontWeight: FontWeight.bold),
@@ -135,7 +137,7 @@ class CustomDrawer extends StatelessWidget {
                       size: 28,
                     ),
                     title: Text(
-                      "Dashboard",
+                      LocaleKeys.dashboard.tr(),
                       style: style,
                     ),
                   ),
@@ -153,7 +155,7 @@ class CustomDrawer extends StatelessWidget {
                             height: 20,
                           ),
                           title: Text(
-                            "Digital card",
+                            LocaleKeys.digital_card.tr(),
                             style: style,
                           ),
                         )
@@ -189,7 +191,7 @@ class CustomDrawer extends StatelessWidget {
                            // print(result.rawContent); // The barcode content
                           },
                           leading: Image.asset(Images.SCAN_ICON, height: 20),
-                          title: Text("Scan QR Code", style: style),
+                          title: Text(LocaleKeys.scan_qr_code.tr(), style: style),
                         )
                       : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
@@ -203,7 +205,7 @@ class CustomDrawer extends StatelessWidget {
                       // print(result.rawContent); // The barcode content
                     },
                     leading: Image.asset(Images.SCAN_ICON, height: 20),
-                    title: Text("Lucky Draw Events", style: style),
+                    title: Text(LocaleKeys.lucky_draw_event.tr(), style: style),
                   )
                       : SizedBox.shrink(),
                   ListTile(
@@ -214,7 +216,7 @@ class CustomDrawer extends StatelessWidget {
                               builder: (context) => FavouritesScreen()));
                     },
                     leading: Image.asset(Images.FAVOURITES_ICON, height: 20),
-                    title: Text("Favourites", style: style),
+                    title: Text(LocaleKeys.favourites.tr(), style: style),
                   ),
                   Provider.of<UserModelProvider>(context, listen: false)
                       .loggedIn && fullAccess ?ListTile(
@@ -225,7 +227,7 @@ class CustomDrawer extends StatelessWidget {
                               builder: (context) => PrizeHistoryScreen()));
                     },
                     leading: Image.asset(Images.PRIZE_ICON, height: 20),
-                    title: Text("Prize History", style: style),
+                    title: Text(LocaleKeys.prize_history.tr(), style: style),
                   ):SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
                           .loggedIn && fullAccess
@@ -238,7 +240,7 @@ class CustomDrawer extends StatelessWidget {
                           },
                           leading:
                               Image.asset(Images.CHAMPION_ICON, height: 20),
-                          title: Text("Champions", style: style),
+                          title: Text(LocaleKeys.champions.tr(), style: style),
                         )
                       : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
@@ -265,13 +267,9 @@ class CustomDrawer extends StatelessWidget {
                                 CupertinoPageRoute(
                                     builder: (_) => NewsletterScreen()));
                           },
-                          title: Text("Newsletters", style: style),
+                          title: Text(LocaleKeys.newsletter.tr(), style: style),
                         )
                       : SizedBox.shrink(),
-                  // ListTile(
-                  //   leading: Image.asset(Images.ARTICLE, height: 20),
-                  //   title: Text("Articles & News", style: style),
-                  // ),
                   Provider.of<UserModelProvider>(context, listen: false)
                           .loggedIn && fullAccess
                       ? ListTile(
@@ -282,7 +280,7 @@ class CustomDrawer extends StatelessWidget {
                                     builder: (_) => AnnouncementsScreen()));
                           },
                           leading: Image.asset(Images.ARTICLE, height: 20),
-                          title: Text("Announcements", style: style),
+                          title: Text(LocaleKeys.announcement.tr(), style: style),
                         )
                       : SizedBox.shrink(),
 
@@ -292,7 +290,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(context,
                           CupertinoPageRoute(builder: (_) => AboutUsScreen()));
                     },
-                    title: Text("About Us", style: style),
+                    title: Text(LocaleKeys.about_us.tr(), style: style),
                   ),
                   ListTile(
                     onTap: () {
@@ -302,7 +300,7 @@ class CustomDrawer extends StatelessWidget {
                               builder: (_) => ContactUsScreen()));
                     },
                     leading: Image.asset(Images.CONATCT, height: 20),
-                    title: Text("Contact Us", style: style),
+                    title: Text(LocaleKeys.contact_us.tr(), style: style),
                   ),
                   ListTile(
                     onTap: () {
@@ -312,7 +310,7 @@ class CustomDrawer extends StatelessWidget {
                               builder: (_) => HelpCustomerScreen()));
                     },
                     leading: Image.asset(Images.SUGGESTIONS, height: 20),
-                    title: Text("Suggestions", style: style),
+                    title: Text(LocaleKeys.suggestion.tr(), style: style),
                   ),
                   ListTile(
                     onTap: () {
@@ -323,7 +321,7 @@ class CustomDrawer extends StatelessWidget {
                                   type: Constants.TERMS)));
                     },
                     leading: Image.asset(Images.TERMS, height: 20),
-                    title: Text("Terms & Conditions", style: style),
+                    title: Text(LocaleKeys.terms_and_condition.tr(), style: style),
                   ),
                   ListTile(
                     onTap: () {
@@ -334,7 +332,7 @@ class CustomDrawer extends StatelessWidget {
                                   type: Constants.PRIVACY)));
                     },
                     leading: Image.asset(Images.PRIVACY, height: 20),
-                    title: Text("Privacy Policy", style: style),
+                    title: Text(LocaleKeys.privacy_policy.tr(), style: style),
                   ),
                   Provider.of<UserModelProvider>(context, listen: false)
                           .loggedIn
@@ -344,7 +342,7 @@ class CustomDrawer extends StatelessWidget {
                                     listen: false)
                                 .logOutUser();
                             Navigator.pop(context);
-                            showToast(context, "User logged out");
+                            showToast(context, LocaleKeys.user_log_out.tr());
                             // Navigator.push(context,
                             //     CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.PRIVACY)));
                           },
@@ -352,9 +350,28 @@ class CustomDrawer extends StatelessWidget {
                             Icons.logout,
                             color: Color(ColorCodes.GOLDEN_COLOR),
                           ),
-                          title: Text("Logout", style: style),
+                          title: Text(LocaleKeys.logout.tr(), style: style),
                         )
                       : SizedBox.shrink(),
+
+                  ListTile(
+                    onTap: () {
+                     String selectedLocale = context.deviceLocale.languageCode;
+                     print(selectedLocale);
+                     if(selectedLocale != 'en'){
+                       context.setLocale(Locale('ar'));
+                     }
+                     else{
+                       context.setLocale(Locale('en'));
+                     }
+                     Navigator.pop(context);
+                    },
+                    leading: Icon(
+                      Icons.logout,
+                      color: Color(ColorCodes.GOLDEN_COLOR),
+                    ),
+                    title: Text("Change language", style: style),
+                  )
                 ],
               ),
             ),

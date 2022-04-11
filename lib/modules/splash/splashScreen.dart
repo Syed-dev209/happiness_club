@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +14,7 @@ import 'package:happiness_club/modules/home/controller/homeController.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/services/notification_services.dart';
 import 'package:happiness_club/services/storage_service.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -34,6 +36,8 @@ class _SplashScreenState extends State<SplashScreen> {
     var exp = storage.readDataFromStorage(StorageKeys.USER_EXP_DATE);
     var company = storage.readDataFromStorage(StorageKeys.USER_COMPANY);
     var access = storage.readDataFromStorage(StorageKeys.USER_ACCESS);
+    var hcId = storage.readDataFromStorage(StorageKeys.USER_HC_ID);
+    var hcCompId = storage.readDataFromStorage(StorageKeys.USER_HC_COMPANY_ID);
     if(response!="" && uid!="" && name!=""){
       Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
       Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);
@@ -41,6 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
       Provider.of<UserModelProvider>(context,listen: false).setMembershipDetails(memb, exp);
       Provider.of<UserModelProvider>(context,listen: false).setCompanyName(company);
       Provider.of<UserModelProvider>(context,listen: false).setAccessType(access);
+      Provider.of<UserModelProvider>(context,listen: false).setHcId(hcId);
+      Provider.of<UserModelProvider>(context,listen: false).setHcCompanyId(hcCompId);
     }
     // await getOfferCategories(context);
     // await getSliderImages(context);
@@ -101,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         child: Column(
                           children: [
                             Text(
-                              "Loading...",
+                              LocaleKeys.loading.tr(),
                               style: FontStyles.PoppinsStyle(14, Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:happiness_club/constants/images.dart';
@@ -6,11 +7,12 @@ import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/modules/offers/Widget/offersCard.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 class OffersScreen extends StatefulWidget {
-  String heading="Offers";
+  String heading=LocaleKeys.offers.tr();
    OffersScreen({this.heading="Offers"});
 
   @override
@@ -134,15 +136,15 @@ class _OffersScreenState extends State<OffersScreen> {
                   ),
                   itemBuilder: (context) => [
                      PopupMenuItem(
-                      child: Text("Most viewed",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
+                      child: Text(LocaleKeys.most_viewed.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
                       value: 1,
                     ),
                     PopupMenuItem(
-                      child: Text("Best rated",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                      child: Text(LocaleKeys.best_rated.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
                       value: 2,
                     ),
                      PopupMenuItem(
-                      child: Text("Featured",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
+                      child: Text(LocaleKeys.featured.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
                       value: 3,
                     ),
                   ]

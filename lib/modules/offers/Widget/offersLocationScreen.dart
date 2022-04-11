@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:happiness_club/modules/nearby/nearby_controller.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_location_model.dart';
 import 'package:happiness_club/services/location_services.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:maps_curved_line/maps_curved_line.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
@@ -95,7 +97,7 @@ class _OfferLocationState extends State<OfferLocation> with AutomaticKeepAliveCl
           }
 
           if(snapshot.data == null){
-            return Text("Unable to find location");
+            return Text(LocaleKeys.unable_to_find_location.tr());
           }
           for(int i=0;i<snapshot.data!.data!.length;i++){
             double lat = double.parse(snapshot.data!.data![i]!.latitude??"0.00");

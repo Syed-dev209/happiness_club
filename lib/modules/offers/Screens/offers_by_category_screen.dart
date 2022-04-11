@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/modules/offers/Widget/offersCard.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
 
@@ -67,7 +69,7 @@ class _OffersByCategoryScreenState extends State<OffersByCategoryScreen> {
                       );
                     }
                     if(snapshot.data == null){
-                      return Text("No offers found");
+                      return Text(LocaleKeys.no_offers.tr());
                     }
                     return ListView.separated(
                       padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -10,6 +11,7 @@ import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/digitalCard/Controller/digital_card_controller.dart';
 import 'package:happiness_club/modules/digitalCard/Model/digital_card_model.dart';
 import 'package:happiness_club/modules/digitalCard/widget/digital_card_widget.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
@@ -35,7 +37,6 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
             blobList.add(base64.decode(value.data!.fazaaCard![i]!.split(',').last));
             blobList.add(base64.decode(value.data!.happinessCard![i]!.split(',').last));
           }
-         // imageBlob = base64.decode(value.split(',').last);
           loaded = true;
         });
       }
@@ -67,7 +68,7 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: CustomAppBar(
-                  title: "Digital Card",
+                  title: LocaleKeys.digital_card.tr(),
                 ),
               ),
              loaded?
@@ -100,7 +101,7 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                             onPressed: () {
                               Navigator.push(context, CupertinoPageRoute(builder: (context)=>HelpCustomerScreen()));
                             },
-                            child: Text("Report a card",
+                            child: Text(LocaleKeys.report_card.tr(),
                             style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),
                            )
                           ),
@@ -110,7 +111,7 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                   ],
                 ),
               ):
-            Expanded(child: Center(child: Text("No cards found")))
+            Expanded(child: Center(child: Text(LocaleKeys.no_card_found.tr())))
                 :
              Expanded(
                 child: Center(

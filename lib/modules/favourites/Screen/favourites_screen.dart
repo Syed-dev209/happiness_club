@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
@@ -8,6 +9,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/favourites/Widget/favourites_card.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/favourites/model/favorites_model.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +28,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   loadData(){
     if(Provider.of<UserModelProvider>(context,listen: false).loggedIn) {
       getFavoritesList(context).then((value) {
-        //print("DATA==>$value");
         if (value != null) {
           controller!.add(value);
           return value;
@@ -51,7 +52,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     // TODO: implement initState
     super.initState();
     controller = StreamController<FavoritesModel?>.broadcast();
-    //loadData();
     loadData();
   }
 
@@ -59,7 +59,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    //loadData();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -68,7 +67,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           padding: EdgeInsets.symmetric(horizontal: 13,vertical: 8),
           child: Column(
             children: [
-              CustomAppBar(title: "Favourites"),
+              CustomAppBar(title: LocaleKeys.favourites.tr()),
               Expanded(
                   child: StreamBuilder<FavoritesModel?>(
                     stream: controller!.stream,
@@ -114,7 +113,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         Image.asset(Images.NO_DATA),
         SizedBox(height: 15,),
         Text(
-          "No favourites marked",
+          LocaleKeys.no_fav_marked.tr(),
           style: FontStyles.PoppinsStyle(
               15,
               Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),

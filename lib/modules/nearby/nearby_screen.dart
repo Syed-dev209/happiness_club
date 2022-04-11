@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,7 @@ import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offer_card_shimmer.dart';
 import 'package:happiness_club/services/location_services.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'dart:ui' as ui;
 
@@ -96,7 +98,6 @@ class _NearbyScreenState extends State<NearbyScreen>
         offerController!.add(value);
         return value;
       } else {
-        log("in else");
         offerController!.add(null);
         return null;
       }
@@ -125,13 +126,6 @@ class _NearbyScreenState extends State<NearbyScreen>
     // TODO: implement initState
     super.initState();
     offerController = StreamController<OffersModel?>();
-    // BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(8, 8)),
-    //     Images.NEARBY_MARKER)
-    //     .then((d) {
-    //       setState(() {
-    //         customIcon = d;
-    //       });
-    // });
     getMarker().then((value) {
       setState(() {});
     });
@@ -151,351 +145,334 @@ class _NearbyScreenState extends State<NearbyScreen>
         position: Provider.of<UserModelProvider>(context, listen: false)
             .currentLocation!));
     return Container(
-        height: size.height * 0.895,
-        width: size.width,
-        child: StreamBuilder<OffersModel?>(
-          stream: offerController!.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError ||
-                snapshot.connectionState == ConnectionState.waiting) {
-              return Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  height: 220,
-                  width: double.maxFinite,
-                  child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, i) {
-                        return DealShimmerCard(smallCard: true);
-                      },
-                      separatorBuilder: (context, i) => SizedBox(
-                            width: 12,
+      height: size.height * 0.895,
+      width: size.width,
+      child: StreamBuilder<OffersModel?>(
+        stream: offerController!.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError ||
+              snapshot.connectionState == ConnectionState.waiting) {
+            return Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height: 220,
+                width: double.maxFinite,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, i) {
+                      return DealShimmerCard(smallCard: true);
+                    },
+                    separatorBuilder: (context, i) => SizedBox(
+                          width: 12,
+                        ),
+                    itemCount: 4),
+              ),
+            );
+          }
+          if (snapshot.data == null) {
+            return Center(child: noDataFound());
+          }
+          for (var data in snapshot.data!.data!) {
+            dataList.add(data);
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    GoogleMap(
+                      zoomControlsEnabled: true,
+                      markers: markers.toSet(),
+                      onMapCreated: (controller) {
+                        mapController = controller;
+                        mapController!.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                                target: LatLng(
+                                    Provider.of<UserModelProvider>(context,
+                                            listen: false)
+                                        .currentLocation!
+                                        .latitude,
+                                    Provider.of<UserModelProvider>(context,
+                                            listen: false)
+                                        .currentLocation!
+                                        .longitude),
+                                zoom: 15),
                           ),
-                      itemCount: 4),
-                ),
-              );
-            }
-            if (snapshot.data == null) {
-              return Center(child: noDataFound());
-            }
-            for (var data in snapshot.data!.data!) {
-              dataList.add(data);
-            }
-            log(dataList.length.toString());
+                        );
 
-            // for(var i in dataList){
-            //   if(i!.longitude!=null && i.latitude!=null){
-            //     double lat = double.parse(i.latitude??"0.0");
-            //     double long = double.parse(i.longitude??"0.0");
-            //     markers.add(Marker(
-            //       markerId: MarkerId("${i.id}"),
-            //       icon: customIcon!,
-            //       position: LatLng(lat,long),
-            //       infoWindow: InfoWindow(
-            //         title: "${i.title}",
-            //         snippet: "${i.categoryName}",
-            //         onTap: (){
-            //           Navigator.push(context, CupertinoPageRoute(builder: (_)=>OfferDetailsScreen(offerId: i.id!.toString(),)));
-            //         }
-            //       )
-            //     ));
-            //   }
-            // }
-            return Column(
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      GoogleMap(
-                          zoomControlsEnabled: true,
-                          markers: markers.toSet(),
-                          onMapCreated: (controller) {
-                            mapController = controller;
-                            mapController!.animateCamera(
-                              CameraUpdate.newCameraPosition(
-                                CameraPosition(
-                                    target: LatLng(
-                                        Provider.of<UserModelProvider>(
-                                                context,
-                                                listen: false)
-                                            .currentLocation!
-                                            .latitude,
-                                        Provider.of<UserModelProvider>(
-                                                context,
-                                                listen: false)
-                                            .currentLocation!
-                                            .longitude),
-                                    zoom: 15),
-                              ),
-                            );
-
-                            getMapNearbyOffers(
-                                context, LatLng(
-                                Provider.of<UserModelProvider>(
-                                    context,
-                                    listen: false)
-                                    .currentLocation!
-                                    .latitude,
-                                Provider.of<UserModelProvider>(
-                                    context,
-                                    listen: false)
-                                    .currentLocation!
-                                    .longitude), 15)
-                                .then((value) {
-                              //Navigator.maybePop(context);
-                              if (value != null) {
-                                for (var data in value.data!) {
-                                  if (data!.longitude != null &&
-                                      data.longitude != null) {
-                                    double lat = double.parse(
-                                        data.latitude ?? "0.0");
-                                    double long = double.parse(
-                                        data.longitude ?? "0.0");
-                                    markers.add(Marker(
-                                        markerId:
-                                        MarkerId("${data.id}"),
-                                        icon: customIcon!,
-                                        position: LatLng(lat, long),
-                                        infoWindow: InfoWindow(
-                                            title:
-                                            "${data.title ?? ""}",
-                                            snippet:
+                        getMapNearbyOffers(
+                                context,
+                                LatLng(
+                                    Provider.of<UserModelProvider>(context,
+                                            listen: false)
+                                        .currentLocation!
+                                        .latitude,
+                                    Provider.of<UserModelProvider>(context,
+                                            listen: false)
+                                        .currentLocation!
+                                        .longitude),
+                                15)
+                            .then(
+                          (value) {
+                            if (value != null) {
+                              for (var data in value.data!) {
+                                if (data!.longitude != null &&
+                                    data.longitude != null) {
+                                  double lat =
+                                      double.parse(data.latitude ?? "0.0");
+                                  double long =
+                                      double.parse(data.longitude ?? "0.0");
+                                  markers.add(
+                                    Marker(
+                                      markerId: MarkerId("${data.id}"),
+                                      icon: customIcon!,
+                                      position: LatLng(lat, long),
+                                      infoWindow: InfoWindow(
+                                        title: "${data.title ?? ""}",
+                                        snippet:
                                             "${data.categoryName ?? ""}, ${data.stateName ?? ""}",
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                      builder: (_) =>
-                                                          OfferDetailsScreen(
-                                                            offerId: data
-                                                                .id!
-                                                                .toString(),
-                                                          )));
-                                            })));
-                                  }
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (_) =>
+                                                  OfferDetailsScreen(
+                                                offerId: data.id!.toString(),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
                                 }
                               }
-                              setState(() {
-                                mapLoading = 0.0;
-                              });
+                            }
+                            setState(() {
+                              mapLoading = 0.0;
                             });
                           },
-                          initialCameraPosition: CameraPosition(
-                              bearing: 192.8334901395799,
-                              target: Provider.of<UserModelProvider>(
-                                      context,
-                                      listen: false)
-                                  .currentLocation!,
-                              zoom: 12,
-                              tilt: 4)),
-                      Positioned(
-                        top: 50,
-                        right: 5,
-                        left: 5,
-                        child: AnimatedContainer(
-                          curve: Curves.bounceInOut,
-                          duration: Duration(milliseconds: 500),
-                          height: mapLoading,
-                          width: mapLoading,
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: Offset(0, 1),
-                                    color: Colors.black26,
-                                    blurRadius: 1,
-                                    spreadRadius: 1)
-                              ]),
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                        );
+                      },
+                      initialCameraPosition: CameraPosition(
+                          bearing: 192.8334901395799,
+                          target: Provider.of<UserModelProvider>(context,
+                                  listen: false)
+                              .currentLocation!,
+                          zoom: 12,
+                          tilt: 4),
+                    ),
+                    Positioned(
+                      top: 50,
+                      right: 5,
+                      left: 5,
+                      child: AnimatedContainer(
+                        curve: Curves.bounceInOut,
+                        duration: Duration(milliseconds: 500),
+                        height: mapLoading,
+                        width: mapLoading,
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: Offset(0, 1),
+                                  color: Colors.black26,
+                                  blurRadius: 1,
+                                  spreadRadius: 1)
+                            ]),
+                        child: Center(
+                          child: CircularProgressIndicator(),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 45),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: FloatingActionButton(
-                            onPressed: () async {
-                              if (released) {
-                                //showLoader();
-                                setState(() {
-                                  mapLoading = 50;
-                                });
-                                LatLngBounds bounds =
-                                    await mapController!.getVisibleRegion();
-                                double zoomLevel =
-                                    await mapController!.getZoomLevel();
-                                LatLng center = LatLng(
-                                    (bounds.northeast.latitude +
-                                            bounds.southwest.latitude) /
-                                        2,
-                                    (bounds.northeast.longitude +
-                                            bounds.southwest.longitude) /
-                                        2);
-                               // print("On idle $center");
-                                getMapNearbyOffers(
-                                        context, center, zoomLevel)
-                                    .then((value) {
-                                  //Navigator.maybePop(context);
-                                  if (value != null) {
-                                    for (var data in value.data!) {
-                                      if (data!.longitude != null &&
-                                          data.longitude != null) {
-                                        double lat = double.parse(
-                                            data.latitude ?? "0.0");
-                                        double long = double.parse(
-                                            data.longitude ?? "0.0");
-                                        markers.add(Marker(
-                                            markerId:
-                                                MarkerId("${data.id}"),
-                                            icon: customIcon!,
-                                            position: LatLng(lat, long),
-                                            infoWindow: InfoWindow(
-                                                title:
-                                                    "${data.title ?? ""}",
-                                                snippet:
-                                                    "${data.categoryName ?? ""}, ${data.stateName ?? ""}",
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      CupertinoPageRoute(
-                                                          builder: (_) =>
-                                                              OfferDetailsScreen(
-                                                                offerId: data
-                                                                    .id!
-                                                                    .toString(),
-                                                              )));
-                                                })));
-                                      }
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 45),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: FloatingActionButton(
+                          onPressed: () async {
+                            if (released) {
+                              //showLoader();
+                              setState(() {
+                                mapLoading = 50;
+                              });
+                              LatLngBounds bounds =
+                                  await mapController!.getVisibleRegion();
+                              double zoomLevel =
+                                  await mapController!.getZoomLevel();
+                              LatLng center = LatLng(
+                                  (bounds.northeast.latitude +
+                                          bounds.southwest.latitude) /
+                                      2,
+                                  (bounds.northeast.longitude +
+                                          bounds.southwest.longitude) /
+                                      2);
+                              getMapNearbyOffers(context, center, zoomLevel)
+                                  .then((value) {
+                                if (value != null) {
+                                  for (var data in value.data!) {
+                                    if (data!.longitude != null &&
+                                        data.longitude != null) {
+                                      double lat =
+                                          double.parse(data.latitude ?? "0.0");
+                                      double long =
+                                          double.parse(data.longitude ?? "0.0");
+                                      markers.add(
+                                        Marker(
+                                          markerId: MarkerId("${data.id}"),
+                                          icon: customIcon!,
+                                          position: LatLng(lat, long),
+                                          infoWindow: InfoWindow(
+                                            title: "${data.title ?? ""}",
+                                            snippet:
+                                                "${data.categoryName ?? ""}, ${data.stateName ?? ""}",
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (_) =>
+                                                      OfferDetailsScreen(
+                                                    offerId:
+                                                        data.id!.toString(),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     }
                                   }
-                                  setState(() {
-                                    mapLoading = 0.0;
-                                  });
+                                }
+                                setState(() {
+                                  mapLoading = 0.0;
                                 });
-                              }
-                            },
-                            child: Icon(Icons.refresh),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 170,
-                          width: double.maxFinite,
-                          child: dataList.isNotEmpty
-                              ? ListView.separated(
-                                  controller: scrollController,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, i) {
-                                    return NearbyDealCard(
-                                      width: 161,
-                                      modelData: dataList[i]!,
-                                      type: StorageKeys.FEATURED_OFFERS,
-                                      onTap: (String lat, String long) {
-                                        setState(() {
-                                          released = false;
-                                        });
-                                        final markerId =
-                                            MarkerId("${dataList[i]!.id}");
-                                        markers.add(Marker(
-                                            markerId: markerId,
-                                            icon: customIcon!,
-                                            position: LatLng(
-                                                double.parse(lat),
-                                                double.parse(long)),
-                                            infoWindow: InfoWindow(
-                                                //anchor: Offset(1,8),
-                                                title:
-                                                    "${dataList[i]!.title ?? ""}",
-                                                snippet:
-                                                    "${dataList[i]!.categoryName ?? ""}, ${dataList[i]!.stateName ?? ""}",
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      CupertinoPageRoute(
-                                                          builder: (_) =>
-                                                              OfferDetailsScreen(
-                                                                offerId: dataList[
-                                                                        i]!
-                                                                    .id!
-                                                                    .toString(),
-                                                              )));
-                                                })));
-                                        mapController!.animateCamera(
-                                            CameraUpdate.newCameraPosition(
-                                                CameraPosition(
-                                                    target: LatLng(
-                                                        double.parse(lat),
-                                                        double.parse(long)),
-                                                    zoom: 15)));
-                                        Future.delayed(Duration(seconds: 1))
-                                            .then((value) {
-                                          mapController!
-                                              .showMarkerInfoWindow(
-                                                  markerId);
-                                        });
-                                        setState(() {
-                                          released = true;
-                                        });
-                                      },
-                                    );
-                                  },
-                                  separatorBuilder: (context, i) =>
-                                      SizedBox(
-                                        width: 12,
-                                      ),
-                                  itemCount: dataList.length)
-                              : Center(
-                                  child: Text("No nearby offers found")),
+                              });
+                            }
+                          },
+                          child: Icon(Icons.refresh),
                         ),
                       ),
-                      loading ? getLoader() : Text('')
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-              ],
-            );
-          },
-        ));
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 170,
+                        width: double.maxFinite,
+                        child: dataList.isNotEmpty
+                            ? ListView.separated(
+                                controller: scrollController,
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, i) {
+                                  return NearbyDealCard(
+                                    width: 161,
+                                    modelData: dataList[i]!,
+                                    type: StorageKeys.FEATURED_OFFERS,
+                                    onTap: (String lat, String long) {
+                                      setState(() {
+                                        released = false;
+                                      });
+                                      final markerId =
+                                          MarkerId("${dataList[i]!.id}");
+                                      markers.add(
+                                        Marker(
+                                          markerId: markerId,
+                                          icon: customIcon!,
+                                          position: LatLng(double.parse(lat),
+                                              double.parse(long)),
+                                          infoWindow: InfoWindow(
+                                            //anchor: Offset(1,8),
+                                            title:
+                                                "${dataList[i]!.title ?? ""}",
+                                            snippet:
+                                                "${dataList[i]!.categoryName ?? ""}, ${dataList[i]!.stateName ?? ""}",
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder: (_) =>
+                                                      OfferDetailsScreen(
+                                                    offerId: dataList[i]!
+                                                        .id!
+                                                        .toString(),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                      mapController!.animateCamera(
+                                          CameraUpdate.newCameraPosition(
+                                              CameraPosition(
+                                                  target: LatLng(
+                                                      double.parse(lat),
+                                                      double.parse(long)),
+                                                  zoom: 15)));
+                                      Future.delayed(Duration(seconds: 1))
+                                          .then((value) {
+                                        mapController!
+                                            .showMarkerInfoWindow(markerId);
+                                      });
+                                      setState(() {
+                                        released = true;
+                                      });
+                                    },
+                                  );
+                                },
+                                separatorBuilder: (context, i) => SizedBox(
+                                      width: 12,
+                                    ),
+                                itemCount: dataList.length)
+                            : Center(child: Text(LocaleKeys.no_nearby_offers_found.tr())),
+                      ),
+                    ),
+                    loading ? getLoader() : Text('')
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   showLoader() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          content: Container(
+            height: 50,
+            width: 50,
+            child: Row(
+              children: [
+                getLoader(),
+                SizedBox(
+                  width: 18,
+                ),
+                Expanded(child: Text("Getting offers...")),
+              ],
             ),
-            content: Container(
-              height: 50,
-              width: 50,
-              child: Row(
-                children: [
-                  getLoader(),
-                  SizedBox(
-                    width: 18,
-                  ),
-                  Expanded(child: Text("Getting offers...")),
-                ],
-              ),
-            ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   noDataFound() {
@@ -507,7 +484,7 @@ class _NearbyScreenState extends State<NearbyScreen>
           height: 15,
         ),
         Text(
-          "No nearby offers found",
+          LocaleKeys.no_nearby_offers_found.tr(),
           style: FontStyles.PoppinsStyle(
               15, Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
               fontWeight: FontWeight.w600),

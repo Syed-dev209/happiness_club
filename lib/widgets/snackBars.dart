@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 showNoInternetSnackBar(context) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text("No Internet connection"),
+    content: Text(LocaleKeys.no_internet.tr()),
     behavior: SnackBarBehavior.floating,
   ));
 }

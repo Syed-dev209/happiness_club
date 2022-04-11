@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/categories/Widget/categoriesCard.dart';
 import 'package:happiness_club/modules/categories/Widget/category_card_shimmer.dart';
 import 'package:happiness_club/modules/categories/controller/categoriesController.dart';
 import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +36,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             height: 30,
           ),
           CustomAppBar(
-            title: "Categories",
+            title: LocaleKeys.categories.tr(),
           ),
           SizedBox(
             height: 10,
@@ -49,7 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${data.modelData!.data!.length} Categories",
+                      "${data.modelData!.data!.length} ${LocaleKeys.categories.tr()}",
                       style: FontStyles.PoppinsStyle(15, Colors.black,
                           fontWeight: FontWeight.w400),
                     ),

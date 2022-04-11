@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/modules/companies/Controller/companies_controller.dart';
 import 'package:happiness_club/modules/companies/Model/companies_model.dart';
 import 'package:happiness_club/modules/companies/Widget/companies_card_shimmer.dart';
 import 'package:happiness_club/modules/companies/Widget/companyCard.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
 class CompaniesScreen extends StatefulWidget {
@@ -55,7 +57,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
           child: Column(
             children: [
               CustomAppBar(
-          title: "HC Portfolio",
+          title: LocaleKeys.hc_portfolio.tr(),
         ),
         SizedBox(height: 20,),
               Expanded(
@@ -73,7 +75,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                       );
                     }
                     if(snapshot.data == null){
-                      return Text("No companies found");
+                      return Text(LocaleKeys.no_companies_found.tr());
                     }
                     CompaniesModel model = snapshot.data!;
                     return GridView.count(

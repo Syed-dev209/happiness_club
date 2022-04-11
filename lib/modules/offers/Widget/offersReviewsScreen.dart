@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -10,6 +11,7 @@ import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/offers/Controller/offers_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +80,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     height: 25,
                   ),
                   Text(
-                    "${offerCard.length} Reviews",
+                    "${offerCard.length} ${LocaleKeys.reviews.tr()}",
                     style: FontStyles.PoppinsStyle(17, Colors.black,
                         fontWeight: FontWeight.w600),
                   ),
@@ -120,7 +122,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                       reviewPopup();
                     },
                     child: Text(
-                      "Add a review",
+                      LocaleKeys.add_review.tr(),
                       style: FontStyles.PoppinsStyle(16, Colors.white,
                           fontWeight: FontWeight.w600),
                     ))),
@@ -169,7 +171,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
               onRatingUpdate: (val) {},
             ),
             trailing: Text(
-              "$days days ago",
+              "$days ${LocaleKeys.days_left.tr()}",
               style: FontStyles.PoppinsStyle(12, Colors.black.withOpacity(0.5),
                   fontWeight: FontWeight.w600),
             ),
@@ -203,7 +205,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Add a review',
+                          LocaleKeys.add_review.tr(),
                           style: FontStyles.PoppinsStyle(17, Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
@@ -221,7 +223,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      "Rate",
+                     LocaleKeys.rate. tr(),
                       style: FontStyles.PoppinsStyle(
                           14, Colors.black.withOpacity(0.5)),
                     ),
@@ -245,7 +247,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                     ),
                      SizedBox(height: 5,),
                     Text(
-                      "Your review",
+                      LocaleKeys.your_review.tr(),
                       style: FontStyles.PoppinsStyle(
                           14, Colors.black.withOpacity(0.5)),
                     ),
@@ -277,7 +279,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                               showToast(context, "You must Log in to post a review.");
                             }
                           },
-                        child: Text("Submit review")
+                        child: Text(LocaleKeys.submit_review.tr())
                         ),
                       )
                       )

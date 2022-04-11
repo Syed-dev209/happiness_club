@@ -7,10 +7,12 @@ import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/aboutUs/controller/about_controller.dart';
 import 'package:happiness_club/modules/aboutUs/widget/partnersCard.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'model/about_us_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AboutUsScreen extends StatefulWidget {
   const AboutUsScreen({Key? key}) : super(key: key);
@@ -67,7 +69,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomAppBar(title: "About Us"),
+                  CustomAppBar(title: LocaleKeys.about_us.tr()),
                   SizedBox(
                     height: 30,
                   ),
@@ -134,7 +136,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                             height: 25,
                           ),
                           Text(
-                            "Videos",
+                            LocaleKeys.videos.tr(),
                             style: FontStyles.PoppinsStyle(16, Colors.black,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -221,7 +223,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                      "Total\nMembers",
+                      LocaleKeys.total_members.tr(),
                       style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
@@ -242,7 +244,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                      "Total\nPartners",
+                      LocaleKeys.total_partners.tr(),
                       style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
@@ -263,7 +265,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                      "Total Staff\nChampions",
+                      LocaleKeys.total_staff_champions.tr(),
                       style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
@@ -284,7 +286,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                      "Total Staff\nCompanies",
+                      LocaleKeys.total_staff_companies.tr(),
                       style: FontStyles.PoppinsStyle(12, Colors.black,
                           fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,

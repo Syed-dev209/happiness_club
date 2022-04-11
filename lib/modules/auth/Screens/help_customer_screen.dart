@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:happiness_club/modules/auth/Controller/auth_controller.dart';
 import 'package:happiness_club/modules/auth/widgets/header_login_signup.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
 import 'package:happiness_club/widgets/custom_text_field.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
@@ -25,15 +27,15 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Widget? buttonWidget;
   Widget? registerButton;
-  String selectedType = "Enquiry";
-  List<String> selectedList = ["Enquiry","Suggestion","Report an issue","Digital card issue"];
+  String selectedType = LocaleKeys.enquiry.tr();
+  List<String> selectedList = [LocaleKeys.enquiry.tr(),LocaleKeys.suggestion.tr(),LocaleKeys.report_a_problem.tr(),LocaleKeys.digital_card_issue.tr()];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     registerButton = CustomFullWidthButton(
-        title: "Send",
+        title: LocaleKeys.send.tr(),
         onTap: () {
           if(formKey.currentState!.validate()){
             setState(() {
@@ -63,7 +65,7 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
             child: Column(
               children: [
                 AuthHeaderWidget(
-                  title: "Customer Information is required",
+                  title: LocaleKeys.customer_info_required.tr(),
                   showText: false,
                 ),
                 signupForm()
@@ -86,11 +88,11 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
               children: [
                 CustomTextField(
                     controller: name,
-                    labelText: "Full Name",
+                    labelText: LocaleKeys.full_name.tr(),
                     keyboardType: TextInputType.name,
                     validator:
                     MultiValidator([
-                      RequiredValidator(errorText: "Name is required*")
+                      RequiredValidator(errorText: LocaleKeys.name_required.tr())
                     ])
 
                 ),
@@ -99,11 +101,11 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
                 ),
                 CustomTextField(
                     controller: phoneNumber,
-                    labelText: "Phone Number",
+                    labelText: LocaleKeys.phone_num.tr(),
                     keyboardType: TextInputType.number,
                     validator:
                     MultiValidator([
-                      RequiredValidator(errorText: "Phone Number is required*"),
+                      RequiredValidator(errorText: LocaleKeys.phone_num_required.tr()),
                       PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: "Please enter a valid mobile number")
                     ])
                 ),
@@ -112,11 +114,11 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
                 ),
                 CustomTextField(
                     controller: email,
-                    labelText: "Email",
+                    labelText: LocaleKeys.email,
                     keyboardType: TextInputType.emailAddress,
                     validator:
                     MultiValidator([
-                      RequiredValidator(errorText: "Email required*"),
+                      RequiredValidator(errorText: LocaleKeys.email_required.tr()),
                       EmailValidator(errorText: "Please enter a correct email address")
                     ])
                 ),
@@ -125,12 +127,12 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
                 ),
                 CustomTextField(
                     controller: companyName,
-                    labelText: "Company Name",
+                    labelText: LocaleKeys.company_name.tr(),
                     keyboardType: TextInputType.text,
                     obscureText: false,
                     validator:
                     MultiValidator([
-                      RequiredValidator(errorText: "Company name is required*"),
+                      RequiredValidator(errorText: LocaleKeys.company_name_required.tr()),
                     ])
                 ),
                 SizedBox(
@@ -142,26 +144,17 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
                 ),
                 CustomTextField(
                     controller: message,
-                    labelText: "Message",
+                    labelText: LocaleKeys.message.tr(),
                     keyboardType: TextInputType.text,
                     obscureText: false,
                     validator:
                     MultiValidator([
-                      RequiredValidator(errorText: "Message is required*"),
+                      RequiredValidator(errorText: LocaleKeys.message_required.tr()),
                     ])
                 ),
                 SizedBox(
                   height: 15,
                 ),
-                // CustomFullWidthButton(
-                //     title: "Register",
-                //   onTap: () {
-                //   if(formKey.currentState!.validate()){
-                //     addCustomer(context, widget.qrResult, name.text, email.text, phoneNumber.text, companyName.text).then((value) {
-                //
-                //     });
-                //   }
-                // }),
                 AnimatedSwitcher(
                   duration: Duration(milliseconds: 800),
                   child: buttonWidget,
@@ -169,11 +162,6 @@ class _HelpCustomerScreenState extends State<HelpCustomerScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                // SocialLoginFooter(
-                //     onApplePressed: () {},
-                //     onFacebookPressed: () {},
-                //     onGoogle: () {},
-                //     onTwitterPressed: () {})
               ],
             ),
           )

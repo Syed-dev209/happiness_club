@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -14,6 +15,7 @@ import 'package:happiness_club/modules/offers/Models/offer_revies_model.dart';
 import 'package:happiness_club/modules/offers/Widget/offersLocationScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersReviewsScreen.dart';
 import 'package:happiness_club/modules/offers/Widget/offersSummaryScreen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
 class OfferDetailsScreen extends StatefulWidget {
@@ -29,13 +31,13 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     with SingleTickerProviderStateMixin {
   List<Tab> tabs = [
     Tab(
-      text: " Summary",
+      text: " ${LocaleKeys.summary.tr()}",
     ),
     Tab(
-      text: " Location",
+      text: " ${LocaleKeys.location.tr()}",
     ),
     Tab(
-      text: " Reviews",
+      text: " ${LocaleKeys.reviews.tr()}",
     ),
   ];
   TabController? controller;
@@ -171,7 +173,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           height: 15,
         ),
         Text(
-          "No offer details found",
+          LocaleKeys.no_offer_details_found.tr(),
           style: FontStyles.PoppinsStyle(
               15, Color(ColorCodes.GOLDEN_COLOR).withOpacity(0.4),
               fontWeight: FontWeight.w600),
@@ -271,7 +273,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                   padding: EdgeInsets.only(bottom: 8),
                   child: Center(
                     child: Text(
-                      "$offer off",
+                      "$offer ${LocaleKeys.off.tr()}",
                       style: FontStyles.PoppinsStyle(10, Colors.white,
                           fontWeight: FontWeight.w500),
                     ),

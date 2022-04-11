@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/modules/champions/Controller/champions_controller.dart';
 import 'package:happiness_club/modules/champions/Model/champions_model.dart';
 import 'package:happiness_club/modules/champions/widgets/champions_card.dart';
 import 'package:happiness_club/modules/champions/widgets/champions_card_shimmer.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
 class ChampionsScreen extends StatefulWidget {
@@ -59,7 +61,7 @@ class _ChampionsScreenState extends State<ChampionsScreen> {
             children:[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: CustomAppBar(title: "Champions"),
+                child: CustomAppBar(title: LocaleKeys.champions.tr()),
               ),
               SizedBox(height: 10,),
               Expanded(
@@ -80,7 +82,7 @@ class _ChampionsScreenState extends State<ChampionsScreen> {
                       );
                     }
                     if(snapshot.data == null){
-                      return Text("No champions found");
+                      return Text(LocaleKeys.no_champions_found.tr());
                     }
 
                     ChampionsModel model = snapshot.data!;

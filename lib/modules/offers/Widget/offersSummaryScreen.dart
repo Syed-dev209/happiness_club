@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -11,6 +12,7 @@ import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/favourites/controller/favorites_controller.dart';
 import 'package:happiness_club/modules/offers/Models/offer_details_model.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:html/parser.dart' as htmlparser;
 import 'package:html/dom.dart' as dom;
@@ -141,7 +143,7 @@ class _OffersSummaryState extends State<OffersSummary> {
               height: 10,
             ),
             Text(
-              "Details",
+              LocaleKeys.details.tr(),
               style: FontStyles.PoppinsStyle(20, Colors.black,
                   fontWeight: FontWeight.w600),
             ),
@@ -208,7 +210,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                             CupertinoPageRoute(builder: (_) => HelpCustomerScreen()));
 
                     },
-                    child: Text("Report a problem",style: FontStyles.PoppinsStyle(17, Colors.white),),
+                    child: Text(LocaleKeys.report_a_problem.tr(),style: FontStyles.PoppinsStyle(17, Colors.white),),
                   ),
                 )
               ],
@@ -261,7 +263,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: AutoSizeText(
-                daysLeft<=0?"1 day left" :"$daysLeft days left",
+                daysLeft<=0?"1 ${LocaleKeys.day_left.tr()}" :"$daysLeft ${LocaleKeys.days_left.tr()}",
                 style: FontStyles.PoppinsStyle(
                     11, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),

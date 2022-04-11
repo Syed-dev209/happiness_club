@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
@@ -20,7 +22,9 @@ Future<PrizeHistoryModel?> getPrizeHistory(context)async{
     bool check = await InternetService.checkConnectivity();
     if(check){
       final user = Provider.of<UserModelProvider>(context,listen: false);
+      log(user.hcId);
       var response = await dio.get(APIS.PRIZE_HISTORY,queryParameters: {"customer_hc_id":user.hcId});
+      print(response.data);
       if(response.data["responseStatus"]=="success" && response.statusCode==200){
         PrizeHistoryModel model = PrizeHistoryModel.fromJson(response.data);
         storage.writeDataToStorage(StorageKeys.PRIZE_HISTORY, model.toJson());

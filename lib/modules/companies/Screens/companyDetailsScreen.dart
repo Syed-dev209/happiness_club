@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
@@ -12,6 +13,7 @@ import 'package:happiness_club/modules/companies/Model/comapnies_details_model.d
 import 'package:happiness_club/modules/companies/Widget/championsCard.dart';
 import 'package:happiness_club/modules/companies/Widget/championshipWinner.dart';
 import 'package:happiness_club/modules/companies/Widget/luckyDrawWinnerCard.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 import '../Widget/comapny_detail_shimmer.dart';
 
@@ -92,15 +94,6 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                             child: SvgPicture.asset(Images.BACK_BUTTON)),
                       ),
                     ),
-                    // Container(
-                    //   // height: 139,
-                    //   // width: 139,
-                    //   decoration: BoxDecoration(
-                    //       color: Colors.white,
-                    //       //shape: BoxShape.circle,
-                    //       image: DecorationImage(
-                    //           image: CachedNetworkImageProvider(companyInfo.logo??Constants.NOT_FOUND_IMAGE_URL),fit: BoxFit.contain)),
-                    // ),
                     CachedNetworkImage(
                         imageUrl: companyInfo.logo??Constants.NOT_FOUND_IMAGE_URL,
                       errorWidget: (a,d,f){
@@ -121,14 +114,6 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
-                    //       "sed diam nonumy eirmod tempor invidunt ut labore.",
-                    //   style: FontStyle.PoppinsStyle(
-                    //       14, Color(ColorCodes.GREY_COLOR),
-                    //       fontWeight: FontWeight.w500),
-                    //   textAlign: TextAlign.center,
-                    // ),
                     SizedBox(
                       height: 20,
                     ),
@@ -141,7 +126,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                       height: 20,
                     ),
                     champions.isNotEmpty? Text(
-                      "Champions(${champions.length})",
+                      "${LocaleKeys.champions.tr()}(${champions.length})",
                       style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ):Text(""),
@@ -153,7 +138,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                       height: 20,
                     ),
                     champWinners.isNotEmpty? Text(
-                      "Championship Winner(${champWinners.length})",
+                      "${LocaleKeys.championship_winner.tr()}(${champWinners.length})",
                       style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ):Text(""),
@@ -165,7 +150,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
                       height: 20,
                     ),
                     luckyWinners.isNotEmpty? Text(
-                      "Winners of Lucky Draw(${luckyWinners.length})",
+                      "${LocaleKeys.winners_of_lucky_draw.tr()}(${luckyWinners.length})",
                       style: FontStyles.PoppinsStyle(16, Colors.black,
                           fontWeight: FontWeight.w600),
                     ):Text(""),
@@ -244,7 +229,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                  "Total\nChampions",
+                  LocaleKeys.total_champions.tr(),
                   style: FontStyles.PoppinsStyle(12, Colors.black,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
@@ -265,7 +250,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                  "Total\nWinners",
+                 LocaleKeys.total_winners.tr(),
                   style: FontStyles.PoppinsStyle(12, Colors.black,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
@@ -286,7 +271,7 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
               children: [
                 Expanded(
                     child: Text(
-                  "Total Staff\nMemebers",
+                  LocaleKeys.total_staff_member.tr(),
                   style: FontStyles.PoppinsStyle(12, Colors.black,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
@@ -311,13 +296,13 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
         Row(
           children: [
             Expanded(
-              child: prizeCard("Trophy Number", Images.TROPHY_ICON, "${model.trophyWinners}"),
+              child: prizeCard(LocaleKeys.trophy_number.tr(), Images.TROPHY_ICON, "${model.trophyWinners}"),
             ),
             SizedBox(
               width: 10,
             ),
             Expanded(
-              child: prizeCard("Gold Numbers", Images.FIRST_POSITION, "${model.totalGold}"),
+              child: prizeCard(LocaleKeys.gold_number.tr(), Images.FIRST_POSITION, "${model.totalGold}"),
             )
           ],
         ),
@@ -327,13 +312,13 @@ class _CompanyDetailsScreenState extends State<CompanyDetailsScreen> {
         Row(
           children: [
             Expanded(
-              child: prizeCard("Silver Numbers", Images.SECOND_POSITION, "${model.totalSilver}"),
+              child: prizeCard(LocaleKeys.silver_number.tr(), Images.SECOND_POSITION, "${model.totalSilver}"),
             ),
             SizedBox(
               width: 10,
             ),
             Expanded(
-              child: prizeCard("Bronze Numbers", Images.THIRD_POSITION, "${model.totalBronze}"),
+              child: prizeCard(LocaleKeys.bronze_number.tr(), Images.THIRD_POSITION, "${model.totalBronze}"),
             )
           ],
         ),

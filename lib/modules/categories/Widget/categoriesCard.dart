@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -8,6 +9,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/categories/model/offers_category_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offers_by_category_screen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 class CategoriesCard extends StatelessWidget {
   OffersCategoriesModelData modelData;
@@ -27,15 +29,6 @@ class CategoriesCard extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            // image: DecorationImage(
-            //     image: CachedNetworkImageProvider(
-            //         modelData.imageFilename ??
-            //         Constants.NOT_FOUND_IMAGE_URL,
-            //       errorListener: (){
-            //            Icon(Icons.error);
-            //       }
-            //     ),
-            //     fit: BoxFit.cover)
         ),
         child: Stack(
           children: [
@@ -75,7 +68,7 @@ class CategoriesCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${modelData.offersCount} Offers",
+                    "${modelData.offersCount} ${LocaleKeys.offers.tr()}",
                    // style: FontStyle.PoppinsStyle(14, Color(ColorCodes.GOLDEN_COLOR)),
                     style: TextStyle(
                       fontSize: 14,

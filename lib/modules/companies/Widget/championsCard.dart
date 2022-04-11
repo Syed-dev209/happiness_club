@@ -30,10 +30,6 @@ class ChampionCard extends StatelessWidget {
               width: 63,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                // image: DecorationImage(
-                //   image: CachedNetworkImageProvider(model.photo??Constants.NOT_FOUND_IMAGE_URL),
-                //   fit: BoxFit.cover
-                // )
               ),
               child: ClipOval(
                 child: Center(

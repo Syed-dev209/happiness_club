@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
@@ -5,6 +6,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/images.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 
 class PdfViewScreen extends StatelessWidget {
@@ -31,7 +33,7 @@ class PdfViewScreen extends StatelessWidget {
       body: const PDF().fromUrl(
         url.origin+url.path,
         placeholder: (double progress) => loader(),
-        errorWidget: (dynamic error) => Center(child: Text("Unable to load newsletter.")),
+        errorWidget: (dynamic error) => Center(child: Text(LocaleKeys.unable_to_load_newsletter.tr())),
       ),
     );
   }

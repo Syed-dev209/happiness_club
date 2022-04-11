@@ -59,6 +59,7 @@ dependencies:
   maps_curved_line: ^1.0.2
   intl: ^0.17.0
   flutter_inappwebview: ^5.3.2
+  easy_localization: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,7 @@ flutter:
     - assets/
     - assets/PNG/
     - assets/SVG/
+    - assets/Translation/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

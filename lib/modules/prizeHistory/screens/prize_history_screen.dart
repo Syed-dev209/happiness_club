@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/prizeHistory/controller/prize_history_controller.dart';
 import 'package:happiness_club/modules/prizeHistory/model/prize_history_model.dart';
 import 'package:happiness_club/modules/prizeHistory/widget/prize_history_card.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
@@ -53,7 +55,7 @@ class _PrizeHistoryScreenState extends State<PrizeHistoryScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: CustomAppBar(
-                  title: "Prize History",
+                  title: LocaleKeys.prize_history.tr(),
                 ),
               ),
 
@@ -71,7 +73,7 @@ class _PrizeHistoryScreenState extends State<PrizeHistoryScreen> {
 
                     if(snapshot.data == null){
                       return Center(
-                        child: Text("No Prize history found",style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.5),fontWeight: FontWeight.bold),),
+                        child: Text(LocaleKeys.no_prize_history_found.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.5),fontWeight: FontWeight.bold),),
                       );
                     }
 

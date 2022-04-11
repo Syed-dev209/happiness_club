@@ -30,15 +30,6 @@ class LuckyDrawWinnerCard extends StatelessWidget {
               width: 63,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                // image: DecorationImage(
-                //   image: CachedNetworkImageProvider(
-                //       model.photo==null||model.photo==""? Constants.ALT_IMAGE:model.photo!,
-                //     errorListener: (){
-                //
-                //     }
-                //   ),
-                //   fit: BoxFit.cover
-                //   )
               ),
               child: ClipOval(
                 child: CachedNetworkImage(

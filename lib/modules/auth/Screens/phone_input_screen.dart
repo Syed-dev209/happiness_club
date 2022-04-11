@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,7 @@ import 'package:happiness_club/modules/auth/Screens/help_customer_screen.dart';
 import 'package:happiness_club/modules/auth/Screens/uae_pass_login_screen.dart';
 import 'package:happiness_club/modules/auth/widgets/header_login_signup.dart';
 import 'package:happiness_club/modules/auth/widgets/social_login_footer.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
 import 'package:happiness_club/widgets/custom_text_field.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
@@ -42,7 +44,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                AuthHeaderWidget(title: "Login",),
+                AuthHeaderWidget(title: LocaleKeys.login.tr(),),
                 formWidget(),
               ],
             ),
@@ -65,7 +67,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               keyboardType: TextInputType.phone,
               validator:
               MultiValidator([
-                RequiredValidator(errorText: "Phone number required*"),
+                RequiredValidator(errorText: LocaleKeys.phone_num_required.tr()),
               ]),
               inputFormatters: [maskFormatter],
             ),
@@ -84,7 +86,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
             SizedBox(height: 18,),
            // rememberMeRow(),
             SizedBox(height: 18,),
-           !loading? CustomFullWidthButton(title: "Login to my Account", onTap: (){
+           !loading? CustomFullWidthButton(title: LocaleKeys.login_to_my_account.tr(), onTap: (){
               if(formKey.currentState!.validate()){
                 setState(() {
                   loading = true;
@@ -124,7 +126,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         radioButton(),
-        Text("Forget Password?",style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
+        Text(LocaleKeys.forget_password.tr(),style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w400),)
       ],
     );
   }
@@ -147,7 +149,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                   }
                 });
               }),
-          Text("Remember me",style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
+          Text(LocaleKeys.remember_me.tr(),style: FontStyles.PoppinsStyle(14, Color(ColorCodes.GREY_COLOR),fontWeight: FontWeight.w400),)
         ],
       ),
     );
@@ -156,7 +158,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
 
   helpRow(){
     return RichText(text: TextSpan(
-      text: "Need Help? ",
+      text: LocaleKeys.need_help.tr(),
         style: TextStyle(
             fontSize: 14,
             fontFamily: "Poppins",
@@ -166,7 +168,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
         ),
       children: [
         TextSpan(
-          text: "Contact us",
+          text: LocaleKeys.contact_us.tr(),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
             //  if(signup!){

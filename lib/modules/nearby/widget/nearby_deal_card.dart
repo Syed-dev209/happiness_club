@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/home/Model/most_viewed_offers_model.dart';
 import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 
 class NearbyDealCard extends StatefulWidget {
   double width;
@@ -77,14 +79,6 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                         minFontSize: 2,
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 3,
-                    // ),
-                    //locationRow(),
-                    // SizedBox(
-                    //   height: 3,
-                    // ),
-                   // ratingAndTime(),
                   ],
                 ),
               ),
@@ -96,8 +90,6 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
   }
 
   Widget dealImage() {
-
-
     return Expanded(
       flex: 2,
       child: Container(
@@ -129,7 +121,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                     padding: EdgeInsets.only(bottom: 8,left: 2,right: 2),
                     child: Center(
                       child: AutoSizeText(
-                        "${widget.modelData.offerDiscount} off",
+                        "${widget.modelData.offerDiscount} ${LocaleKeys.off.tr()}",
                         style: FontStyles.PoppinsStyle(10, Colors.white,
                             fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
@@ -208,7 +200,7 @@ class _NearbyDealCardState extends State<NearbyDealCard> {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: AutoSizeText(
-                daysLeft<=0?"1 day left" :"$daysLeft days left",
+                daysLeft<=0?"1 ${LocaleKeys.day_left.tr()}" :"$daysLeft ${LocaleKeys.days_left.tr()}",
                 style: FontStyles.PoppinsStyle(
                     10, Color(ColorCodes.DARK_PINK_COLOR),
                     fontWeight: FontWeight.w600),

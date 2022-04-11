@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:happiness_club/modules/companies/Widget/companies_card_shimmer.dart';
 import 'package:happiness_club/modules/newsletter/Controller/newsletter_controller.dart';
 import 'package:happiness_club/modules/newsletter/Model/newsletter_model.dart';
 import 'package:happiness_club/modules/newsletter/widgets/newsCard.dart';
 import 'package:happiness_club/modules/newsletter/widgets/newsletter_shimmer.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 
 class NewsletterScreen extends StatefulWidget {
@@ -50,7 +52,7 @@ class _NewsletterScreenState extends State<NewsletterScreen> {
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Column(
             children: [
-              CustomAppBar(title: "Newsletters"),
+              CustomAppBar(title: LocaleKeys.newsletter.tr()),
               Expanded(
                   child:StreamBuilder<NewsletterModel?>(
                     stream: newsStream!.stream,
@@ -67,7 +69,7 @@ class _NewsletterScreenState extends State<NewsletterScreen> {
                        }
                        if(snapshot.data == null){
                          return Center(
-                           child: Text("No Newsletters are found"),
+                           child: Text(LocaleKeys.no_newsletter_found.tr()),
                          );
                        }
                       return

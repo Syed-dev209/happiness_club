@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,6 +26,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:happiness_club/modules/home/widgets/deal_shimmer_card.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/modules/offers/Screens/offerScreen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -49,12 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   int currentPos = 0;
 
-  onRefreshCall()async{
-    Provider.of<CategoriesOfferProvider>(context, listen: false).clearProvider();
+  onRefreshCall() async {
+    Provider.of<CategoriesOfferProvider>(context, listen: false)
+        .clearProvider();
     Provider.of<OffersSliderProvider>(context, listen: false).clearProvider();
-    Provider.of<MostViewedOffersProvider>(context,listen: false).clearProvider();
-    Provider.of<LatestOffersProvider>(context,listen: false).clearProvider();
-    Provider.of<FeaturedOffersProvider>(context,listen: false).clearProvider();
+    Provider.of<MostViewedOffersProvider>(context, listen: false)
+        .clearProvider();
+    Provider.of<LatestOffersProvider>(context, listen: false).clearProvider();
+    Provider.of<FeaturedOffersProvider>(context, listen: false).clearProvider();
 
     // await getOfferCategories(context);
     // await getSliderImages(context);
@@ -63,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // await getFeaturedOffers(context);
     await getDashboardData(context);
     showToast(context, "Page refreshed");
-
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar(),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: ()async{
+                onRefresh: () async {
                   return onRefreshCall();
                 },
                 child: ListView(
@@ -85,25 +89,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     // SizedBox(
                     //   height: 25,
                     // ),
-                   // creditCard(), ///credit card
+                    // creditCard(), ///credit card
                     SizedBox(
                       height: 20,
                     ),
-                    discountSlider(), ///slider
+                    discountSlider(),
+
+                    ///slider
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Categories",
+                          LocaleKeys.categories.tr(),
                           style: FontStyles.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: CategoriesScreen(),)));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => Scaffold(
+                                          body: CategoriesScreen(),
+                                        )));
                           },
                           child: Text(
-                            "View All",
+                            LocaleKeys.view_all.tr(),
                             style: FontStyles.PoppinsStyle(
                                 12, Color(ColorCodes.GOLDEN_COLOR),
                                 fontWeight: FontWeight.w600),
@@ -111,46 +122,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Consumer<CategoriesOfferProvider>(
-                        builder: (context,data,_){
-                          if(data.modelData==null){
-                            return SizedBox(
-                              height: 150,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView.separated(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, i) {
-                                    return CategoryCardShimmer();
-                                  },
-                                  separatorBuilder: (context, i) => SizedBox(
+                        builder: (context, data, _) {
+                      if (data.modelData == null) {
+                        return SizedBox(
+                          height: 150,
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, i) {
+                                return CategoryCardShimmer();
+                              },
+                              separatorBuilder: (context, i) => SizedBox(
                                     width: 10,
                                   ),
-                                  itemCount:3),
-                            );
-                          }
-                      return SizedBox( ///categories
+                              itemCount: 3),
+                        );
+                      }
+                      return SizedBox(
+                        ///categories
                         height: 150,
                         width: MediaQuery.of(context).size.width,
                         child: ListView.separated(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, i) {
-                              return CategoriesCard(modelData: data.modelData!.data![i]!,);
+                              return CategoriesCard(
+                                modelData: data.modelData!.data![i]!,
+                              );
                             },
                             separatorBuilder: (context, i) => SizedBox(
-                              width: 10,
-                            ),
-                            itemCount:data.modelData!.data!.length),
+                                  width: 10,
+                                ),
+                            itemCount: data.modelData!.data!.length),
                       );
                     }),
                     SizedBox(
                       height: 10,
                     ),
                     Consumer<MostViewedOffersProvider>(
-                      builder: (context,data,_){
-                        if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
+                      builder: (context, data, _) {
+                        if (data.state == StorageKeys.STATE_LOADING &&
+                            data.modelData == null) {
                           return SizedBox(
                             height: 260,
                             child: ListView.separated(
@@ -161,35 +178,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                                 separatorBuilder: (context, i) => SizedBox(
-                                  width: 10,
-                                ),
+                                      width: 10,
+                                    ),
                                 itemCount: 4),
                           );
                         }
-                        if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
+                        if (data.state == StorageKeys.STATE_FINISHED &&
+                            data.modelData == null) {
                           return Center(
-                            child: Text("No Offers"),
+                            child: Text(LocaleKeys.no_offers.tr()),
                           );
                         }
-                        return  data.modelData!.data!.isNotEmpty?  SizedBox(
-                          height: 260,
-                          child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, i) {
-                                return DealCard(
-                                  width: 230,
-                                  smallBox: false,
-                                  modelData: data.modelData!.data![i]!,
-                                  type: StorageKeys.MOST_VIEWED_OFFERS,
-                                );
-                              },
-                              separatorBuilder: (context, i) => SizedBox(
-                                width: 10,
-                              ),
-                              itemCount: data.modelData!.data!.length),
-                        ):Center(
-                          child: Text("No Offers"),
-                        );
+                        return data.modelData!.data!.isNotEmpty
+                            ? SizedBox(
+                                height: 260,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, i) {
+                                      return DealCard(
+                                        width: 230,
+                                        smallBox: false,
+                                        modelData: data.modelData!.data![i]!,
+                                        type: StorageKeys.MOST_VIEWED_OFFERS,
+                                      );
+                                    },
+                                    separatorBuilder: (context, i) => SizedBox(
+                                          width: 10,
+                                        ),
+                                    itemCount: data.modelData!.data!.length),
+                              )
+                            : Center(
+                                child: Text(LocaleKeys.no_offers.tr()),
+                              );
                       },
                     ),
                     SizedBox(
@@ -199,16 +219,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "New Deals",
+                          LocaleKeys.new_deals.tr(),
                           style: FontStyles.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen(heading: "New Deals",))));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => Scaffold(
+                                            body: OffersScreen(
+                                          heading: "New Deals",
+                                        ))));
                           },
                           child: Text(
-                            "View All",
+                            LocaleKeys.view_all.tr(),
                             style: FontStyles.PoppinsStyle(
                                 12, Color(ColorCodes.GOLDEN_COLOR),
                                 fontWeight: FontWeight.w600),
@@ -217,8 +243,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Consumer<LatestOffersProvider>(
-                      builder:  (context, data , _){
-                        if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
+                      builder: (context, data, _) {
+                        if (data.state == StorageKeys.STATE_LOADING &&
+                            data.modelData == null) {
                           return SizedBox(
                             height: 220,
                             child: ListView.separated(
@@ -229,35 +256,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                                 separatorBuilder: (context, i) => SizedBox(
-                                  width: 10,
-                                ),
+                                      width: 10,
+                                    ),
                                 itemCount: 4),
                           );
                         }
-                        if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
+                        if (data.state == StorageKeys.STATE_FINISHED &&
+                            data.modelData == null) {
                           return Center(
-                            child: Text("No Offers"),
+                            child: Text(LocaleKeys.no_offers.tr()),
                           );
                         }
-                         return  data.modelData!.data!.isNotEmpty? SizedBox(
-                           height: 220,
-                           child: ListView.separated(
-                               scrollDirection: Axis.horizontal,
-                               itemBuilder: (context, i) {
-                                 return DealCard(
-                                   width: 161,
-                                   smallBox: true,
-                                   modelData: data.modelData!.data![i]!,
-                                   type: StorageKeys.LATEST_OFFERS,
-                                 );
-                               },
-                               separatorBuilder: (context, i) => SizedBox(
-                                 width: 10,
-                               ),
-                               itemCount: data.modelData!.data!.length),
-                         ):Center(
-                           child: Text("No offers"),
-                         );
+                        return data.modelData!.data!.isNotEmpty
+                            ? SizedBox(
+                                height: 220,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, i) {
+                                      return DealCard(
+                                        width: 161,
+                                        smallBox: true,
+                                        modelData: data.modelData!.data![i]!,
+                                        type: StorageKeys.LATEST_OFFERS,
+                                      );
+                                    },
+                                    separatorBuilder: (context, i) => SizedBox(
+                                          width: 10,
+                                        ),
+                                    itemCount: data.modelData!.data!.length),
+                              )
+                            : Center(
+                                child: Text(LocaleKeys.no_offers.tr()),
+                              );
                       },
                     ),
                     SizedBox(
@@ -267,16 +297,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Featured Deals",
+                          LocaleKeys.featured_deals.tr(),
                           style: FontStyles.PoppinsStyle(14, Colors.black,
                               fontWeight: FontWeight.w500),
                         ),
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Scaffold(body: OffersScreen(heading: "Featured Deals",),)));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => Scaffold(
+                                          body: OffersScreen(
+                                            heading: "Featured Deals",
+                                          ),
+                                        )));
                           },
                           child: Text(
-                            "View All",
+                            LocaleKeys.view_all.tr(),
                             style: FontStyles.PoppinsStyle(
                                 12, Color(ColorCodes.GOLDEN_COLOR),
                                 fontWeight: FontWeight.w600),
@@ -285,8 +322,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Consumer<FeaturedOffersProvider>(
-                      builder: (context,data,_){
-                        if(data.state == StorageKeys.STATE_LOADING && data.modelData==null){
+                      builder: (context, data, _) {
+                        if (data.state == StorageKeys.STATE_LOADING &&
+                            data.modelData == null) {
                           return SizedBox(
                             height: 220,
                             child: ListView.separated(
@@ -297,33 +335,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                                 separatorBuilder: (context, i) => SizedBox(
-                                  width: 10,
-                                ),
+                                      width: 10,
+                                    ),
                                 itemCount: 4),
                           );
                         }
-                        if(data.state == StorageKeys.STATE_FINISHED && data.modelData==null){
+                        if (data.state == StorageKeys.STATE_FINISHED &&
+                            data.modelData == null) {
                           return Center(
-                            child: Text("No Offers"),
+                            child: Text(LocaleKeys.no_offers.tr()),
                           );
                         }
-                        return data.modelData!.data!.isNotEmpty?SizedBox(
-                          height: 220,
-                          child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, i) {
-                                return DealCard(
-                                  width: 161,
-                                  smallBox: true,
-                                  modelData: data.modelData!.data![i]!,
-                                  type: StorageKeys.FEATURED_OFFERS,
-                                );
-                              },
-                              separatorBuilder: (context, i) => SizedBox(
-                                width: 10,
-                              ),
-                              itemCount: data.modelData!.data!.length),
-                        ):Center(child: Text("No offers"));
+                        return data.modelData!.data!.isNotEmpty
+                            ? SizedBox(
+                                height: 220,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, i) {
+                                      return DealCard(
+                                        width: 161,
+                                        smallBox: true,
+                                        modelData: data.modelData!.data![i]!,
+                                        type: StorageKeys.FEATURED_OFFERS,
+                                      );
+                                    },
+                                    separatorBuilder: (context, i) => SizedBox(
+                                          width: 10,
+                                        ),
+                                    itemCount: data.modelData!.data!.length),
+                              )
+                            : Center(child: Text(LocaleKeys.no_offers.tr()));
                       },
                     )
                   ],
@@ -338,89 +379,93 @@ class _HomeScreenState extends State<HomeScreen> {
 
   discountSlider() {
     return Consumer<OffersSliderProvider>(
-      builder: (context,data,_){
-        if(data.modelData == null){
-         // print("null data");
+      builder: (context, data, _) {
+        if (data.modelData == null) {
           return sliderImageShimmer();
         }
         return Container(
-            height: 230,
-            child: Column(
-              children: [
-                Expanded(
-                  child: CarouselSlider.builder(
-                    itemCount: data.modelData!.data!.length,
-                    options: CarouselOptions(
-                        aspectRatio: 2.5,
-                        enlargeCenterPage: true,
-                        viewportFraction: 1,
-                        scrollDirection: Axis.horizontal,
-                        autoPlay: true,
-                        onPageChanged: (index, val) {
-                          //print("Index $index");
-                          setState(() {
-                            currentPos = index;
-                          });
-                        }),
-                    itemBuilder: (context, index, h) {
-                      return sliderImageContainer(data.modelData!.data![index]!);
-                    },
-                  ),
+          height: 230,
+          child: Column(
+            children: [
+              Expanded(
+                child: CarouselSlider.builder(
+                  itemCount: data.modelData!.data!.length,
+                  options: CarouselOptions(
+                      aspectRatio: 2.5,
+                      enlargeCenterPage: true,
+                      viewportFraction: 1,
+                      scrollDirection: Axis.horizontal,
+                      autoPlay: true,
+                      onPageChanged: (index, val) {
+                        setState(() {
+                          currentPos = index;
+                        });
+                      }),
+                  itemBuilder: (context, index, h) {
+                    return sliderImageContainer(data.modelData!.data![index]!);
+                  },
                 ),
-                data.modelData!.data!.isNotEmpty? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(data.modelData!.data!.length, (index) {
-                      return Container(
-                        width: 8.0,
-                        height: 8.0,
-                        margin:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: currentPos == index
-                              ? Color(ColorCodes.GOLDEN_COLOR)
-                              : Color(ColorCodes.LITE_GOLDEN_COLOR),
-                        ),
-                      );
-                    })):Text('No Offer discounts found')
-              ],
-            ));
+              ),
+              data.modelData!.data!.isNotEmpty
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        data.modelData!.data!.length,
+                        (index) {
+                          return Container(
+                            width: 8.0,
+                            height: 8.0,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 2.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: currentPos == index
+                                  ? Color(ColorCodes.GOLDEN_COLOR)
+                                  : Color(ColorCodes.LITE_GOLDEN_COLOR),
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  : Text(LocaleKeys.no_offer_discount_found.tr())
+            ],
+          ),
+        );
       },
     );
-
-
   }
 
   Widget sliderImageContainer(OffersSliderModelData data) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, CupertinoPageRoute(builder: (_)=>OfferDetailsScreen(offerId: data.offerId.toString())));
+      onTap: () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (_) =>
+                    OfferDetailsScreen(offerId: data.offerId.toString())));
       },
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            // image: data.imageFilename!=null? DecorationImage(
-            //     image: CachedNetworkImageProvider(data.imageFilename!), fit: BoxFit.cover
-            // ): DecorationImage(
-            //   image: AssetImage(Images.NO_IMAGE_PLACEHOLDER),
-            // )
+          borderRadius: BorderRadius.circular(10),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: CachedNetworkImage(
             height: 230,
             width: double.maxFinite,
-            imageUrl: data.imageFilename??Constants.NOT_FOUND_IMAGE_URL,fit: BoxFit.cover,
-            errorWidget: (context,s,dd){
-            return Image.asset(Images.NO_IMAGE);
-          },),
+            imageUrl: data.imageFilename ?? Constants.NOT_FOUND_IMAGE_URL,
+            fit: BoxFit.cover,
+            errorWidget: (context, s, dd) {
+              return Image.asset(Images.NO_IMAGE);
+            },
+          ),
         ),
       ),
     );
   }
 
-  sliderImageShimmer(){
+  sliderImageShimmer() {
     return SizedBox(
       height: 150,
       width: 500,
@@ -432,107 +477,127 @@ class _HomeScreenState extends State<HomeScreen> {
           width: double.maxFinite,
           decoration: BoxDecoration(
             color: Colors.black,
-              borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10),
           ),
-
         ),
       ),
     );
   }
 
   appBar() {
-    return
-      AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: GestureDetector(
-            onTap: () {
-              Scaffold.of(context).openDrawer();
-            },
-            child: Container(
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      leading: GestureDetector(
+          onTap: () {
+            Scaffold.of(context).openDrawer();
+          },
+          child: Container(
               height: 30,
+              width: 20,
+              //color: Colors.red,
+              child: Center(
+                  child: SvgPicture.asset(
+                Images.DRAWER_ICON,
+                height: 30,
                 width: 20,
-                //color: Colors.red,
-                child: Center(child: SvgPicture.asset(Images.DRAWER_ICON,height: 30,width: 20,)))),
-        leadingWidth: 26,
-        title: Container(
-            height: 59,
-            width: 59,
-            child: Image.asset(
-              Images.LOGO,
-            ),
-          ),
-        centerTitle: true,
-        actions: [
-     ! Provider.of<UserModelProvider>(context,listen: false).loggedIn?
-
-     Provider.of<UserModelProvider>(context,listen: false).accessType!="guest"?
-     IconButton(
-        padding: EdgeInsets.zero,
-        alignment: Alignment.centerRight,
-        tooltip: "Sign Up/Login",
-          icon: Column(
-            children: [
-              ImageIcon(AssetImage(Images.LOGIN_ICON),color:Color( ColorCodes.GOLDEN_COLOR),size: 22,),
-              Text("Login",style: TextStyle(
-                  color: Color(ColorCodes.GOLDEN_COLOR),
-                  fontSize: 10
-              ),)
-            ],
-          ),
-        onPressed: (){
-          Navigator.push(context, CupertinoPageRoute(builder: (context)=>PhoneInputScreen()));
-        },
-      ):Text("")
-
-      // ListTile(
-      //   onTap: () {
-      //     Navigator.push(
-      //         context,
-      //         CupertinoPageRoute(
-      //             builder: (context) => DigitalCardScreen()));
-      //   },
-      //   leading: Image.asset(
-      //     Images.CARD_ICON,
-      //     height: 20,
-      //   ),
-      //   title: Text(
-      //     "Digital card",
-      //     style: style,
-      //   ),
-      // )
-      // GestureDetector(
-      //           onTap: (){
-      //
-      //           },
-      //           child:  Text("Sign Up/Login",
-      //               style: FontStyles.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
-      //                   fontWeight: FontWeight.bold)),
-      //         )
-
-          :
-      IconButton(
-        padding: EdgeInsets.zero,
-        alignment: Alignment.centerRight,
-        tooltip: "Digital Card",
-        icon: Column(
-          children: [
-            ImageIcon(AssetImage( Images.CARD_ICON,),color:Color( ColorCodes.GOLDEN_COLOR),size: 22,),
-            Text("Card",style: TextStyle(
-              color: Color(ColorCodes.GOLDEN_COLOR),
-              fontSize: 10
-            ),)
-          ],
+              )))),
+      leadingWidth: 26,
+      title: Container(
+        height: 59,
+        width: 59,
+        child: Image.asset(
+          Images.LOGO,
         ),
-        onPressed: (){
-          Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => DigitalCardScreen()));
-        },
-      )
-        ],
-      );
+      ),
+      centerTitle: true,
+      actions: [
+        !Provider.of<UserModelProvider>(context, listen: false).loggedIn
+            ? Provider.of<UserModelProvider>(context, listen: false)
+                        .accessType !=
+                    "guest"
+                ? IconButton(
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.centerRight,
+                    tooltip: LocaleKeys.login.tr(),
+                    icon: Column(
+                      children: [
+                        ImageIcon(
+                          AssetImage(Images.LOGIN_ICON),
+                          color: Color(ColorCodes.GOLDEN_COLOR),
+                          size: 22,
+                        ),
+                        Text(
+                          LocaleKeys.login.tr(),
+                          style: TextStyle(
+                              color: Color(ColorCodes.GOLDEN_COLOR),
+                              fontSize: 10),
+                        )
+                      ],
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => PhoneInputScreen()));
+                    },
+                  )
+                : Text("")
+
+            // ListTile(
+            //   onTap: () {
+            //     Navigator.push(
+            //         context,
+            //         CupertinoPageRoute(
+            //             builder: (context) => DigitalCardScreen()));
+            //   },
+            //   leading: Image.asset(
+            //     Images.CARD_ICON,
+            //     height: 20,
+            //   ),
+            //   title: Text(
+            //     "Digital card",
+            //     style: style,
+            //   ),
+            // )
+            // GestureDetector(
+            //           onTap: (){
+            //
+            //           },
+            //           child:  Text("Sign Up/Login",
+            //               style: FontStyles.PoppinsStyle(11, Color(ColorCodes.GOLDEN_COLOR),
+            //                   fontWeight: FontWeight.bold)),
+            //         )
+
+            : IconButton(
+                padding: EdgeInsets.zero,
+                alignment: Alignment.centerRight,
+                tooltip: LocaleKeys.digital_card.tr(),
+                icon: Column(
+                  children: [
+                    ImageIcon(
+                      AssetImage(
+                        Images.CARD_ICON,
+                      ),
+                      color: Color(ColorCodes.GOLDEN_COLOR),
+                      size: 22,
+                    ),
+                    Text(
+                      LocaleKeys.card.tr(),
+                      style: TextStyle(
+                          color: Color(ColorCodes.GOLDEN_COLOR), fontSize: 10),
+                    )
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => DigitalCardScreen()));
+                },
+              )
+      ],
+    );
   }
 
   creditCard() {

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,6 +7,7 @@ import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
 import 'package:happiness_club/modules/announcements/Model/announcement_model.dart';
 import 'package:happiness_club/modules/announcements/controller/announcement_controller.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
@@ -62,7 +64,7 @@ class _AnnouncementDetailsScreenState extends State<AnnouncementDetailsScreen> {
             child: SvgPicture.asset(Images.BACK_BUTTON,height: 15,),
           ),
         ),
-        title: Text("Announcements Detail",style: FontStyles.PoppinsStyle(17, Colors.black,
+        title: Text(LocaleKeys.announcement_detail.tr(),style: FontStyles.PoppinsStyle(17, Colors.black,
             fontWeight: FontWeight.w600),),
       ),
       body: Container(
@@ -95,7 +97,7 @@ class _AnnouncementDetailsScreenState extends State<AnnouncementDetailsScreen> {
              ),
               htmlData!=null? Html(
                 data: htmlData,
-              ):Center(child: Text("No details found"))
+              ):Center(child: Text(LocaleKeys.no_details_found.tr()))
             ],
           ): Center(
             child: getLoader(),

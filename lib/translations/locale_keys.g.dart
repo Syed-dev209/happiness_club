@@ -121,5 +121,13 @@ abstract class  LocaleKeys {
   static const recent_searches = 'recent_searches';
   static const loading = 'loading';
   static const no_internet = 'no_internet';
+  static const you_must_login_to_post_review = 'you_must_login_to_post_review';
+  static const you_must_login_to_mark_fav = 'you_must_login_to_mark_fav';
+  static const companies = 'companies';
+  static const enter_valid_email = 'enter_valid_email';
+  static const enter_valid_number = 'enter_valid_number';
+  static const language = 'language';
+  static const english = 'english';
+  static const arabic = 'arabic';
 
 }

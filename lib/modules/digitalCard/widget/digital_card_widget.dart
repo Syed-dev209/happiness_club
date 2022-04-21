@@ -14,6 +14,7 @@ class DigitalCardWidget extends StatelessWidget {
       height: 217,
       width: double.maxFinite,
       decoration: BoxDecoration(
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             offset: Offset(0,1),
@@ -25,7 +26,7 @@ class DigitalCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           image: MemoryImage(imageBlob),
-          fit: BoxFit.fill
+          //fit: BoxFit.fill
           )
       ),
     );

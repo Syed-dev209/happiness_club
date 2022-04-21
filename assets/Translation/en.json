@@ -118,5 +118,13 @@
   "no_prize_history_found": "No Prize history found",
   "recent_searches": "Recent Searches",
   "loading": "Loading...",
-  "no_internet": "No Internet connection"
+  "no_internet": "No Internet connection",
+  "you_must_login_to_post_review": "You must Log in to post a review.",
+  "you_must_login_to_mark_fav": "You must login to mark favorite.",
+  "companies": "Companies",
+  "enter_valid_email": "Enter a valid email",
+  "enter_valid_number": "Please enter a valid mobile number",
+  "language": "Language",
+  "english": "English",
+  "arabic": "العربية"
 }

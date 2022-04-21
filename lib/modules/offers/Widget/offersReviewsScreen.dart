@@ -276,7 +276,7 @@ class _OffersReviewState extends State<OffersReview> with AutomaticKeepAliveClie
                             }
                             else{
                               Navigator.pop(context);
-                              showToast(context, "You must Log in to post a review.");
+                              showToast(context, LocaleKeys.you_must_login_to_post_review.tr());
                             }
                           },
                         child: Text(LocaleKeys.submit_review.tr())

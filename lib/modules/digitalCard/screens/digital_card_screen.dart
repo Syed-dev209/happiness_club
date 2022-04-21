@@ -35,6 +35,8 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
         setState(() {
           for(int i=0;i< value.data!.fazaaCard!.length;i++){
             blobList.add(base64.decode(value.data!.fazaaCard![i]!.split(',').last));
+          }
+          for(int i=0;i< value.data!.happinessCard!.length;i++){
             blobList.add(base64.decode(value.data!.happinessCard![i]!.split(',').last));
           }
           loaded = true;
@@ -69,47 +71,31 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: CustomAppBar(
                   title: LocaleKeys.digital_card.tr(),
+                  actions: [
+                    SizedBox(
+                      width: 50,
+                      child: TextButton(
+                          onPressed: (){
+                        Navigator.push(context, CupertinoPageRoute(builder: (context)=> HelpCustomerScreen() ));
+                      }, child: Text(LocaleKeys.report_card.tr(),
+                        style: FontStyles.PoppinsStyle(8, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      )),
+                    )
+                  ],
                 ),
               ),
              loaded?
              blobList.isNotEmpty?
             Expanded(
-                child: Stack(
-                  children: [
-                    ListView.separated(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        itemBuilder: (context, i) => DigitalCardWidget(imageBlob: blobList[i],),
-                        separatorBuilder: (context, i) => SizedBox(
-                              height: 15,
-                            ),
-                        itemCount: blobList.length),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15,left: 15,right: 15),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          height: 58,
-                          width: double.maxFinite,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Color(ColorCodes.GOLDEN_COLOR),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)
-                              )
-                            ),
-                            onPressed: () {
-                              Navigator.push(context, CupertinoPageRoute(builder: (context)=>HelpCustomerScreen()));
-                            },
-                            child: Text(LocaleKeys.report_card.tr(),
-                            style: FontStyles.PoppinsStyle(16, Colors.white,fontWeight: FontWeight.w600),
-                           )
-                          ),
-                        )
-                      ),
-                    )
-                  ],
-                ),
+                child: ListView.separated(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    itemBuilder: (context, i) => DigitalCardWidget(imageBlob: blobList[i],),
+                    separatorBuilder: (context, i) => SizedBox(
+                          height: 15,
+                        ),
+                    itemCount: blobList.length),
               ):
             Expanded(child: Center(child: Text(LocaleKeys.no_card_found.tr())))
                 :

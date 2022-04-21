@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:happiness_club/modules/auth/Screens/otp_screen.dart';
 import 'package:happiness_club/modules/auth/widgets/header_login_signup.dart';
 import 'package:happiness_club/modules/auth/widgets/social_login_footer.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
 import 'package:happiness_club/widgets/custom_text_field.dart';
 
@@ -84,7 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 validator:
                     MultiValidator([
                       RequiredValidator(errorText: "Phone Number is required*"),
-                      PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: "Please enter a valid mobile number")
+                      PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: LocaleKeys.enter_valid_number.tr())
                     ])
               ),
               SizedBox(

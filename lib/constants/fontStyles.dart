@@ -11,9 +11,3 @@ class FontStyles {
     );
   }
 }
-
-// GoogleFonts.poppins(
-//       fontSize: fontSize,
-//       fontWeight: fontWeight,
-//       color: colors
-//     );

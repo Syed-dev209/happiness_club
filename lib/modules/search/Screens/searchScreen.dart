@@ -177,7 +177,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     //     maxWidth: 25,
                     //     minHeight: 25,
                     //     minWidth: 25),
-                    hintText: "Search",
+                    hintText: LocaleKeys.search.tr(),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(15))),

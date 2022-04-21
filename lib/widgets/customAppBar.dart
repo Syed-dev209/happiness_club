@@ -5,7 +5,8 @@ import 'package:happiness_club/constants/images.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
-  CustomAppBar({required this.title});
+  List<Widget>? actions;
+  CustomAppBar({required this.title, this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   fontWeight: FontWeight.w600),
             ),
       centerTitle: true,
+      actions: actions,
     );
 
     //   Container(

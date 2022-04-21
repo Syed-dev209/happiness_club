@@ -33,6 +33,8 @@ class StorageKeys {
 
   static const DC_BLOB ="digitalcardblob";
   static const ANNOUNCEMENTS ="announcements";
+  static const LANGUAGE ="language";
+
 }
 
 

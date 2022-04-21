@@ -173,7 +173,7 @@ class _OffersSummaryState extends State<OffersSummary> {
                       });
                     }
                     else{
-                      showToast(context, "You must login to mark favorite.");
+                      showToast(context, LocaleKeys.you_must_login_to_mark_fav.tr());
                     }
                   },
                   child: Container(

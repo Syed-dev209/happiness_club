@@ -118,5 +118,13 @@
    "winners_of_lucky_draw": "الفائزين بجوائز السعادة",
    "wrong_password": "كلمة مرور خاطئة.  حاول مرة أخري.",
    "yes": "نعم",
-   "your_review": "تعليقك"
+   "your_review": "تعليقك",
+   "you_must_login_to_post_review": " لإضافة تعليق يتوجب عليك تسجيل الدخول",
+   "you_must_login_to_mark_fav": "للاضافة إلى المفضلة يتوجب عليك تسجيل الدخول.",
+   "companies": "المؤسسات",
+   "enter_valid_email": "الرجاء كتاب البريد الإلكتروني بشكل صحيح.",
+   "enter_valid_number": "الرجاء كتابة رقم الهاتف بشكل صحيح.",
+   "language": "لغة",
+   "english": "English",
+   "arabic": "العربية"
 }

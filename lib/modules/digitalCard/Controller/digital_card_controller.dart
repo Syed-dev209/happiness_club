@@ -21,7 +21,7 @@ Future<DigitalCardModel?> getDigitalCards(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     var response = storage.readDataFromStorage(StorageKeys.DC_BLOB);
-    if(response!=""){
+    if(response==""){
      return DigitalCardModel.fromJson(response);
    }
    else {

@@ -125,7 +125,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         controller: phoneNumber,
         validator: MultiValidator([
           RequiredValidator(errorText: LocaleKeys.phone_num_required.tr()),
-          PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: "Please enter a valid mobile number")
+          PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: LocaleKeys.enter_valid_number.tr())
         ]),
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(

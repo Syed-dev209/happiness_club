@@ -100,7 +100,7 @@ class _InputCustomerInfoState extends State<InputCustomerInfo> {
                   validator:
                   MultiValidator([
                     RequiredValidator(errorText: LocaleKeys.phone_num_required.tr()),
-                    PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: "Please enter a valid mobile number")
+                    PatternValidator(r'(^(?:[+0]9)?[0-9]{10,12}$)', errorText: LocaleKeys.enter_valid_number.tr())
                   ])
               ),
               SizedBox(
@@ -113,7 +113,7 @@ class _InputCustomerInfoState extends State<InputCustomerInfo> {
                   validator:
                   MultiValidator([
                     RequiredValidator(errorText: LocaleKeys.email_required.tr()),
-                    EmailValidator(errorText: "Please enter a correct email address")
+                    EmailValidator(errorText: LocaleKeys.enter_valid_email.tr())
                   ])
               ),
               SizedBox(

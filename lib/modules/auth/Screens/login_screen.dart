@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/modules/auth/widgets/header_login_signup.dart';
 import 'package:happiness_club/modules/auth/widgets/social_login_footer.dart';
+import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
 import 'package:happiness_club/widgets/custom_text_field.dart';
 
@@ -55,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 validator:
                   MultiValidator([
-                    RequiredValidator(errorText: "Email required*"),
+                    RequiredValidator(errorText: LocaleKeys.email_required.tr()),
                     EmailValidator(errorText: "Please enter a correct email address")
                   ]),
               ),

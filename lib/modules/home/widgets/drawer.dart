@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/images.dart';
@@ -20,8 +21,10 @@ import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
 import 'package:happiness_club/modules/favourites/Screen/favourites_screen.dart';
 import 'package:happiness_club/modules/home/controller/qr_controller.dart';
+import 'package:happiness_club/modules/home/widgets/custom_switch.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
 import 'package:happiness_club/modules/termsAndPrivacy/terms_and_privacy_screen.dart';
+import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -31,10 +34,16 @@ import 'dart:io' show Platform;
 
 import '../../prizeHistory/screens/prize_history_screen.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
   final style =
   FontStyles.PoppinsStyle(14.5, Color(0xff7C86A2),
       fontWeight: FontWeight.w500);
+  int language = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +66,15 @@ class CustomDrawer extends StatelessWidget {
 
     if(user.accessType=="full"){
       fullAccess = true;
+    }
+
+    var check = StorageServices().readDataFromStorage(StorageKeys.LANGUAGE);
+    if(check=="")
+    {
+      language=0;
+    }
+    else{
+      language = check;
     }
 
     return Drawer(
@@ -355,23 +373,35 @@ class CustomDrawer extends StatelessWidget {
                       : SizedBox.shrink(),
 
                   ListTile(
-                    onTap: () {
-                     String selectedLocale = context.deviceLocale.languageCode;
-                     print(selectedLocale);
-                     if(selectedLocale != 'en'){
-                       context.setLocale(Locale('ar'));
-                     }
-                     else{
-                       context.setLocale(Locale('en'));
-                     }
-                     Navigator.pop(context);
-                    },
-                    leading: Icon(
-                      Icons.logout,
-                      color: Color(ColorCodes.GOLDEN_COLOR),
+
+                     leading: Icon(Icons.language,color: Color(ColorCodes.GOLDEN_COLOR),),
+                      title:Text(LocaleKeys.language.tr(),style: style,),
+                    trailing: SizedBox(
+                      width: 120,
+                      child: AnimatedToggle(
+                        initialPosition: language==0?true:false,
+                        values: [LocaleKeys.english.tr(), LocaleKeys.arabic.tr()],
+                        onToggleCallback: (value) {
+                          print(value);
+                          StorageServices().writeDataToStorage(StorageKeys.LANGUAGE, value);
+                          if(value==0){
+                            context.setLocale(Locale('en'));
+                          }
+                          else{
+                            context.setLocale(Locale('ar'));
+                          }
+                          setState(() {
+                            language = value;
+                          });
+                        },
+                        buttonColor: Color(ColorCodes.GOLDEN_COLOR),
+                        backgroundColor: const Color(0xFFB5C1CC),
+                        textColor:  Colors.white,
+                      ),
                     ),
-                    title: Text("Change language", style: style),
-                  )
+
+
+                  ),
                 ],
               ),
             ),
@@ -380,7 +410,7 @@ class CustomDrawer extends StatelessWidget {
               padding: const EdgeInsets.only(left: 25),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(Platform.isAndroid? "Version 16.1.0(4)":"3.3.0(1)",style: TextStyle(
+                child: Text(Platform.isAndroid? "Version 16.1.0(4)":"Version 3.3.0(1)",style: TextStyle(
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w500,
                   fontFamily: "Poppins",

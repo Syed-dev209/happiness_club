@@ -41,7 +41,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     else {
       Future.delayed(Duration(seconds: 2)).then((value) {
         controller!.add(null);
-        showToast(context, "You must login to see favorites");
+        showToast(context, LocaleKeys.you_must_login_to_mark_fav.tr());
         return null;
       });
     }

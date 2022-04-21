@@ -134,7 +134,15 @@ class CodegenLoader extends AssetLoader{
   "no_prize_history_found": "No Prize history found",
   "recent_searches": "Recent Searches",
   "loading": "Loading...",
-  "no_internet": "No Internet connection"
+  "no_internet": "No Internet connection",
+  "you_must_login_to_post_review": "You must Log in to post a review.",
+  "you_must_login_to_mark_fav": "You must login to mark favorite.",
+  "companies": "Companies",
+  "enter_valid_email": "Enter a valid email",
+  "enter_valid_number": "Please enter a valid mobile number",
+  "language": "Language",
+  "english": "English",
+  "arabic": "العربية"
 };
 static const Map<String,dynamic> ar = {
   "about_us": "معلومات عنا",
@@ -256,7 +264,15 @@ static const Map<String,dynamic> ar = {
   "winners_of_lucky_draw": "الفائزين بجوائز السعادة",
   "wrong_password": "كلمة مرور خاطئة.  حاول مرة أخري.",
   "yes": "نعم",
-  "your_review": "تعليقك"
+  "your_review": "تعليقك",
+  "you_must_login_to_post_review": " لإضافة تعليق يتوجب عليك تسجيل الدخول",
+  "you_must_login_to_mark_fav": "للاضافة إلى المفضلة يتوجب عليك تسجيل الدخول.",
+  "companies": "المؤسسات",
+  "enter_valid_email": "الرجاء كتاب البريد الإلكتروني بشكل صحيح.",
+  "enter_valid_number": "الرجاء كتابة رقم الهاتف بشكل صحيح.",
+  "language": "لغة",
+  "english": "English",
+  "arabic": "العربية"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
 }

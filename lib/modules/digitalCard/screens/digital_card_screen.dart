@@ -23,26 +23,38 @@ class DigitalCardScreen extends StatefulWidget {
 }
 
 class _DigitalCardScreenState extends State<DigitalCardScreen> {
-
   Uint8List? imageBlob;
-  List<Uint8List> blobList = [];
+  List<Widget> blobList = [];
+  List<Uint8List> fazaCard = [];
+  List<Uint8List> hpcCard = [];
+
   bool loaded = false;
 
-  loadData(){
-    getDigitalCards(context).then((DigitalCardModel? value) {
+  loadData() {
+    getDigitalCards(context).then((DigitalCardsModel? value) {
       //print(value);
-      if(value!=null){
+      if (value != null) {
         setState(() {
-          for(int i=0;i< value.data!.fazaaCard!.length;i++){
-            blobList.add(base64.decode(value.data!.fazaaCard![i]!.split(',').last));
+          for (int i = 0; i < value.data.fazaaCard.length; i++) {
+            // fazaCard.add(base64.decode(value.data.fazaaCard[i].front.split(',').last));
+            // fazaCard.add(base64.decode(value.data.fazaaCard[i].back.split(',').last));
+            blobList.add(DigitalCardWidget(
+                front: base64
+                    .decode(value.data.fazaaCard[i].front.split(',').last),
+                back: base64
+                    .decode(value.data.fazaaCard[i].back.split(',').last)));
           }
-          for(int i=0;i< value.data!.happinessCard!.length;i++){
-            blobList.add(base64.decode(value.data!.happinessCard![i]!.split(',').last));
+
+          for (int i = 0; i < value.data.happinessCard.length; i++) {
+            blobList.add(DigitalCardWidget(
+                front: base64
+                    .decode(value.data.happinessCard[i].front.split(',').last),
+                back: base64
+                    .decode(value.data.happinessCard[i].back.split(',').last)));
           }
           loaded = true;
         });
-      }
-      else{
+      } else {
         setState(() {
           loaded = true;
         });
@@ -75,35 +87,44 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                     SizedBox(
                       width: 50,
                       child: TextButton(
-                          onPressed: (){
-                        Navigator.push(context, CupertinoPageRoute(builder: (context)=> HelpCustomerScreen() ));
-                      }, child: Text(LocaleKeys.report_card.tr(),
-                        style: FontStyles.PoppinsStyle(8, Color(ColorCodes.GOLDEN_COLOR),fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      )),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) =>
+                                        HelpCustomerScreen()));
+                          },
+                          child: Text(
+                            LocaleKeys.report_card.tr(),
+                            style: FontStyles.PoppinsStyle(
+                                8, Color(ColorCodes.GOLDEN_COLOR),
+                                fontWeight: FontWeight.w600),
+                            textAlign: TextAlign.center,
+                          )),
                     )
                   ],
                 ),
               ),
-             loaded?
-             blobList.isNotEmpty?
-            Expanded(
-                child: ListView.separated(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    itemBuilder: (context, i) => DigitalCardWidget(imageBlob: blobList[i],),
-                    separatorBuilder: (context, i) => SizedBox(
-                          height: 15,
-                        ),
-                    itemCount: blobList.length),
-              ):
-            Expanded(child: Center(child: Text(LocaleKeys.no_card_found.tr())))
-                :
-             Expanded(
-                child: Center(
-                 child: getLoader(),
-             ),
-              )
+              loaded
+                  ? blobList.isNotEmpty
+                      ? Expanded(
+                          child: ListView.separated(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              itemBuilder: (context, i) => blobList[i],
+                              separatorBuilder: (context, i) => SizedBox(
+                                    height: 15,
+                                  ),
+                              itemCount: blobList.length),
+                        )
+                      : Expanded(
+                          child: Center(
+                              child: Text(LocaleKeys.no_card_found.tr())))
+                  : Expanded(
+                      child: Center(
+                        child: getLoader(),
+                      ),
+                    )
             ],
           ),
         ),

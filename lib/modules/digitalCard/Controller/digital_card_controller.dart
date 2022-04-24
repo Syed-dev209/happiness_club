@@ -17,12 +17,12 @@ var dio = Dio(BaseOptions(
 ));
 var storage = StorageServices();
 
-Future<DigitalCardModel?> getDigitalCards(context)async{
+Future<DigitalCardsModel?> getDigitalCards(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     var response = storage.readDataFromStorage(StorageKeys.DC_BLOB);
     if(response==""){
-     return DigitalCardModel.fromJson(response);
+     return DigitalCardsModel.fromJson(response);
    }
    else {
       if (check) {
@@ -35,8 +35,7 @@ Future<DigitalCardModel?> getDigitalCards(context)async{
             "customer_id": user
           });
           if (response.statusCode == 200) {
-            var imageBlob = response.data["data"];
-            DigitalCardModel model = DigitalCardModel.fromJson(response.data);
+            DigitalCardsModel model = DigitalCardsModel.fromJson(response.data);
             storage.writeDataToStorage(StorageKeys.DC_BLOB, model.toJson());
             return model;
           }

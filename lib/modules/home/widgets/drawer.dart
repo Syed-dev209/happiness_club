@@ -50,9 +50,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
     initializeDateFormatting();
     bool fullAccess = false;
     final user = Provider.of<UserModelProvider>(context, listen: false);
-    print(user.company);
-    print(user.expDate);
-    //print(DateTime.now().toString());
     var formatter = DateFormat("MM/yy", "en");
     var date;
     if (user.loggedIn && user.expDate!="-") {
@@ -271,7 +268,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 CupertinoPageRoute(
                                     builder: (_) => CompaniesScreen()));
                           },
-                          title: Text("Companies", style: style),
+                          title: Text(LocaleKeys.companies.tr(), style: style),
                         )
                       : SizedBox.shrink(),
 
@@ -336,7 +333,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           context,
                           CupertinoPageRoute(
                               builder: (_) => TermsAndPrivacyScreen(
-                                  type: Constants.TERMS)));
+                                  type: LocaleKeys.terms_and_condition.tr())));
                     },
                     leading: Image.asset(Images.TERMS, height: 20),
                     title: Text(LocaleKeys.terms_and_condition.tr(), style: style),
@@ -347,7 +344,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           context,
                           CupertinoPageRoute(
                               builder: (_) => TermsAndPrivacyScreen(
-                                  type: Constants.PRIVACY)));
+                                  type: LocaleKeys.privacy_policy.tr())));
                     },
                     leading: Image.asset(Images.PRIVACY, height: 20),
                     title: Text(LocaleKeys.privacy_policy.tr(), style: style),
@@ -361,8 +358,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 .logOutUser();
                             Navigator.pop(context);
                             showToast(context, LocaleKeys.user_log_out.tr());
-                            // Navigator.push(context,
-                            //     CupertinoPageRoute(builder: (_) => TermsAndPrivacyScreen(type: Constants.PRIVACY)));
+
                           },
                           leading: Icon(
                             Icons.logout,

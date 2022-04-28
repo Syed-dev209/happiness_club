@@ -38,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var access = storage.readDataFromStorage(StorageKeys.USER_ACCESS);
     var hcId = storage.readDataFromStorage(StorageKeys.USER_HC_ID);
     var hcCompId = storage.readDataFromStorage(StorageKeys.USER_HC_COMPANY_ID);
+    var lang = StorageServices().readDataFromStorage(StorageKeys.LANGUAGE);
     if(response!="" && uid!="" && name!=""){
       Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
       Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);
@@ -48,10 +49,12 @@ class _SplashScreenState extends State<SplashScreen> {
       Provider.of<UserModelProvider>(context,listen: false).setHcId(hcId);
       Provider.of<UserModelProvider>(context,listen: false).setHcCompanyId(hcCompId);
     }
-    // await getOfferCategories(context);
-    // await getSliderImages(context);
-    // getMostViewedOffers(context);
-    // getLatestOffers(context);
+    if(lang==""){
+      Provider.of<UserModelProvider>(context,listen: false).setLanguage(0);
+    }
+    else{
+      Provider.of<UserModelProvider>(context,listen: false).setLanguage(lang);
+    }
      await LocationService().getCurrentLocation(context);
     await getDashboardData(context);
 

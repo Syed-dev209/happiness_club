@@ -13,6 +13,7 @@ class UserModelProvider extends ChangeNotifier{
   String hcId="";
   String hcCompanyId="";
   LatLng? currentLocation;
+  int? language;
   addCustomerId(String id){
     customerId = id;
   }
@@ -43,7 +44,9 @@ class UserModelProvider extends ChangeNotifier{
   setHcCompanyId(String id){
     hcCompanyId = id;
   }
-
+  setLanguage(int lang){
+    language= lang;
+  }
   logOutUser(){
     StorageServices()..clearAllData();
     loggedIn = false;

@@ -1,54 +1,548 @@
+import 'dart:developer';
+
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/services/navigatorKey.dart';
+import 'package:provider/provider.dart';
+
 class APIS {
   //https://hpcapi.softlinks.ae //test
   //https://hpcapi.happinessclub.ae //live
-  static const String BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
-  static const String SLIDER_IMAGED = BASE_URL + "offers/slider";
-  static const String DASHBOARD_DATA = BASE_URL + "dashboard";
-  static const String OFFER_CATEGORIES = BASE_URL + "offers/categories";
-  static const String MOST_VIEWED_OFFERS = BASE_URL + "offers/most-viewed";
-  static const String LATEST_OFFERS = BASE_URL + "offers/latest";
-  static const String FEATURED_OFFERS = BASE_URL + "offers/featured";
-  static const String NEARBY_OFFERS =
-      BASE_URL + "offers/nearby-all"; // params lat lang
-  static const String NEARBY_MAP_OFFERS =
-      BASE_URL + "offers/nearby-map";
-  static const String OFFER_DETAILS =BASE_URL+"offers/detail"; //param in link
-  static const String OFFER_LOCATION =BASE_URL+"offers/locations"; //param in link
-  static const String OFFER_REVIEWS =BASE_URL+"offers/reviews"; //param in link
-  static const String OFFER_BY_CATEGORY =BASE_URL+"offers/category"; //param in query parameters
-  static const String ABOUT = BASE_URL+"about";
-  static const String PRIVACY = BASE_URL+"privacy";
-  static const String TERMS = BASE_URL+"terms";
-  static const String CONTACT = BASE_URL+"contact";
-  static const String ALL_OFFERS = BASE_URL+"offers/all";
-  static const String COMPANIES = BASE_URL+"companies";
-  static const String COMPANIES_DETAIL = BASE_URL+"company-details";
-  static const String CHAMPIONS = BASE_URL+"champions";
-  static const String LOGIN = BASE_URL+"login";
-  static const String NEWSLETTER = BASE_URL+"newsletters";
-  static const String ADD_REVIEW = BASE_URL+"offers/rating";
-  static const String SCAN_QR = BASE_URL+"event/scan";
-  static const String FAVORITES_LIST = BASE_URL+"favorites/listing";
-  static const String REMOVE_FAVORITES = BASE_URL+"favorites/remove";
-  static const String ADD_TO_FAVORITES = BASE_URL+"favorites/add";
-  static const String VALIDATE_QR = BASE_URL+"event/customer-info";
-  static const String ADD_CUSTOMER = BASE_URL+"event/customer-add";
-  static const String ADD_VIEW = BASE_URL+"offers/add-view";
-  static const String HELP = BASE_URL+"help";
+  APIS() {
+    int lang =
+        Provider.of<UserModelProvider>(GlobalVariable.navState.currentContext!)
+                .language ??
+            0;
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    log(BASE_URL);
+  }
+
+  static String BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+
+  static get SLIDER_IMAGED {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/slider";
+  }
+
+  static get DASHBOARD_DATA {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "dashboard";
+  }
+
+  static get OFFER_CATEGORIES {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/categories";
+  }
+
+  static get MOST_VIEWED_OFFERS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/most-viewed";
+  }
+
+  static get LATEST_OFFERS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/latest";
+  }
+
+  static get FEATURED_OFFERS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/featured";
+  }
+
+  static get NEARBY_OFFERS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/nearby-all";
+  } // params lat lang
+
+  static get NEARBY_MAP_OFFERS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/nearby-map";
+  }
+
+  static get OFFER_DETAILS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/detail";
+  } //param in link
+
+  static get OFFER_LOCATION {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/locations";
+  } //param in link
+
+  static get OFFER_REVIEWS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/reviews";
+  } //param in link
+
+  static get OFFER_BY_CATEGORY {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/category";
+  } //param in query parameters
+
+  static get ABOUT {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "about";
+  }
+
+  static get PRIVACY {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "privacy";
+  }
+
+  static get TERMS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "terms";
+  }
+
+  static get CONTACT {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "contact";
+  }
+
+  static get ALL_OFFERS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/all";
+  }
+
+  static get COMPANIES {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "companies";
+  }
+
+  static get COMPANIES_DETAIL {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "company-details";
+  }
+
+  static get CHAMPIONS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "champions";
+  }
+
+  static get LOGIN {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "login";
+  }
+
+  static get NEWSLETTER {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "newsletters";
+  }
+
+  static get ADD_REVIEW {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/rating";
+  }
+
+  static get SCAN_QR {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "event/scan";
+  }
+
+  static get FAVORITES_LIST {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "favorites/listing";
+  }
+
+  static get REMOVE_FAVORITES {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "favorites/remove";
+  }
+
+  static get ADD_TO_FAVORITES {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "favorites/add";
+  }
+
+  static get VALIDATE_QR {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "event/customer-info";
+  }
+
+  static get ADD_CUSTOMER {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "event/customer-add";
+  }
+
+  static get ADD_VIEW {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/add-view";
+  }
+
+  static get HELP {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "help";
+  }
+
   //static const String DIGITAL_CARD = BASE_URL+"dc";
-  static const String DIGITAL_CARD = BASE_URL+"dc-both-sides";
-  static const String ANNOUNCEMENTS = BASE_URL+"announcements";
-  static const String ANNOUNCEMENT = BASE_URL+"announcement";
-  static const String SEARCH = BASE_URL+"offers/search";
-  static const String REGISTER_TOKEN = BASE_URL+"get-token";
-  static const String UAE_PASS_LOGIN =BASE_URL+"uaepass-login";
-  static const String LUCKY_DRAW_EVENTS =BASE_URL+"event/luckydraw-event-listing";
-  static const String SUBSCRIBE_EVENTS =BASE_URL+"event/luckydraw-event-registration";
-  static const String PRIZE_HISTORY =BASE_URL+"customer/prize-history";
+  static get DIGITAL_CARD {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "dc-both-sides";
+  }
 
+  static get ANNOUNCEMENTS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "announcements";
+  }
 
-  static const String UAE_PASS_URL ="https://happinessclub.ae/m/uaepass";
-  static const Map<String,dynamic> HEADER={
-    "api-key":"KZ85YttM4ZYMD4avjgTWr3QtXnAhk7aF"
+  static get ANNOUNCEMENT {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "announcement";
+  }
+
+  static get SEARCH {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "offers/search";
+  }
+
+  static get REGISTER_TOKEN {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "get-token";
+  }
+
+  static get UAE_PASS_LOGIN {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "uaepass-login";
+  }
+
+  static get LUCKY_DRAW_EVENTS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "event/luckydraw-event-listing";
+  }
+
+  static get SUBSCRIBE_EVENTS {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "event/luckydraw-event-registration";
+  }
+
+  static get PRIZE_HISTORY {
+    int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "customer/prize-history";
+  }
+
+  static const String UAE_PASS_URL = "https://happinessclub.ae/m/uaepass";
+  static const Map<String, dynamic> HEADER = {
+    "api-key": "KZ85YttM4ZYMD4avjgTWr3QtXnAhk7aF"
   };
 }

@@ -95,64 +95,64 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
 
   announcementCard(AnnouncementModelData data){
     String htmlData = """${data.description}""";
-    return Container(
-      height: 296,
-      width: double.maxFinite,
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          
-          SizedBox(
-            height: 174,
-            width: double.maxFinite,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl:  data.imageUrl??Constants.NOT_FOUND_IMAGE_URL,
-                height: 174,
-                width: double.maxFinite,
-                placeholder: (context,s){
-                  return Center(
-                    child: getLoader(),
-                  );
-                },
-                errorWidget: (context , a,s){
-                  return Center();
-                },
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, CupertinoPageRoute(builder: (_)=>AnnouncementDetailsScreen(id: data.id!.toString())));
+      },
+      child: Container(
+        height: 296,
+        width: double.maxFinite,
+        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+            SizedBox(
+              height: 174,
+              width: double.maxFinite,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl:  data.imageUrl??Constants.NOT_FOUND_IMAGE_URL,
+                  height: 174,
+                  width: double.maxFinite,
+                  placeholder: (context,s){
+                    return Center(
+                      child: getLoader(),
+                    );
+                  },
+                  errorWidget: (context , a,s){
+                    return Center();
+                  },
+                ),
               ),
             ),
-          ),
-          //SizedBox(height: 5,),
-          Expanded(
-            child: AutoSizeText("${data.title}",
-              style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
-              minFontSize: 10,
+            //SizedBox(height: 5,),
+            Expanded(
+              child: AutoSizeText("${data.title}",
+                style: FontStyles.PoppinsStyle(15, Colors.black,fontWeight: FontWeight.w600),
+                minFontSize: 10,
+              ),
             ),
-          ),
-          Expanded(
-              child: AutoSizeText(
-                "${data.description}....",
-                style: FontStyles.PoppinsStyle(12, Colors.black),
-                minFontSize: 8,
-              )),
-          GestureDetector(
-            onTap: (){
-              Navigator.push(context, CupertinoPageRoute(builder: (_)=>AnnouncementDetailsScreen(id: data.id!.toString())));
-            },
-              child: Text(
-                "${LocaleKeys.read_more.tr()}",
-                style: FontStyles.PoppinsStyle(
-                    14, Color(ColorCodes.BLUE_COLOR),
-                    fontWeight: FontWeight.w500),
-              )
-          )
-        ],
+            Expanded(
+                child: AutoSizeText(
+                  "${data.description}....",
+                  style: FontStyles.PoppinsStyle(12, Colors.black),
+                  minFontSize: 8,
+                )),
+            Text(
+              "${LocaleKeys.read_more.tr()}",
+              style: FontStyles.PoppinsStyle(
+                  14, Color(ColorCodes.BLUE_COLOR),
+                  fontWeight: FontWeight.w500),
+            )
+          ],
+        ),
       ),
     );
   }

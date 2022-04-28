@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,6 +30,7 @@ Future getDashboardData(context)async{
   try{
     bool check = await InternetService.checkConnectivity();
     if(check){
+      log(APIS.DASHBOARD_DATA);
       var response = await dio.get(APIS.DASHBOARD_DATA);
       if(response.statusCode==200 && response.data["responseStatus"]=="success"){
         DashboardModel model = DashboardModel.fromJson(response.data);

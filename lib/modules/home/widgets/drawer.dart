@@ -382,9 +382,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           StorageServices().writeDataToStorage(StorageKeys.LANGUAGE, value);
                           if(value==0){
                             context.setLocale(Locale('en'));
+                            Provider.of<UserModelProvider>(context,listen: false).setLanguage(0);
                           }
                           else{
                             context.setLocale(Locale('ar'));
+                            Provider.of<UserModelProvider>(context,listen: false).setLanguage(1);
                           }
                           setState(() {
                             language = value;

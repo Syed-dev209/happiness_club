@@ -290,7 +290,22 @@ class APIS {
     if (lang != 0) {
       BASE_URL = BASE_URL + "ar/";
     }
-    return BASE_URL + "login";
+    //old end point 'login'
+    // new end point 'validate-login'
+    return BASE_URL + "validate-login";
+  }
+
+  static get VALIDATE_OTP {
+       int lang = Provider.of<UserModelProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .language ??
+        0;
+    BASE_URL = "https://hpcapi.happinessclub.ae/api/v2/";
+    if (lang != 0) {
+      BASE_URL = BASE_URL + "ar/";
+    }
+    return BASE_URL + "validate-otp";
   }
 
   static get NEWSLETTER {

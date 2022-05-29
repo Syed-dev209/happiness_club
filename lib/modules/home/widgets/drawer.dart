@@ -408,7 +408,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               padding: const EdgeInsets.only(left: 25),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(Platform.isAndroid? "Version 16.1.0(4)":"Version 3.3.0(1)",style: TextStyle(
+                child: Text(Platform.isAndroid? "Version 16.1.1(20)":"Version 3.3.1(1)",style: TextStyle(
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w500,
                   fontFamily: "Poppins",

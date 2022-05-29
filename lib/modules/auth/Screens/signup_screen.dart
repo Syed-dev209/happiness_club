@@ -137,7 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               CustomFullWidthButton(title: "Register", onTap: () {
                 if(formKey.currentState!.validate()){
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=>OtpScreen(otp: "",)));
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=>OtpScreen(token: "",)));
                 }
               }),
               SizedBox(

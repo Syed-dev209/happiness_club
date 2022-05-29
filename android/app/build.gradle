@@ -42,8 +42,8 @@ android {
         minSdkVersion 20
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 19
-        versionName "16.1.0"
+        versionCode 20
+        versionName "16.1.1"
     }
 //    signingConfigs {
 //        release {
@@ -61,14 +61,14 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
-//        release {
-//            signingConfig null
-//            applicationVariants.all { variant ->
-//                variant.outputs.all { output ->
-//                    output.outputFileName = "app-release.apk"
-//                }
-//            }
-//        }
+    //    release {
+    //        signingConfig null
+    //        applicationVariants.all { variant ->
+    //            variant.outputs.all { output ->
+    //                output.outputFileName = "app-release.apk"
+    //            }
+    //        }
+     //  }
     }
 }
 

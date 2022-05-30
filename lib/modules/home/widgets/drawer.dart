@@ -20,6 +20,7 @@ import 'package:happiness_club/modules/contactUs/contact_us_screen.dart';
 import 'package:happiness_club/modules/dashboard/homeBase.dart';
 import 'package:happiness_club/modules/digitalCard/screens/digital_card_screen.dart';
 import 'package:happiness_club/modules/favourites/Screen/favourites_screen.dart';
+import 'package:happiness_club/modules/home/controller/homeController.dart';
 import 'package:happiness_club/modules/home/controller/qr_controller.dart';
 import 'package:happiness_club/modules/home/widgets/custom_switch.dart';
 import 'package:happiness_club/modules/newsletter/Screens/newsletterScreen.dart';
@@ -40,8 +41,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  final style =
-  FontStyles.PoppinsStyle(14.5, Color(0xff7C86A2),
+  final style = FontStyles.PoppinsStyle(14.5, Color(0xff7C86A2),
       fontWeight: FontWeight.w500);
   int language = 0;
 
@@ -52,25 +52,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
     final user = Provider.of<UserModelProvider>(context, listen: false);
     var formatter = DateFormat("MM/yy", "en");
     var date;
-    if (user.loggedIn && user.expDate!="-") {
+    if (user.loggedIn && user.expDate != "-") {
       date = formatter.format(
         DateTime.parse("${user.expDate} 00:00:00.000"),
       );
-    }
-    else{
-      date="-";
+    } else {
+      date = "-";
     }
 
-    if(user.accessType=="full"){
+    if (user.accessType == "full") {
       fullAccess = true;
     }
 
     var check = StorageServices().readDataFromStorage(StorageKeys.LANGUAGE);
-    if(check=="")
-    {
-      language=0;
-    }
-    else{
+    if (check == "") {
+      language = 0;
+    } else {
       language = check;
     }
 
@@ -157,7 +154,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                   ),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn && user.accessType!="guest"
+                              .loggedIn &&
+                          user.accessType != "guest"
                       ? ListTile(
                           onTap: () {
                             Navigator.push(
@@ -175,10 +173,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ),
                         )
                       : SizedBox.shrink(),
-
-
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn && fullAccess
+                              .loggedIn &&
+                          fullAccess
                       ? ListTile(
                           onTap: () async {
                             var result = await BarcodeScanner.scan();
@@ -203,25 +200,28 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 //Navigator.pop(context);
                               }
                             });
-                           // print(result.rawContent); // The barcode content
+                            // print(result.rawContent); // The barcode content
                           },
                           leading: Image.asset(Images.SCAN_ICON, height: 20),
-                          title: Text(LocaleKeys.scan_qr_code.tr(), style: style),
+                          title:
+                              Text(LocaleKeys.scan_qr_code.tr(), style: style),
                         )
                       : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
-                      .loggedIn && fullAccess
+                              .loggedIn &&
+                          fullAccess
                       ? ListTile(
-                    onTap: ()  {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => LuckyDrawScreen()));
-                      // print(result.rawContent); // The barcode content
-                    },
-                    leading: Image.asset(Images.SCAN_ICON, height: 20),
-                    title: Text(LocaleKeys.lucky_draw_event.tr(), style: style),
-                  )
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) => LuckyDrawScreen()));
+                            // print(result.rawContent); // The barcode content
+                          },
+                          leading: Image.asset(Images.SCAN_ICON, height: 20),
+                          title: Text(LocaleKeys.lucky_draw_event.tr(),
+                              style: style),
+                        )
                       : SizedBox.shrink(),
                   ListTile(
                     onTap: () {
@@ -234,18 +234,24 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     title: Text(LocaleKeys.favourites.tr(), style: style),
                   ),
                   Provider.of<UserModelProvider>(context, listen: false)
-                      .loggedIn && fullAccess ?ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => PrizeHistoryScreen()));
-                    },
-                    leading: Image.asset(Images.PRIZE_ICON, height: 20),
-                    title: Text(LocaleKeys.prize_history.tr(), style: style),
-                  ):SizedBox.shrink(),
+                              .loggedIn &&
+                          fullAccess
+                      ? ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) =>
+                                        PrizeHistoryScreen()));
+                          },
+                          leading: Image.asset(Images.PRIZE_ICON, height: 20),
+                          title:
+                              Text(LocaleKeys.prize_history.tr(), style: style),
+                        )
+                      : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn && fullAccess
+                              .loggedIn &&
+                          fullAccess
                       ? ListTile(
                           onTap: () {
                             Navigator.push(
@@ -259,7 +265,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         )
                       : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn && fullAccess
+                              .loggedIn &&
+                          fullAccess
                       ? ListTile(
                           leading: Image.asset(Images.COMPANIES, height: 20),
                           onTap: () {
@@ -271,9 +278,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           title: Text(LocaleKeys.companies.tr(), style: style),
                         )
                       : SizedBox.shrink(),
-
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn && fullAccess
+                              .loggedIn &&
+                          fullAccess
                       ? ListTile(
                           leading: Image.asset(Images.NEWSLETTER, height: 20),
                           onTap: () {
@@ -286,7 +293,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         )
                       : SizedBox.shrink(),
                   Provider.of<UserModelProvider>(context, listen: false)
-                          .loggedIn && fullAccess
+                              .loggedIn &&
+                          fullAccess
                       ? ListTile(
                           onTap: () {
                             Navigator.push(
@@ -295,10 +303,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                     builder: (_) => AnnouncementsScreen()));
                           },
                           leading: Image.asset(Images.ARTICLE, height: 20),
-                          title: Text(LocaleKeys.announcement.tr(), style: style),
+                          title:
+                              Text(LocaleKeys.announcement.tr(), style: style),
                         )
                       : SizedBox.shrink(),
-
                   ListTile(
                     leading: Image.asset(Images.ABOUT, height: 20),
                     onTap: () {
@@ -336,7 +344,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   type: LocaleKeys.terms_and_condition.tr())));
                     },
                     leading: Image.asset(Images.TERMS, height: 20),
-                    title: Text(LocaleKeys.terms_and_condition.tr(), style: style),
+                    title:
+                        Text(LocaleKeys.terms_and_condition.tr(), style: style),
                   ),
                   ListTile(
                     onTap: () {
@@ -358,7 +367,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 .logOutUser();
                             Navigator.pop(context);
                             showToast(context, LocaleKeys.user_log_out.tr());
-
                           },
                           leading: Icon(
                             Icons.logout,
@@ -367,60 +375,76 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           title: Text(LocaleKeys.logout.tr(), style: style),
                         )
                       : SizedBox.shrink(),
-
                   ListTile(
-
-                     leading: Icon(Icons.language,color: Color(ColorCodes.GOLDEN_COLOR),),
-                      title:Text(LocaleKeys.language.tr(),style: style,),
+                    leading: Icon(
+                      Icons.language,
+                      color: Color(ColorCodes.GOLDEN_COLOR),
+                    ),
+                    title: Text(
+                      LocaleKeys.language.tr(),
+                      style: style,
+                    ),
                     trailing: SizedBox(
                       width: 120,
                       child: AnimatedToggle(
-                        initialPosition: language==0?true:false,
-                        values: [LocaleKeys.english.tr(), LocaleKeys.arabic.tr()],
+                        initialPosition: language == 0 ? true : false,
+                        values: [
+                          LocaleKeys.english.tr(),
+                          LocaleKeys.arabic.tr()
+                        ],
                         onToggleCallback: (value) {
                           print(value);
-                          StorageServices().writeDataToStorage(StorageKeys.LANGUAGE, value);
-                          if(value==0){
+                          StorageServices()
+                              .writeDataToStorage(StorageKeys.LANGUAGE, value);
+                          if (value == 0) {
                             context.setLocale(Locale('en'));
-                            Provider.of<UserModelProvider>(context,listen: false).setLanguage(0);
-                          }
-                          else{
+                            Provider.of<UserModelProvider>(context,
+                                    listen: false)
+                                .setLanguage(0);
+                          } else {
                             context.setLocale(Locale('ar'));
-                            Provider.of<UserModelProvider>(context,listen: false).setLanguage(1);
+                            Provider.of<UserModelProvider>(context,
+                                    listen: false)
+                                .setLanguage(1);
                           }
+                          getDashboardData(context);
                           setState(() {
                             language = value;
                           });
                         },
                         buttonColor: Color(ColorCodes.GOLDEN_COLOR),
                         backgroundColor: const Color(0xFFB5C1CC),
-                        textColor:  Colors.white,
+                        textColor: Colors.white,
                       ),
                     ),
-
-
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 25),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(Platform.isAndroid? "Version 16.1.1(20)":"Version 3.3.1(1)",style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Poppins",
-                  fontSize: 15,
-                  color: Color(0xff7C86A2)
-
-                ),
+                child: Text(
+                  Platform.isAndroid
+                      ? "Version 16.1.1(21)"
+                      : "Version 3.3.2(1)",
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Poppins",
+                      fontSize: 15,
+                      color: Color(0xff7C86A2)),
                   textAlign: TextAlign.start,
                 ),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),

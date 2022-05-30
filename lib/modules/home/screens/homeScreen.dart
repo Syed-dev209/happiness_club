@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // await getLatestOffers(context);
     // await getFeaturedOffers(context);
     await getDashboardData(context);
-    showToast(context, "Page refreshed");
+    showToast(context, LocaleKeys.page_refreshed.tr());
   }
 
   @override

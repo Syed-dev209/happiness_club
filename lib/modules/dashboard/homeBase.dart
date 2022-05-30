@@ -25,24 +25,23 @@ class _HomeBaseState extends State<HomeBase> {
   int selectedIndex = 0;
   Widget? body;
 
-
-  loadData()async{
+  loadData() async {
     //await getFeaturedOffers(context);
     PushNotificationServices().registerUserToken();
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     body = HomeScreen();
     loadData();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer( ),
       body: body,
       bottomNavigationBar: Card(
         elevation: 8,
@@ -100,7 +99,7 @@ class _HomeBaseState extends State<HomeBase> {
                   label: LocaleKeys.search.tr()),
             ],
             onTap: (index) {
-             // print(index);
+              // print(index);
               setState(() {
                 if (index == 0) {
                   body = HomeScreen();
@@ -110,8 +109,7 @@ class _HomeBaseState extends State<HomeBase> {
                   body = OffersScreen();
                 } else if (index == 4) {
                   body = SearchScreen();
-                }
-                else{
+                } else {
                   body = NearbyScreen();
                 }
                 selectedIndex = index;

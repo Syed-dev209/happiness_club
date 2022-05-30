@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var access = storage.readDataFromStorage(StorageKeys.USER_ACCESS);
     var hcId = storage.readDataFromStorage(StorageKeys.USER_HC_ID);
     var hcCompId = storage.readDataFromStorage(StorageKeys.USER_HC_COMPANY_ID);
-    var lang = StorageServices().readDataFromStorage(StorageKeys.LANGUAGE);
+    var lang = storage.readDataFromStorage(StorageKeys.LANGUAGE);
     if(response!="" && uid!="" && name!=""){
       Provider.of<UserModelProvider>(context,listen: false).updateLoginStatus(true);
       Provider.of<UserModelProvider>(context,listen: false).addCustomerId(uid);

@@ -20,137 +20,187 @@ import 'package:happiness_club/services/storage_service.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
-var dio = Dio(BaseOptions(
-    headers: APIS.HEADER
-));
+var dio = Dio(BaseOptions(headers: APIS.HEADER));
 
 var storage = StorageServices();
 
-Future getDashboardData(context)async{
-  try{
+Future getDashboardData(context) async {
+  Provider.of<CategoriesOfferProvider>(GlobalVariable.navState.currentContext!,
+          listen: false)
+      .clearProvider();
+  Provider.of<OffersSliderProvider>(GlobalVariable.navState.currentContext!,
+          listen: false)
+      .clearProvider();
+  Provider.of<MostViewedOffersProvider>(GlobalVariable.navState.currentContext!,
+          listen: false)
+      .clearProvider();
+  Provider.of<LatestOffersProvider>(GlobalVariable.navState.currentContext!,
+          listen: false)
+      .clearProvider();
+  Provider.of<FeaturedOffersProvider>(GlobalVariable.navState.currentContext!,
+          listen: false)
+      .clearProvider();
+  try {
     bool check = await InternetService.checkConnectivity();
-    if(check){
+    if (check) {
       log(APIS.DASHBOARD_DATA);
       var response = await dio.get(APIS.DASHBOARD_DATA);
-      if(response.statusCode==200 && response.data["responseStatus"]=="success"){
+      if (response.statusCode == 200 &&
+          response.data["responseStatus"] == "success") {
         DashboardModel model = DashboardModel.fromJson(response.data);
 
         ///slider
         OffersSliderModel slider = OffersSliderModel(
-          responseStatus: model.responseStatus,
-          message: model.message,
-          data: model.data!.slides!
-        );
-        Provider.of<OffersSliderProvider>(context, listen: false)
+            responseStatus: model.responseStatus,
+            message: model.message,
+            data: model.data!.slides!);
+        Provider.of<OffersSliderProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
             .addModel(slider);
         storage.writeDataToStorage(StorageKeys.SLIDER, slider.toJson());
 
         ///most viewed offers
         OffersModel mostViewed = OffersModel(
-          responseStatus: model.responseStatus,
-          message: model.message,
-          data: model.data!.mostViewedOffers
-        );
-        Provider.of<MostViewedOffersProvider>(GlobalVariable.navState.currentContext!,listen: false).addModelData(mostViewed);
-        storage.writeDataToStorage(StorageKeys.MOST_VIEWED_OFFERS, mostViewed.toJson());
+            responseStatus: model.responseStatus,
+            message: model.message,
+            data: model.data!.mostViewedOffers);
+        Provider.of<MostViewedOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(mostViewed);
+        storage.writeDataToStorage(
+            StorageKeys.MOST_VIEWED_OFFERS, mostViewed.toJson());
+
         ///latest offers
         OffersModel latest = OffersModel(
-          responseStatus: model.responseStatus,
-          message: model.message,
-          data: model.data!.latestOffers
-        );
-        Provider.of<LatestOffersProvider>(GlobalVariable.navState.currentContext!,listen: false).addModelData(latest);
+            responseStatus: model.responseStatus,
+            message: model.message,
+            data: model.data!.latestOffers);
+        Provider.of<LatestOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(latest);
         storage.writeDataToStorage(StorageKeys.LATEST_OFFERS, latest.toJson());
+
         ///featured offers
         OffersModel featured = OffersModel(
-          responseStatus: model.responseStatus,
-          message: model.message,
-          data: model.data!.featuredOffers
-        );
-        Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(featured);
-        storage.writeDataToStorage(StorageKeys.FEATURED_OFFERS, featured.toJson());
+            responseStatus: model.responseStatus,
+            message: model.message,
+            data: model.data!.featuredOffers);
+        Provider.of<FeaturedOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(featured);
+        storage.writeDataToStorage(
+            StorageKeys.FEATURED_OFFERS, featured.toJson());
+
         ///categories
         var cat = OffersCategoriesModel(
-          responseStatus: model.responseStatus,
-          message: model.message,
-          data: model.data!.categories
-        );
-        Provider.of<CategoriesOfferProvider>(context, listen: false)
+            responseStatus: model.responseStatus,
+            message: model.message,
+            data: model.data!.categories);
+        Provider.of<CategoriesOfferProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
             .addModel(cat);
         storage.writeDataToStorage(StorageKeys.CATEGORIES, cat.toJson());
       }
-    }
-    else{
+    } else {
       //slider
       var data = storage.readDataFromStorage(StorageKeys.SLIDER);
       if (data != "") {
         OffersSliderModel model = OffersSliderModel.fromJson(data);
-        Provider.of<OffersSliderProvider>(context, listen: false)
+        Provider.of<OffersSliderProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
             .addModel(model);
       }
       //most viewed
-      var response = storage.readDataFromStorage(StorageKeys.MOST_VIEWED_OFFERS);
-      if(response!="") {
+      var response =
+          storage.readDataFromStorage(StorageKeys.MOST_VIEWED_OFFERS);
+      if (response != "") {
         OffersModel model = OffersModel.fromJson(response);
-        Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<MostViewedOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(model);
       }
       //latest
       var response2 = storage.readDataFromStorage(StorageKeys.LATEST_OFFERS);
-      if(response2!=""){
+      if (response2 != "") {
         OffersModel model = OffersModel.fromJson(response2);
-        Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<LatestOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(model);
       }
       //featured
       var response3 = storage.readDataFromStorage(StorageKeys.FEATURED_OFFERS);
-      if(response3!="") {
+      if (response3 != "") {
         OffersModel model = OffersModel.fromJson(response3);
-        Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<FeaturedOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(model);
       }
       //categories
       var cat = storage.readDataFromStorage(StorageKeys.CATEGORIES);
       if (cat != "") {
         var model = OffersCategoriesModel.fromJson(cat);
-        Provider.of<CategoriesOfferProvider>(context, listen: false)
+        Provider.of<CategoriesOfferProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
             .addModel(model);
       }
-      showNoInternetSnackBar(context);
+      showNoInternetSnackBar(GlobalVariable.navState.currentContext!);
     }
-  }
-  on DioError catch(e){
+  } on DioError catch (e) {
     //print(e);
     //slider
     var data = storage.readDataFromStorage(StorageKeys.SLIDER);
     if (data != "") {
       OffersSliderModel model = OffersSliderModel.fromJson(data);
-      Provider.of<OffersSliderProvider>(context, listen: false)
+      Provider.of<OffersSliderProvider>(GlobalVariable.navState.currentContext!,
+              listen: false)
           .addModel(model);
     }
     //most viewed
     var response = storage.readDataFromStorage(StorageKeys.MOST_VIEWED_OFFERS);
-    if(response!="") {
+    if (response != "") {
       OffersModel model = OffersModel.fromJson(response);
-      Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
+      Provider.of<MostViewedOffersProvider>(
+              GlobalVariable.navState.currentContext!,
+              listen: false)
+          .addModelData(model);
     }
     //latest
     var response2 = storage.readDataFromStorage(StorageKeys.LATEST_OFFERS);
-    if(response2!=""){
+    if (response2 != "") {
       OffersModel model = OffersModel.fromJson(response2);
-      Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
+      Provider.of<LatestOffersProvider>(GlobalVariable.navState.currentContext!,
+              listen: false)
+          .addModelData(model);
     }
     //featured
     var response3 = storage.readDataFromStorage(StorageKeys.FEATURED_OFFERS);
-    if(response3!="") {
+    if (response3 != "") {
       OffersModel model = OffersModel.fromJson(response3);
-      Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
+      Provider.of<FeaturedOffersProvider>(
+              GlobalVariable.navState.currentContext!,
+              listen: false)
+          .addModelData(model);
     }
     //categories
     var cat = storage.readDataFromStorage(StorageKeys.CATEGORIES);
     if (cat != "") {
       var model = OffersCategoriesModel.fromJson(cat);
-      Provider.of<CategoriesOfferProvider>(context, listen: false)
+      Provider.of<CategoriesOfferProvider>(
+              GlobalVariable.navState.currentContext!,
+              listen: false)
           .addModel(model);
     }
-    showToast(context, "Unable to load data");
+    showToast(GlobalVariable.navState.currentContext!, "Unable to load data");
   }
 }
 
@@ -178,99 +228,105 @@ Future getSliderImages(context) async {
     }
   } on DioError catch (e) {
     //print(e);
-   // print("Sliders failed to load from API");
+    // print("Sliders failed to load from API");
   }
 }
 
-
-Future getMostViewedOffers(context)async{
-  try{
+Future getMostViewedOffers(context) async {
+  try {
     bool check = await InternetService.checkConnectivity();
-    if(check){
-      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
-     // print(APIS.MOST_VIEWED_OFFERS);
-      var response = await dio.get(APIS.MOST_VIEWED_OFFERS,queryParameters: {
-        "lat":location.latitude,
-        "long":location.longitude
+    if (check) {
+      LatLng location = Provider.of<UserModelProvider>(context, listen: false)
+          .currentLocation!;
+      // print(APIS.MOST_VIEWED_OFFERS);
+      var response = await dio.get(APIS.MOST_VIEWED_OFFERS, queryParameters: {
+        "lat": location.latitude,
+        "long": location.longitude
       });
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         OffersModel model = OffersModel.fromJson(response.data);
-        Provider.of<MostViewedOffersProvider>(GlobalVariable.navState.currentContext!,listen: false).addModelData(model);
-        storage.writeDataToStorage(StorageKeys.MOST_VIEWED_OFFERS, model.toJson());
+        Provider.of<MostViewedOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(model);
+        storage.writeDataToStorage(
+            StorageKeys.MOST_VIEWED_OFFERS, model.toJson());
       }
-    }
-    else{
-      var response = storage.readDataFromStorage(StorageKeys.MOST_VIEWED_OFFERS);
-      if(response!="") {
+    } else {
+      var response =
+          storage.readDataFromStorage(StorageKeys.MOST_VIEWED_OFFERS);
+      if (response != "") {
         OffersModel model = OffersModel.fromJson(response);
-        Provider.of<MostViewedOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<MostViewedOffersProvider>(context, listen: false)
+            .addModelData(model);
       }
       //showNoInternetSnackBar(context);
     }
-  }
-  on DioError catch (e) {
+  } on DioError catch (e) {
     //print("Most viewed failed to load from API");
   }
 }
 
-Future getLatestOffers(context)async{
-  try{
+Future getLatestOffers(context) async {
+  try {
     bool check = await InternetService.checkConnectivity();
-    if(check){
-      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
-     // print(APIS.LATEST_OFFERS);
-      var response = await dio.get(APIS.LATEST_OFFERS,queryParameters: {
-      "lat":location.latitude,
-      "long":location.longitude
+    if (check) {
+      LatLng location = Provider.of<UserModelProvider>(context, listen: false)
+          .currentLocation!;
+      // print(APIS.LATEST_OFFERS);
+      var response = await dio.get(APIS.LATEST_OFFERS, queryParameters: {
+        "lat": location.latitude,
+        "long": location.longitude
       });
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         OffersModel model = OffersModel.fromJson(response.data);
-        Provider.of<LatestOffersProvider>(GlobalVariable.navState.currentContext!,listen: false).addModelData(model);
+        Provider.of<LatestOffersProvider>(
+                GlobalVariable.navState.currentContext!,
+                listen: false)
+            .addModelData(model);
         storage.writeDataToStorage(StorageKeys.LATEST_OFFERS, model.toJson());
       }
-    }
-    else{
+    } else {
       var response = storage.readDataFromStorage(StorageKeys.LATEST_OFFERS);
-      if(response!=""){
+      if (response != "") {
         OffersModel model = OffersModel.fromJson(response);
-        Provider.of<LatestOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<LatestOffersProvider>(context, listen: false)
+            .addModelData(model);
       }
       //showNoInternetSnackBar(context);
     }
-  }
-  on DioError catch (e) {
-  //  print("latest offers failed to load from API");
+  } on DioError catch (e) {
+    //  print("latest offers failed to load from API");
   }
 }
 
-Future getFeaturedOffers(context)async{
-  try{
+Future getFeaturedOffers(context) async {
+  try {
     bool check = await InternetService.checkConnectivity();
-    if(check){
-      LatLng location = Provider.of<UserModelProvider>(context,listen: false).currentLocation!;
-      var response = await dio.get(APIS.FEATURED_OFFERS,queryParameters: {
-        "lat":location.latitude,
-        "long":location.longitude
+    if (check) {
+      LatLng location = Provider.of<UserModelProvider>(context, listen: false)
+          .currentLocation!;
+      var response = await dio.get(APIS.FEATURED_OFFERS, queryParameters: {
+        "lat": location.latitude,
+        "long": location.longitude
       });
-      if(response.statusCode==200){
-       // print(response.data);
+      if (response.statusCode == 200) {
+        // print(response.data);
         OffersModel model = OffersModel.fromJson(response.data);
-        Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<FeaturedOffersProvider>(context, listen: false)
+            .addModelData(model);
         storage.writeDataToStorage(StorageKeys.FEATURED_OFFERS, model.toJson());
       }
-    }
-    else{
+    } else {
       var response = storage.readDataFromStorage(StorageKeys.FEATURED_OFFERS);
-      if(response!="") {
+      if (response != "") {
         OffersModel model = OffersModel.fromJson(response);
-        Provider.of<FeaturedOffersProvider>(context,listen: false).addModelData(model);
+        Provider.of<FeaturedOffersProvider>(context, listen: false)
+            .addModelData(model);
       }
       //showNoInternetSnackBar(context);
     }
-
-  }
-  on DioError catch (e) {
+  } on DioError catch (e) {
     //print("Featured offers failed to load from API");
   }
 }
-

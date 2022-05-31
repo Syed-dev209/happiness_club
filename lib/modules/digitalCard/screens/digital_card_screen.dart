@@ -73,41 +73,37 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          height: size.height,
-          width: size.width,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: CustomAppBar(
-                  title: LocaleKeys.digital_card.tr(),
-                  actions: [
-                    SizedBox(
-                      width: 50,
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) =>
-                                        HelpCustomerScreen()));
-                          },
-                          child: Text(
-                            LocaleKeys.report_card.tr(),
-                            style: FontStyles.PoppinsStyle(
-                                8, Color(ColorCodes.GOLDEN_COLOR),
-                                fontWeight: FontWeight.w600),
-                            textAlign: TextAlign.center,
-                          )),
-                    )
-                  ],
-                ),
-              ),
-              loaded
+      appBar: CustomAppBar(
+        title: LocaleKeys.digital_card.tr(),
+        actions: [
+          SizedBox(
+            width: 50,
+            child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => HelpCustomerScreen()));
+                },
+                child: Text(
+                  LocaleKeys.report_card.tr(),
+                  style: FontStyles.PoppinsStyle(
+                      8, Color(ColorCodes.GOLDEN_COLOR),
+                      fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                )),
+          )
+        ],
+      ),
+      body: SafeArea(child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            child: Container(
+              height: size.height,
+              width: constraints.maxWidth < 600 ? size.width : 400,
+              child: loaded
                   ? blobList.isNotEmpty
-                      ? Expanded(
+                      ? Center(
                           child: ListView.separated(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 10),
@@ -117,18 +113,14 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                                   ),
                               itemCount: blobList.length),
                         )
-                      : Expanded(
-                          child: Center(
-                              child: Text(LocaleKeys.no_card_found.tr())))
-                  : Expanded(
-                      child: Center(
-                        child: getLoader(),
-                      ),
-                    )
-            ],
-          ),
-        ),
-      ),
+                      : Center(child: Text(LocaleKeys.no_card_found.tr()))
+                  : Center(
+                      child: getLoader(),
+                    ),
+            ),
+          );
+        },
+      )),
     );
   }
 }

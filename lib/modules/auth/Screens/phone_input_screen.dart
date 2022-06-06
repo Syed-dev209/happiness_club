@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +20,9 @@ import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
-
 import 'package:provider/provider.dart';
+import 'package:intl/src/intl/text_direction.dart' as te;
+import 'dart:ui' as ui;
 
 class PhoneInputScreen extends StatefulWidget {
   const PhoneInputScreen({Key? key}) : super(key: key);
@@ -40,7 +43,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
     // TODO: implement initState
     super.initState();
     maskFormatter = new MaskTextInputFormatter(
-        mask:'+(###) ##-###-####',
+        mask: '+(###) ##-###-####',
         filter: {"#": RegExp(r'[0-9]')},
         initialText: "+(971) 58 123 4567");
   }
@@ -76,15 +79,18 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 18),
         child: Column(
           children: [
-            CustomTextField(
-              controller: phoneNumber,
-              labelText: "+(971) 58 123 4567",
-              keyboardType: TextInputType.phone,
-              validator: MultiValidator([
-                RequiredValidator(
-                    errorText: LocaleKeys.phone_num_required.tr()),
-              ]),
-              inputFormatters: [maskFormatter],
+            Directionality(
+              textDirection: ui.TextDirection.ltr,
+              child: CustomTextField(
+                controller: phoneNumber,
+                labelText: "+(971) 58 123 4567",
+                keyboardType: TextInputType.phone,
+                validator: MultiValidator([
+                  RequiredValidator(
+                      errorText: LocaleKeys.phone_num_required.tr()),
+                ]),
+                inputFormatters: [maskFormatter],
+              ),
             ),
 
             SizedBox(
@@ -102,10 +108,11 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         setState(() {
                           loading = true;
                         });
+
                         loginWithPhoneNumber(
                             context: context,
                             phoneNumber: maskFormatter.getUnmaskedText());
-                        //print(maskFormatter.getUnmaskedText());
+                        print(maskFormatter.getUnmaskedText());
                       }
                     })
                 : Center(child: loader()),

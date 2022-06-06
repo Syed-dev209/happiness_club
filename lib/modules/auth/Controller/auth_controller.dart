@@ -41,7 +41,6 @@ loginWithPhoneNumber({required context, required String phoneNumber}) async {
       showNoInternetSnackBar(context);
     }
   } on DioError catch (e) {
-    //print("Failed to log in");
     showToast(context, "Failed to login. Please check mobile number.");
   }
 }

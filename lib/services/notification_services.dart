@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,10 +16,11 @@ import 'package:happiness_club/services/internet_service.dart';
 import 'package:happiness_club/services/storage_service.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'navigatorKey.dart';
+import 'dart:io' show Platform;
 
 class PushNotificationServices {
   static PushNotificationServices _pushNotificationServices =
-  PushNotificationServices._internal();
+      PushNotificationServices._internal();
   factory PushNotificationServices() {
     return _pushNotificationServices;
   }
@@ -40,42 +43,32 @@ class PushNotificationServices {
     // bool isLoggedIn = Provider.of<LoginChecker>(context,listen: false).getUserStatus;
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       ///jab app open hu
-     // print(message.data);
+      // print(message.data);
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
         showOverlayNotification((context) {
           return GestureDetector(
             onTap: () {
-              if(message.data["type"]=="announcement") {
+              if (message.data["type"] == "announcement") {
                 ///announcement when
                 SchedulerBinding.instance!.addPostFrameCallback((_) {
                   Navigator.of(GlobalVariable.navState.currentContext!).push(
                       MaterialPageRoute(
-                          builder: (_) =>
-                             AnnouncementDetailsScreen(id: message.data["aid"])
-                      )
-                  );
+                          builder: (_) => AnnouncementDetailsScreen(
+                              id: message.data["aid"])));
                 });
-              }
-              else if(message.data["type"]=="offer"){
+              } else if (message.data["type"] == "offer") {
                 SchedulerBinding.instance!.addPostFrameCallback((_) {
                   Navigator.of(GlobalVariable.navState.currentContext!).push(
                       MaterialPageRoute(
-                          builder: (_) =>
-                              OfferDetailsScreen(offerId: message.data["offer_id"])
-                      )
-                  );
+                          builder: (_) => OfferDetailsScreen(
+                              offerId: message.data["offer_id"])));
                 });
-              }
-              else if(message.data["type"]=="prize"){
+              } else if (message.data["type"] == "prize") {
                 SchedulerBinding.instance!.addPostFrameCallback((_) {
                   Navigator.of(GlobalVariable.navState.currentContext!).push(
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              PrizeHistoryScreen()
-                      )
-                  );
+                      MaterialPageRoute(builder: (_) => PrizeHistoryScreen()));
                 });
               }
             },
@@ -112,35 +105,25 @@ class PushNotificationServices {
       //print('A new onMessageOpenedApp event was published!');
       //print(message.data);
       SchedulerBinding.instance!.addPostFrameCallback((_) {
-        if(message.data["type"]=="announcement") {
+        if (message.data["type"] == "announcement") {
           ///announcement when
           SchedulerBinding.instance!.addPostFrameCallback((_) {
             Navigator.of(GlobalVariable.navState.currentContext!).push(
                 MaterialPageRoute(
                     builder: (_) =>
-                        AnnouncementDetailsScreen(id: message.data["aid"])
-                )
-            );
+                        AnnouncementDetailsScreen(id: message.data["aid"])));
           });
-        }
-        else if(message.data["type"]=="offer"){
+        } else if (message.data["type"] == "offer") {
           SchedulerBinding.instance!.addPostFrameCallback((_) {
             Navigator.of(GlobalVariable.navState.currentContext!).push(
                 MaterialPageRoute(
                     builder: (_) =>
-                        OfferDetailsScreen(offerId: message.data["offer_id"])
-                )
-            );
+                        OfferDetailsScreen(offerId: message.data["offer_id"])));
           });
-        }
-        else if(message.data["type"]=="prize"){
+        } else if (message.data["type"] == "prize") {
           SchedulerBinding.instance!.addPostFrameCallback((_) {
-            Navigator.of(GlobalVariable.navState.currentContext!).push(
-                MaterialPageRoute(
-                    builder: (_) =>
-                        PrizeHistoryScreen()
-                )
-            );
+            Navigator.of(GlobalVariable.navState.currentContext!)
+                .push(MaterialPageRoute(builder: (_) => PrizeHistoryScreen()));
           });
         }
       });
@@ -150,62 +133,49 @@ class PushNotificationServices {
     RemoteMessage? terminatedMessage = await _fcm.getInitialMessage();
     if (terminatedMessage != null) {
       if (terminatedMessage.notification != null) {
-        if(terminatedMessage.data["type"]=="announcement") {
+        if (terminatedMessage.data["type"] == "announcement") {
           ///announcement when
           SchedulerBinding.instance!.addPostFrameCallback((_) {
             Navigator.of(GlobalVariable.navState.currentContext!).push(
                 MaterialPageRoute(
-                    builder: (_) =>
-                        AnnouncementDetailsScreen(id: terminatedMessage.data["aid"])
-                )
-            );
+                    builder: (_) => AnnouncementDetailsScreen(
+                        id: terminatedMessage.data["aid"])));
           });
-        }
-        else if(terminatedMessage.data["type"]=="offer"){
+        } else if (terminatedMessage.data["type"] == "offer") {
           SchedulerBinding.instance!.addPostFrameCallback((_) {
             Navigator.of(GlobalVariable.navState.currentContext!).push(
                 MaterialPageRoute(
-                    builder: (_) =>
-                        OfferDetailsScreen(offerId: terminatedMessage.data["offer_id"])
-                )
-            );
+                    builder: (_) => OfferDetailsScreen(
+                        offerId: terminatedMessage.data["offer_id"])));
           });
-        }
-        else if(terminatedMessage.data["type"]=="prize"){
+        } else if (terminatedMessage.data["type"] == "prize") {
           SchedulerBinding.instance!.addPostFrameCallback((_) {
-            Navigator.of(GlobalVariable.navState.currentContext!).push(
-                MaterialPageRoute(
-                    builder: (_) =>
-                        PrizeHistoryScreen()
-                )
-            );
+            Navigator.of(GlobalVariable.navState.currentContext!)
+                .push(MaterialPageRoute(builder: (_) => PrizeHistoryScreen()));
           });
         }
       }
     }
   }
 
-  registerUserToken()async{
-    try{
+  registerUserToken() async {
+    try {
       String device = await getDeviceToken();
+      String deviceType = Platform.isAndroid ? "android" : "ios";
+      log(deviceType);
+      print(device.toString());
       bool check = await InternetService.checkConnectivity();
-      if(check){
+      if (check) {
         var isRegister = storage.readDataFromStorage(StorageKeys.REGISTERED);
-        if(isRegister==""){
-         var response =  await dio.post(APIS.REGISTER_TOKEN,data: {
-            "token":device
-          });
-          if(response.statusCode == 200){
-            storage.writeDataToStorage(StorageKeys.REGISTERED, true);
-           // print("Device registered");
-          }
-          }
+        if (isRegister == "") {
+        var response = await dio.post(APIS.REGISTER_TOKEN,
+            options: Options(headers: APIS.HEADER),
+            data: {"token": device, "device_type": deviceType});
+        if (response.statusCode == 200) {
+          storage.writeDataToStorage(StorageKeys.REGISTERED, true);
+        }
+        }
       }
-    }
-    on DioError catch(e){
-
-    }
+    } on DioError catch (e) {}
   }
-
-
 }

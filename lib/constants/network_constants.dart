@@ -30,7 +30,7 @@ class APIS {
     if (lang != 0) {
       BASE_URL = BASE_URL + "ar/";
     }
-    return BASE_URL + "offers/slider";
+    return BASE_URL + "offers/slider_v2";
   }
 
   static get DASHBOARD_DATA {
@@ -296,7 +296,7 @@ class APIS {
   }
 
   static get VALIDATE_OTP {
-       int lang = Provider.of<UserModelProvider>(
+    int lang = Provider.of<UserModelProvider>(
                 GlobalVariable.navState.currentContext!,
                 listen: false)
             .language ??

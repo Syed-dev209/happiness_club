@@ -11,8 +11,6 @@ import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/customAppBar.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
 
-
-
 class LuckyDrawScreen extends StatefulWidget {
   const LuckyDrawScreen({Key? key}) : super(key: key);
 
@@ -21,16 +19,14 @@ class LuckyDrawScreen extends StatefulWidget {
 }
 
 class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
-
   late StreamController<LuckDrawModel?> streamController;
 
-  loadData(){
-    getLuckDrawEvents(context).then((value){
-      if(value!=null){
+  loadData() {
+    getLuckDrawEvents(context).then((value) {
+      if (value != null) {
         streamController.add(value);
         return value;
-      }
-      else{
+      } else {
         streamController.add(null);
         return null;
       }
@@ -53,42 +49,52 @@ class _LuckyDrawScreenState extends State<LuckyDrawScreen> {
         preferredSize: Size.fromHeight(56),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CustomAppBar(title: LocaleKeys.lucky_draw_event.tr(),),
+          child: CustomAppBar(
+            title: LocaleKeys.lucky_draw_event.tr(),
+          ),
         ),
       ),
       body: SafeArea(
         child: Container(
           height: size.height,
           width: size.width,
-          child:StreamBuilder<LuckDrawModel?>(
+          child: StreamBuilder<LuckDrawModel?>(
             stream: streamController.stream,
-            builder: (context,snapshot){
-              if(snapshot.hasError || snapshot.connectionState == ConnectionState.waiting){
+            builder: (context, snapshot) {
+              if (snapshot.hasError ||
+                  snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
-                      itemBuilder: (context,i)=> OfferCardShimmer(),
-                      separatorBuilder: (context,i)=>SizedBox(height: 12,),
-                      itemCount: 4
-                  )
-                );
+                    child: ListView.separated(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                        itemBuilder: (context, i) => OfferCardShimmer(),
+                        separatorBuilder: (context, i) => SizedBox(
+                              height: 12,
+                            ),
+                        itemCount: 4));
               }
 
-              if(snapshot.data ==null){
+              if (snapshot.data == null) {
                 return Center(
-                  child: Text(LocaleKeys.no_events_found.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.5),fontWeight: FontWeight.bold),),
+                  child: Text(
+                    LocaleKeys.no_events_found.tr(),
+                    style: FontStyles.PoppinsStyle(
+                        17, Colors.black.withOpacity(0.5),
+                        fontWeight: FontWeight.bold),
+                  ),
                 );
               }
-
 
               return ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 12),
-                  itemBuilder: (context,i)=> LuckyDrawEventCard(modelData: snapshot.data!.data![i]!),
-                  separatorBuilder: (context,i)=>SizedBox(height: 12,),
-                  itemCount: snapshot.data!.data!.length
-              );
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                  itemBuilder: (context, i) =>
+                      LuckyDrawEventCard(modelData: snapshot.data!.data![i]!),
+                  separatorBuilder: (context, i) => SizedBox(
+                        height: 12,
+                      ),
+                  itemCount: snapshot.data!.data!.length);
             },
-          ) ,
+          ),
         ),
       ),
     );

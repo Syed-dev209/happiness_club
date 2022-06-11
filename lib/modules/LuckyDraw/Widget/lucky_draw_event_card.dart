@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:happiness_club/modules/home/Model/offers_model.dart';
 import 'package:happiness_club/modules/offers/Screens/offerDetailsScreen.dart';
 import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/snackBars.dart';
+import 'package:happiness_club/widgets/successpop.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -62,7 +64,7 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                           flex: 4,
                           child: Container(
                             constraints:
-                            BoxConstraints(minHeight: 0, maxHeight: 20),
+                                BoxConstraints(minHeight: 0, maxHeight: 20),
                             child: AutoSizeText(
                               "${widget.modelData.eventTitle}",
                               style: FontStyles.PoppinsStyle(14, Colors.black,
@@ -96,34 +98,36 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                     height: 10,
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 32,
                     width: double.maxFinite,
-                    child: !load? ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                        )
-                      ),
-                        onPressed: (){
-                        setState(() {
-                          load = true;
-                        });
-                          subscribeToEvent(context,widget.modelData.id.toString()).then((value) {
-                            setState(() {
-                              load= false;
-                            });
-                          });
-                        },
-                        child: Text(LocaleKeys.subscribe_to_lucky_draw.tr(),style: FontStyles.PoppinsStyle(12, Colors.white),)
-                    ):SizedBox(
-                      height: 20,
-                        width: 15,
-                        child: Center(child: CircularProgressIndicator())),
+                    child: !load
+                        ? ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20))),
+                            onPressed: () {
+                              setState(() {
+                                load = true;
+                              });
+                              subscribeToEvent(
+                                      context, widget.modelData.id.toString())
+                                  .then((value) {
+                                setState(() {
+                                  load = false;
+                                });
+                              if (value) {
+                              getSuccessPopup();
+                              } else {
+                                getErrorPopup();
+                              }
+                              });
+                            },
+                            child: Text(
+                              LocaleKeys.subscribe_to_lucky_draw.tr(),
+                              style: FontStyles.PoppinsStyle(12, Colors.white),
+                            ))
+                        : Center(child: CircularProgressIndicator()),
                   )
-                  // SizedBox(
-                  //   height: 3,
-                  // ),
-                  //ratingAndTime(),
                 ],
               ),
             ),
@@ -133,8 +137,31 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
     );
   }
 
-  Widget dealImage() {
+  Widget _buildButton(
+      {VoidCallback? onTap, required String text, Color? color}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: MaterialButton(
+        color: color,
+        minWidth: double.infinity,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        onPressed: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
+  Widget dealImage() {
     return Expanded(
       flex: 2,
       child: Container(
@@ -143,8 +170,8 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image:
-                CachedNetworkImageProvider(widget.modelData.eventImage??Constants.NOT_FOUND_IMAGE_URL),
+                image: CachedNetworkImageProvider(widget.modelData.eventImage ??
+                    Constants.NOT_FOUND_IMAGE_URL),
                 fit: BoxFit.cover),
             color: Colors.white,
             borderRadius: BorderRadius.circular(14)),

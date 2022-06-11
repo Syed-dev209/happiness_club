@@ -68,12 +68,9 @@ try{
     };
     
     var response = await dio.post(APIS.SUBSCRIBE_EVENTS,data: mapData);
-    log(response.data.toString());
-    if(response.statusCode==200 ){
-      showToast(context,response.data["message"]);
-    }
-    
-    
+    // if(response.statusCode==200 ){
+    //   showToast(context,response.data["message"]);
+    // }
   }
   else{
     showNoInternetSnackBar(context);

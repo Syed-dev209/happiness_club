@@ -31,8 +31,12 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
   bool loaded = false;
 
   loadData() {
+    setState(() {
+      loaded = false;
+      blobList.clear();
+    });
+
     getDigitalCards(context).then((DigitalCardsModel? value) {
-      //print(value);
       if (value != null) {
         setState(() {
           for (int i = 0; i < value.data.fazaaCard.length; i++) {
@@ -104,14 +108,19 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
               child: loaded
                   ? blobList.isNotEmpty
                       ? Center(
-                          child: ListView.separated(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 10),
-                              itemBuilder: (context, i) => blobList[i],
-                              separatorBuilder: (context, i) => SizedBox(
-                                    height: 15,
-                                  ),
-                              itemCount: blobList.length),
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              loadData();
+                            },
+                            child: ListView.separated(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 10),
+                                itemBuilder: (context, i) => blobList[i],
+                                separatorBuilder: (context, i) => SizedBox(
+                                      height: 15,
+                                    ),
+                                itemCount: blobList.length),
+                          ),
                         )
                       : Center(child: Text(LocaleKeys.no_card_found.tr()))
                   : Center(

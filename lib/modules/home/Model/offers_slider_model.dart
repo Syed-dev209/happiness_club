@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 
 class OffersSliderModelData {
   int? offerId;
-  String? imageFilename;
+  String? imageFilename, type;
 
   OffersSliderModelData({
     this.offerId,
     this.imageFilename,
   });
   OffersSliderModelData.fromJson(Map<String, dynamic> json) {
-    offerId = json['offer_id']?.toInt();
-    imageFilename = json['image_filename']?.toString();
+    offerId = json['id']?.toInt() ?? 0;
+    imageFilename = json['image_filename']?.toString() ?? '';
+    type = json['type']?.toString() ?? '';
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

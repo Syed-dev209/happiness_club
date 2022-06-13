@@ -7,6 +7,7 @@ import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
 import 'package:happiness_club/constants/storage_keys.dart';
+import 'package:happiness_club/modules/LuckyDraw/Screens/lucky_draw_screen.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/modules/auth/Screens/login_screen.dart';
 import 'package:happiness_club/modules/auth/Screens/phone_input_screen.dart';
@@ -438,11 +439,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget sliderImageContainer(OffersSliderModelData data) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            CupertinoPageRoute(
-                builder: (_) =>
-                    OfferDetailsScreen(offerId: data.offerId.toString())));
+        if (data.type == 'event' || data.type == 'luckyDraw') {
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (_) => LuckyDrawScreen()));
+        } else {
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (_) =>
+                      OfferDetailsScreen(offerId: data.offerId.toString())));
+        }
       },
       child: Container(
         width: double.maxFinite,

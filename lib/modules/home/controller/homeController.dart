@@ -45,20 +45,21 @@ Future getDashboardData(context) async {
     if (check) {
       log(APIS.DASHBOARD_DATA);
       var response = await dio.get(APIS.DASHBOARD_DATA);
+      await getSliderImages(context);
       if (response.statusCode == 200 &&
           response.data["responseStatus"] == "success") {
         DashboardModel model = DashboardModel.fromJson(response.data);
 
         ///slider
-        OffersSliderModel slider = OffersSliderModel(
-            responseStatus: model.responseStatus,
-            message: model.message,
-            data: model.data!.slides!);
-        Provider.of<OffersSliderProvider>(
-                GlobalVariable.navState.currentContext!,
-                listen: false)
-            .addModel(slider);
-        storage.writeDataToStorage(StorageKeys.SLIDER, slider.toJson());
+        // OffersSliderModel slider = OffersSliderModel(
+        //     responseStatus: model.responseStatus,
+        //     message: model.message,
+        //     data: model.data!.slides!);
+        // Provider.of<OffersSliderProvider>(
+        //         GlobalVariable.navState.currentContext!,
+        //         listen: false)
+        //     .addModel(slider);
+        // storage.writeDataToStorage(StorageKeys.SLIDER, slider.toJson());
 
         ///most viewed offers
         OffersModel mostViewed = OffersModel(
@@ -208,8 +209,6 @@ Future getSliderImages(context) async {
   try {
     bool check = await InternetService.checkConnectivity();
     if (check) {
-      // var ab =await dio.get("https://hpcapi.happinessclub.ae/api/v1/offers/featured?v=123");
-      // print(ab.data);
       var response = await dio.get(APIS.SLIDER_IMAGED);
       if (response.statusCode == 200) {
         OffersSliderModel model = OffersSliderModel.fromJson(response.data);

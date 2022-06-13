@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -178,28 +181,31 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           fullAccess
                       ? ListTile(
                           onTap: () async {
-                            var result = await BarcodeScanner.scan();
-                            scanQrResult(context, result.rawContent)
-                                .then((value) {
-                              //print("==>$value");
-                              if (value == "success") {
-                                if (Provider.of<UserModelProvider>(context,
-                                        listen: false)
-                                    .loggedIn) {
-                                  validateCustomer(context, result.rawContent);
+                            ScanResult result = await BarcodeScanner.scan();
+                            log(result.rawContent.toString());
+                            if (result.rawContent != "") {
+                              scanQrResult(context, result.rawContent)
+                                  .then((value) {
+                                if (value == "success") {
+                                  if (Provider.of<UserModelProvider>(context,
+                                          listen: false)
+                                      .loggedIn) {
+                                    validateCustomer(
+                                        context, result.rawContent);
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                InputCustomerInfo(
+                                                  qrResult: result.rawContent,
+                                                )));
+                                  }
                                 } else {
-                                  Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                          builder: (context) =>
-                                              InputCustomerInfo(
-                                                qrResult: result.rawContent,
-                                              )));
+                                  //Navigator.pop(context);
                                 }
-                              } else {
-                                //Navigator.pop(context);
-                              }
-                            });
+                              });
+                            }
                             // print(result.rawContent); // The barcode content
                           },
                           leading: Image.asset(Images.SCAN_ICON, height: 20),
@@ -430,8 +436,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   Platform.isAndroid
-                      ? "Version 16.1.1(21)"
-                      : "Version 3.3.2(1)",
+                      ? "Version 16.2.0(23)"
+                      : "Version 3.3.5(1)",
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w500,

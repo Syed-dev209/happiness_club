@@ -38,7 +38,7 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 270,
+      height: 280,
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
@@ -97,37 +97,49 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                   SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    height: 32,
-                    width: double.maxFinite,
-                    child: !load
-                        ? ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                            onPressed: () {
+                  AnimatedCrossFade(
+                    firstChild: SizedBox(
+                      height: 36,
+                      width: double.maxFinite,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
+                          onPressed: () {
+                            setState(() {
+                              load = true;
+                            });
+                            subscribeToEvent(
+                                    context, widget.modelData.id.toString())
+                                .then((value) {
                               setState(() {
-                                load = true;
+                                load = false;
                               });
-                              subscribeToEvent(
-                                      context, widget.modelData.id.toString())
-                                  .then((value) {
-                                setState(() {
-                                  load = false;
-                                });
-                              if (value) {
-                              getSuccessPopup();
+                              if (!value) {
+                                getSuccessPopup();
                               } else {
-                                getErrorPopup();
+                                getErrorPopup(
+                                    text: "You have already subscribed");
                               }
-                              });
-                            },
-                            child: Text(
-                              LocaleKeys.subscribe_to_lucky_draw.tr(),
-                              style: FontStyles.PoppinsStyle(12, Colors.white),
-                            ))
-                        : Center(child: CircularProgressIndicator()),
-                  )
+                            });
+                          },
+                          child: Text(
+                            LocaleKeys.subscribe_to_lucky_draw.tr(),
+                            style: FontStyles.PoppinsStyle(12, Colors.white),
+                          )),
+                    ),
+                    secondChild: Center(
+                      child: Transform.scale(
+                        scale: 0.6,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    crossFadeState: !load
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    duration: Duration(milliseconds: 500),
+                  ),
                 ],
               ),
             ),

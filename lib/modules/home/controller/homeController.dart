@@ -44,7 +44,10 @@ Future getDashboardData(context) async {
     bool check = await InternetService.checkConnectivity();
     if (check) {
       log(APIS.DASHBOARD_DATA);
-      var response = await dio.get(APIS.DASHBOARD_DATA);
+      var response = await dio.get(APIS.DASHBOARD_DATA,queryParameters: 
+      {
+        'company_id':Provider.of<UserModelProvider>(context,listen: false).hcCompanyId
+      });
       await getSliderImages(context);
       if (response.statusCode == 200 &&
           response.data["responseStatus"] == "success") {

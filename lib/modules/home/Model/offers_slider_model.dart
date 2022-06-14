@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
+import 'package:happiness_club/modules/auth/Model/user_model.dart';
+import 'package:happiness_club/services/navigatorKey.dart';
+import 'package:provider/provider.dart';
 
 class OffersSliderModelData {
   int? offerId;
@@ -63,6 +68,27 @@ class OffersSliderProvider extends ChangeNotifier {
   OffersSliderModel? modelData;
   addModel(OffersSliderModel data) {
     clearProvider();
+    List<OffersSliderModelData?>? list = [...data.data!];
+    data.data!.clear();
+    if (Provider.of<UserModelProvider>(GlobalVariable.navState.currentContext!,
+            listen: false)
+        .loggedIn) {
+      for (var i in list) {
+        if (i!.type == 'event') {
+          data.data!.add(i);
+        }
+      }
+      for (var i in list) {
+        if (i!.type == 'luckyDraw') {
+          data.data!.add(i);
+        }
+      }
+    }
+    for (var i in list) {
+      if (i!.type != 'event' && i.type != 'luckyDraw') {
+        data.data!.add(i);
+      }
+    }
     modelData = data;
     notifyListeners();
   }

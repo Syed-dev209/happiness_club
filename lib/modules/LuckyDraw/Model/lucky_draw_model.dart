@@ -1,12 +1,11 @@
-
 class LuckDrawModelData {
-
   int? id;
   String? eventTitle;
   String? eventLocation;
   String? eventDatetime;
   int? eventStatus;
   String? eventImage;
+  bool? hasLuckyDraw;
 
   LuckDrawModelData({
     this.id,
@@ -15,6 +14,7 @@ class LuckDrawModelData {
     this.eventDatetime,
     this.eventStatus,
     this.eventImage,
+    this.hasLuckyDraw
   });
   LuckDrawModelData.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
@@ -23,6 +23,7 @@ class LuckDrawModelData {
     eventDatetime = json['event_datetime']?.toString();
     eventStatus = json['event_status']?.toInt();
     eventImage = json['event_image']?.toString();
+    hasLuckyDraw = json['has_luckydraw']==0?false:true;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -37,7 +38,6 @@ class LuckDrawModelData {
 }
 
 class LuckDrawModel {
-
   String? responseStatus;
   String? message;
   List<LuckDrawModelData?>? data;

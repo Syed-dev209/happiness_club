@@ -97,7 +97,7 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                   SizedBox(
                     height: 10,
                   ),
-                  AnimatedCrossFade(
+                 widget.modelData.hasLuckyDraw!?  AnimatedCrossFade(
                     firstChild: SizedBox(
                       height: 36,
                       width: double.maxFinite,
@@ -116,7 +116,7 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                               setState(() {
                                 load = false;
                               });
-                              if (!value) {
+                              if (value) {
                                 getSuccessPopup();
                               } else {
                                 getErrorPopup(
@@ -139,7 +139,7 @@ class _LuckyDrawEventCardState extends State<LuckyDrawEventCard> {
                         ? CrossFadeState.showFirst
                         : CrossFadeState.showSecond,
                     duration: Duration(milliseconds: 500),
-                  ),
+                  ):SizedBox.shrink(),
                 ],
               ),
             ),

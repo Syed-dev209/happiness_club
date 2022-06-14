@@ -213,9 +213,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               Text(LocaleKeys.scan_qr_code.tr(), style: style),
                         )
                       : SizedBox.shrink(),
-                  Provider.of<UserModelProvider>(context, listen: false)
+                  (Provider.of<UserModelProvider>(context, listen: false)
                               .loggedIn &&
-                          fullAccess
+                          fullAccess)
                       ? ListTile(
                           onTap: () {
                             Navigator.push(

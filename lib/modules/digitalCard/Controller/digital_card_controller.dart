@@ -19,10 +19,6 @@ var storage = StorageServices();
 Future<DigitalCardsModel?> getDigitalCards(context) async {
   try {
     bool check = await InternetService.checkConnectivity();
-    var response = storage.readDataFromStorage(StorageKeys.DC_BLOB);
-    if (response != "") {
-      return DigitalCardsModel.fromJson(response);
-    } else {
       if (check) {
         final user =
             Provider.of<UserModelProvider>(context, listen: false).customerId;
@@ -30,11 +26,10 @@ Future<DigitalCardsModel?> getDigitalCards(context) async {
         if (user != "") {
           var response = await dio
               .post(APIS.DIGITAL_CARD, queryParameters: {"customer_id": user});
-          if (response.statusCode == 200) {
             DigitalCardsModel model = DigitalCardsModel.fromJson(response.data);
             storage.writeDataToStorage(StorageKeys.DC_BLOB, model.toJson());
             return model;
-          }
+
         } else {
           showToast(context, "You must log in to see your cards");
           return null;
@@ -45,7 +40,7 @@ Future<DigitalCardsModel?> getDigitalCards(context) async {
           return response;
         }
       }
-    }
+    
   } on DioError catch (e) {
     return null;
   }

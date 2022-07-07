@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,8 +14,8 @@ import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 class OffersScreen extends StatefulWidget {
-  String heading=LocaleKeys.offers.tr();
-   OffersScreen({this.heading="Offers"});
+  String heading = LocaleKeys.offers.tr();
+  OffersScreen({this.heading = "Offers"});
 
   @override
   _OffersScreenState createState() => _OffersScreenState();
@@ -21,20 +23,22 @@ class OffersScreen extends StatefulWidget {
 
 class _OffersScreenState extends State<OffersScreen> {
   ScrollController? scrollController;
-  int start=0, end=9;
+  int start = 0, end = 9;
   bool loading = false;
   _scrollListener() {
-    if (scrollController!.offset >= scrollController!.position.maxScrollExtent &&
+    if (scrollController!.offset >=
+            scrollController!.position.maxScrollExtent &&
         !scrollController!.position.outOfRange) {
       setState(() {
         loading = true;
       });
-        loadData();
+      loadData();
       // setState(() {
       //   message = "reach the bottom";
       // });
     }
-    if (scrollController!.offset <= scrollController!.position.minScrollExtent &&
+    if (scrollController!.offset <=
+            scrollController!.position.minScrollExtent &&
         !scrollController!.position.outOfRange) {
       // setState(() {
       //   message = "reach the top";
@@ -42,15 +46,23 @@ class _OffersScreenState extends State<OffersScreen> {
     }
   }
 
- Future loadData()async{
+  Future loadData({bool reset = false}) async {
+    if (reset) {
+      start = 0;
+      end = 9;
+    }
+    log(start.toString());
+    log(end.toString());
     getAllOffers(context, start, end).then((value) {
-        start = start +10;
-        end = end + 10;
-        setState(() {
-          loading = false;
-        });
+      start = start + 10;
+      end = end + 10;
+
+      setState(() {
+        loading = false;
+      });
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -59,6 +71,7 @@ class _OffersScreenState extends State<OffersScreen> {
     scrollController!.addListener(_scrollListener);
     loadData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,32 +84,35 @@ class _OffersScreenState extends State<OffersScreen> {
             height: 30,
           ),
           appBar(widget.heading),
-          Expanded(
-              child: Consumer<AllOffersProvider>(
-                builder: (context,data,_){
-                  if(data.modelData==null){
-                    return ListView.separated(
-                        itemBuilder: (context, i) {
-                          return OfferCardShimmer();
-                        },
-                        separatorBuilder: (context, i) => SizedBox(
+          Expanded(child: Consumer<AllOffersProvider>(
+            builder: (context, data, _) {
+              if (data.modelData == null) {
+                return ListView.separated(
+                    itemBuilder: (context, i) {
+                      return OfferCardShimmer();
+                    },
+                    separatorBuilder: (context, i) => SizedBox(
                           height: 10,
                         ),
-                        itemCount:3);
-                  }
-                  return ListView.separated(
-                      controller: scrollController!,
-                      itemBuilder: (context, i) {
-                        return OffersCard(modelData: data.modelData!.data![i]!);
-                      },
-                      separatorBuilder: (context, i) => SizedBox(
-                        height: 10,
-                      ),
-                      itemCount: data.modelData!.data!.length);
+                    itemCount: 3);
+              }
+              return RefreshIndicator(
+                onRefresh: () async {
+                  loadData(reset: true);
                 },
-
-              )),
-          loading ? getLoader():Text("")
+                child: ListView.separated(
+                    controller: scrollController!,
+                    itemBuilder: (context, i) {
+                      return OffersCard(modelData: data.modelData!.data![i]!);
+                    },
+                    separatorBuilder: (context, i) => SizedBox(
+                          height: 10,
+                        ),
+                    itemCount: data.modelData!.data!.length),
+              );
+            },
+          )),
+          loading ? getLoader() : Text("")
         ],
       ),
     );
@@ -104,7 +120,7 @@ class _OffersScreenState extends State<OffersScreen> {
 
   appBar(String heading) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.maybePop(context);
       },
       child: Container(
@@ -123,32 +139,35 @@ class _OffersScreenState extends State<OffersScreen> {
                   fontWeight: FontWeight.w600),
             ),
             PopupMenuButton(
-              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8)
-              ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 05,
-                      vertical: 10
-                    ),
-                    child: SvgPicture.asset(Images.APPBAR_DROP_ICON),
-                  ),
-                  itemBuilder: (context) => [
-                     PopupMenuItem(
-                      child: Text(LocaleKeys.most_viewed.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6)),),
-                      value: 1,
-                    ),
-                    PopupMenuItem(
-                      child: Text(LocaleKeys.best_rated.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
-                      value: 2,
-                    ),
-                     PopupMenuItem(
-                      child: Text(LocaleKeys.featured.tr(),style: FontStyles.PoppinsStyle(17, Colors.black.withOpacity(0.6))),
-                      value: 3,
-                    ),
-                  ]
-              )
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 05, vertical: 10),
+                  child: SvgPicture.asset(Images.APPBAR_DROP_ICON),
+                ),
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text(
+                          LocaleKeys.most_viewed.tr(),
+                          style: FontStyles.PoppinsStyle(
+                              17, Colors.black.withOpacity(0.6)),
+                        ),
+                        value: 1,
+                      ),
+                      PopupMenuItem(
+                        child: Text(LocaleKeys.best_rated.tr(),
+                            style: FontStyles.PoppinsStyle(
+                                17, Colors.black.withOpacity(0.6))),
+                        value: 2,
+                      ),
+                      PopupMenuItem(
+                        child: Text(LocaleKeys.featured.tr(),
+                            style: FontStyles.PoppinsStyle(
+                                17, Colors.black.withOpacity(0.6))),
+                        value: 3,
+                      ),
+                    ])
             // GestureDetector(
             //     onTap: () {
 

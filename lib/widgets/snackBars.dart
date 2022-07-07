@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:happiness_club/constants/colorCodes.dart';
 import 'package:happiness_club/translations/locale_keys.g.dart';
 
 showNoInternetSnackBar(context) {
@@ -23,6 +25,14 @@ showToast(context,String message){
 
 getLoader(){
   return Center(
-    child: Platform.isAndroid ? CircularProgressIndicator() : CupertinoActivityIndicator(),
+    child: SizedBox(
+      height: 30,
+      width: 30,
+      child: SpinKitSpinningLines(
+        color: Color(ColorCodes.GOLDEN_COLOR),
+      ),
+    )
+    
+    // Platform.isAndroid ? CircularProgressIndicator() : CupertinoActivityIndicator(),
   );
 }

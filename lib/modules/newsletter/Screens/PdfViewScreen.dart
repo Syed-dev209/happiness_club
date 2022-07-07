@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:happiness_club/constants/images.dart';
 import 'package:happiness_club/modules/auth/Model/user_model.dart';
 import 'package:happiness_club/translations/locale_keys.g.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:provider/provider.dart';
 
 class PdfViewScreen extends StatelessWidget {
@@ -52,8 +53,6 @@ class PdfViewScreen extends StatelessWidget {
 
   loader() {
     return Center(
-        child: Platform.isAndroid
-            ? CircularProgressIndicator()
-            : CupertinoActivityIndicator());
+        child: getLoader());
   }
 }

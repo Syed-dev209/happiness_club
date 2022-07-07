@@ -13,9 +13,10 @@ class DigitalCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return SizedBox(
+      return Container(
         height: 217,
         width: constraints.maxWidth < 600 ? double.maxFinite : 300,
+        margin: EdgeInsets.only(bottom: 12),
         child: FlipCard(
             key: cardKey,
             flipOnTouch: false,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:animation_list/animation_list.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,6 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
       if (value != null) {
         setState(() {
           for (int i = 0; i < value.data.fazaaCard.length; i++) {
-            // fazaCard.add(base64.decode(value.data.fazaaCard[i].front.split(',').last));
-            // fazaCard.add(base64.decode(value.data.fazaaCard[i].back.split(',').last));
             blobList.add(DigitalCardWidget(
                 front: base64
                     .decode(value.data.fazaaCard[i].front.split(',').last),
@@ -109,18 +108,26 @@ class _DigitalCardScreenState extends State<DigitalCardScreen> {
                   ? blobList.isNotEmpty
                       ? Center(
                           child: RefreshIndicator(
-                            onRefresh: () async {
-                              loadData();
-                            },
-                            child: ListView.separated(
+                              onRefresh: () async {
+                                loadData();
+                              },
+                              child: AnimationList(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 10),
-                                itemBuilder: (context, i) => blobList[i],
-                                separatorBuilder: (context, i) => SizedBox(
-                                      height: 15,
-                                    ),
-                                itemCount: blobList.length),
-                          ),
+                                children: blobList,
+                                duration: 1000,
+                                reBounceDepth: 10,
+                              )
+
+                              //  ListView.separated(
+                              //     padding: EdgeInsets.symmetric(
+                              //         horizontal: 12, vertical: 10),
+                              //     itemBuilder: (context, i) => blobList[i],
+                              //     separatorBuilder: (context, i) => SizedBox(
+                              //           height: 15,
+                              //         ),
+                              //     itemCount: blobList.length),
+                              ),
                         )
                       : Center(child: Text(LocaleKeys.no_card_found.tr()))
                   : Center(

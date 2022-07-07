@@ -17,6 +17,7 @@ import 'package:happiness_club/translations/locale_keys.g.dart';
 import 'package:happiness_club/widgets/custom_full_width_button.dart';
 import 'package:happiness_club/widgets/custom_text_field.dart';
 import 'package:happiness_club/constants/fontStyles.dart';
+import 'package:happiness_club/widgets/snackBars.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
@@ -143,9 +144,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
   }
 
   loader() {
-    return Platform.isAndroid
-        ? CircularProgressIndicator()
-        : CupertinoActivityIndicator();
+    return getLoader();
   }
 
   rememberMeRow() {

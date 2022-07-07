@@ -284,7 +284,7 @@ class _NearbyScreenState extends State<NearbyScreen>
                                   spreadRadius: 1)
                             ]),
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: getLoader(),
                         ),
                       ),
                     ),

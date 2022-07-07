@@ -2,58 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happiness_club/services/storage_service.dart';
 
-class UserModelProvider extends ChangeNotifier{
+class UserModelProvider extends ChangeNotifier {
   bool loggedIn = false;
   String customerId = "";
-  String name="Not logged in";
-  String memberShip="";
-  String expDate="";
-  String company="";
-  String accessType="";
-  String hcId="";
-  String hcCompanyId="";
+  String name = "Not logged in";
+  String memberShip = "";
+  String expDate = "";
+  String company = "";
+  String accessType = "";
+  String hcId = "";
+  String hcCompanyId = "";
   LatLng? currentLocation;
   int? language;
-  addCustomerId(String id){
+  addCustomerId(String id) {
     customerId = id;
   }
-  addName(String nam){
-    name=nam;
+
+  addName(String nam) {
+    name = nam;
   }
-  updateLoginStatus(bool status){
+
+  updateLoginStatus(bool status) {
     loggedIn = true;
   }
 
-  setCurrentLocation(LatLng loc){
+  setCurrentLocation(LatLng loc) {
     currentLocation = loc;
   }
 
-  setMembershipDetails(String memNum, String date){
+  setMembershipDetails(String memNum, String date) {
     memberShip = memNum;
     expDate = date;
   }
-  setCompanyName(String comp){
+
+  setCompanyName(String comp) {
     company = comp;
   }
-  setAccessType(String type){
+
+  setAccessType(String type) {
     accessType = type;
   }
-  setHcId(String id){
+
+  setHcId(String id) {
     hcId = id;
   }
-  setHcCompanyId(String id){
+
+  setHcCompanyId(String id) {
     hcCompanyId = id;
   }
-  setLanguage(int lang){
-    language= lang;
+
+  setLanguage(int lang) {
+    language = lang;
   }
-  logOutUser(){
+
+  logOutUser() {
     StorageServices()..clearAllData();
     loggedIn = false;
-    customerId="";
+    customerId = "";
     name = "Not logged in";
     memberShip = "";
-    expDate="";
+    expDate = "";
     notifyListeners();
   }
 }
